@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom'
 type DashboardTabProps = {
 	title: string
 	to: string
-	selected: boolean
 }
 
 const baseStyles = 'rounded-[7px] py-2 px-4 transition-all'
