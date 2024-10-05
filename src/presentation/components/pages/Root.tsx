@@ -9,9 +9,9 @@ const Root: React.FC = () => {
 			<Dashboard />
 
 			<div className="flex flex-col py-6 px-4 gap-5">
-				<div className="text-3xl font-bold tracking-wide">
+				<p className="text-3xl font-bold tracking-wide">
 					Guía Administración de Fármacos
-				</div>
+				</p>
 				<Outlet />
 			</div>
 		</AppContainer>
