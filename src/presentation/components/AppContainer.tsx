@@ -5,11 +5,8 @@ interface AppContainerProps {
 }
 
 const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
-	return (
-		<div className="mx-auto w-[90%] sm:w-[33rem] flex flex-col gap-3 text-[0.8rem]">
-			{children}
-		</div>
-	)
+	// h-[100vh] es temporal
+	return <div className="flex gap-3 bg-gray-100 h-[100vh]">{children}</div>
 }
 
 export default AppContainer

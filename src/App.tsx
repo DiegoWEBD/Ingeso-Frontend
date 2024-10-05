@@ -1,11 +1,17 @@
-import AppContainer from './presentation/components/AppContainer'
+import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Root from './presentation/components/pages/Root'
 
-function App() {
-	return (
-		<AppContainer>
-			<div className="text-2xl">Guía de consulta para Enfermería</div>
-		</AppContainer>
-	)
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Root />,
+		children: [],
+	},
+])
+
+const App: React.FC = () => {
+	return <RouterProvider router={router} />
 }
 
 export default App
