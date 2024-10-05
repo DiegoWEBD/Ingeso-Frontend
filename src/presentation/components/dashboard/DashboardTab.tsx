@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 type DashboardTabProps = {
 	title: string
@@ -6,20 +7,18 @@ type DashboardTabProps = {
 	selected: boolean
 }
 
-const selectedStyle =
-	'rounded-[7px] py-2 px-4 bg-blue-200 text-blue-700 transition-all font-semibold'
+const baseStyles = 'rounded-[7px] py-2 px-4 transition-all'
+const unselectedStyle = `${baseStyles} hover:bg-gray-200`
+const selectedStyle = `${baseStyles} bg-blue-200 text-blue-700 font-semibold`
 
-const DashboardTab: React.FC<DashboardTabProps> = ({ title, selected }) => {
+const DashboardTab: React.FC<DashboardTabProps> = ({ title, to }) => {
 	return (
-		<div
-			className={
-				selected
-					? selectedStyle
-					: 'rounded-[7px] py-2 px-4 hover:bg-gray-200 transition-all'
-			}
+		<NavLink
+			to={to}
+			className={({ isActive }) => (isActive ? selectedStyle : unselectedStyle)}
 		>
 			{title}
-		</div>
+		</NavLink>
 	)
 }
 

@@ -7,10 +7,13 @@ const Root: React.FC = () => {
 	return (
 		<AppContainer>
 			<Dashboard />
-			<div className="py-6 px-4 text-3xl font-bold tracking-wide">
-				Guía Administración de Fármacos
+
+			<div className="flex flex-col py-6 px-4 gap-5">
+				<div className="text-3xl font-bold tracking-wide">
+					Guía Administración de Fármacos
+				</div>
+				<Outlet />
 			</div>
-			<Outlet />
 		</AppContainer>
 	)
 }
