@@ -1,5 +1,6 @@
 import React from 'react'
-import AppContainer from '../AppContainer'
+import AppContainer from '../containers/AppContainer'
+import BodyContainer from '../containers/BodyContainer'
 import Dashboard from '../dashboard/Dashboard'
 import { Outlet } from 'react-router-dom'
 
@@ -8,12 +9,12 @@ const Root: React.FC = () => {
 		<AppContainer>
 			<Dashboard />
 
-			<div className="flex flex-col py-6 px-4 gap-5">
+			<BodyContainer>
 				<p className="text-3xl font-bold tracking-wide">
 					Guía Administración de Fármacos
 				</p>
 				<Outlet />
-			</div>
+			</BodyContainer>
 		</AppContainer>
 	)
 }
