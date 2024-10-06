@@ -13,6 +13,7 @@ const Root: React.FC = () => {
 				<p className="text-3xl font-bold tracking-wide">
 					Guía Administración de Fármacos
 				</p>
+
 				<Outlet />
 			</BodyContainer>
 		</AppContainer>
