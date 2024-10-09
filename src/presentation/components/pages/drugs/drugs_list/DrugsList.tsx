@@ -2,13 +2,13 @@ import React from 'react'
 import DrugsListItem from './DrugsListItem'
 
 type DrugsListProps = {
-	drugs: string[]
+	drugNames: string[]
 }
 
-const DrugsList: React.FC<DrugsListProps> = ({ drugs }) => {
+const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 	return (
-		<div className="flex flex-wrap gap-5 ">
-			{drugs.map((drugName) => (
+		<div className="grid grid-cols-5 gap-4">
+			{drugNames.map((drugName) => (
 				<DrugsListItem key={drugName} drugName={drugName} />
 			))}
 		</div>

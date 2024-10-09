@@ -8,7 +8,7 @@ type DrugItemModalProps = {
 const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 	return (
 		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-			<div className="bg-white rounded p-4 shadow-lg w-[35rem]">
+			<div className="relative bg-white rounded p-4 shadow-lg w-[35rem]">
 				<h2 className="text-2xl font-bold pb-4 text-center">
 					Detalles del fármaco
 				</h2>
@@ -60,9 +60,9 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 
 				<button
 					onClick={closeModal}
-					className="mt-4 bg-blue-500 text-white rounded py-2 px-4 w-full hover:shadow-md hover:shadow-black/50 transition-all"
+					className="absolute top-2 right-2 bg-red-500 text-white font-bold rounded py-1 px-3 hover:shadow-md hover:shadow-red-600/50 transition-all"
 				>
-					Cerrar
+					X
 				</button>
 			</div>
 		</div>
