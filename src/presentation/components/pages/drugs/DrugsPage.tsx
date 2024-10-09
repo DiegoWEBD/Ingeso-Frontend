@@ -20,7 +20,13 @@ const DrugsPage: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		filterDrugNames()
+		const waitTime = 0 // Tiempo que debe transcurrir desde que el usuario deja de escribir para realizar la búsqueda.
+
+		const timeout = setTimeout(() => {
+			filterDrugNames()
+		}, waitTime)
+
+		return () => clearTimeout(timeout)
 	}, [drugNames, formik.values.userInput])
 
 	const filterDrugNames = () => {
