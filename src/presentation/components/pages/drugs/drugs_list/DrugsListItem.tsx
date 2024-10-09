@@ -12,7 +12,6 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 	const [drugInfo, setDrugInfo] = useState<any>(null)
 
 	const onClick = () => {
-		console.log(drugName)
 		getDrugInformation()
 			.then((data) => {
 				setDrugInfo(data)
