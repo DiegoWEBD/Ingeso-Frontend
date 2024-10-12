@@ -6,28 +6,28 @@ import PageNotFound from './presentation/components/pages/not_found/PageNotFound
 import DrugsPage from './presentation/components/pages/drugs/DrugsPage'
 
 const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <Root />,
-		children: [
-			{
-				path: '/',
-				element: <HomePage />,
-			},
-			{
-				path: '/drugs',
-				element: <DrugsPage />,
-			},
-			{
-				path: '*',
-				element: <PageNotFound />,
-			},
-		],
-	},
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      {
+        path: '/',
+        element: <HomePage />,
+      },
+      {
+        path: '/drugs',
+        element: <DrugsPage />,
+      },
+      {
+        path: '*',
+        element: <PageNotFound />,
+      },
+    ],
+  },
 ])
 
 const App: React.FC = () => {
-	return <RouterProvider router={router} />
+  return <RouterProvider router={router} />
 }
 
 export default App
