@@ -9,10 +9,10 @@ type DrugsListItemProps = {
 
 const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 	const [modalVisible, setModalVisible] = useState<boolean>(false)
-	const [drugInfo, setDrugInfo] = useState<any>(null)
+	const [drug, setDrugInfo] = useState<any>(null)
 
 	const onClick = () => {
-		getDrugInformation()
+		getDrug()
 			.then((data) => {
 				setDrugInfo(data)
 				setModalVisible(true)
@@ -20,7 +20,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 			.catch(console.error)
 	}
 
-	const getDrugInformation = async (): Promise<any> => {
+	const getDrug = async (): Promise<any> => {
 		const { data } = await axios.get(`${API_URL}/drugs/${drugName}`)
 		return data
 	}
@@ -33,14 +33,12 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 		<>
 			<button
 				onClick={onClick}
-				className="rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all"
+				className='rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all'
 			>
 				{drugName}
 			</button>
 
-			{modalVisible && (
-				<DrugItemModal closeModal={closeModal} drug={drugInfo} />
-			)}
+			{modalVisible && <DrugItemModal closeModal={closeModal} drug={drug} />}
 		</>
 	)
 }
