@@ -1,18 +1,11 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { API_URL } from '../../../../utils'
-import DrugsList from './drugs_list/DrugsList'
 import { useFormik } from 'formik'
-import DrugRepository from '../../../../domain/drug/DrugRepository'
+import React, { useEffect, useState } from 'react'
 import useAppState from '../../../global_states/appState'
+import DrugsList from './drugs_list/DrugsList'
 
 const DrugsPage: React.FC = () => {
-	const [drugNames, setDrugNames] = useState<string[]>([])
+	const drugsNames: Array<string> = useAppState((state) => state.drugsNames)
 	const [filteredDrugNames, setFilteredDrugNames] = useState<string[]>([])
-
-	const drugRepository: DrugRepository = useAppState(
-		(state) => state.drugRepository
-	)
 
 	const formik = useFormik({
 		initialValues: {
@@ -22,10 +15,6 @@ const DrugsPage: React.FC = () => {
 	})
 
 	useEffect(() => {
-		getDrugs().then(setDrugNames).catch(console.error)
-	}, [])
-
-	useEffect(() => {
 		const waitTime = 0 // Tiempo que debe transcurrir desde que el usuario deja de escribir para realizar la búsqueda.
 
 		const timeout = setTimeout(() => {
@@ -33,17 +22,13 @@ const DrugsPage: React.FC = () => {
 		}, waitTime)
 
 		return () => clearTimeout(timeout)
-	}, [drugNames, formik.values.userInput])
+	}, [drugsNames, formik.values.userInput])
 
 	const filterDrugNames = () => {
-		const filtered = drugNames.filter((name) =>
+		const filtered = drugsNames.filter((name) =>
 			name.toLowerCase().includes(formik.values.userInput.toLowerCase())
 		)
 		setFilteredDrugNames(filtered)
-	}
-
-	const getDrugs = async (): Promise<any[]> => {
-		return await drugRepository.getAll()
 	}
 
 	return (

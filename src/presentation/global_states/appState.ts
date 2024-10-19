@@ -8,13 +8,18 @@ type AppState = {
 	loadInitialData: () => Promise<void>
 }
 
-const useAppState = create<AppState>((set) => ({
-	drugsNames: [],
-	drugRepository: new RestApiDrugRepository(),
+const useAppState = create<AppState>((set) => {
+	const drugRepository: DrugRepository = new RestApiDrugRepository()
 
-	loadInitialData: async () => {
-		// por hacer
-	},
-}))
+	return {
+		drugsNames: [],
+		drugRepository,
+
+		loadInitialData: async () => {
+			const drugsNames: Array<string> = await drugRepository.getAllNames()
+			set({ drugsNames })
+		},
+	}
+})
 
 export default useAppState

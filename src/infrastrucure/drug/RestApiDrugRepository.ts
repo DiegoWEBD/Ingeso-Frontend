@@ -10,13 +10,17 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async getAll(): Promise<Array<Drug>> {
+		throw new Error('To do.')
+	}
+
+	async getAllNames(): Promise<Array<string>> {
 		const { data } = await axios.get(`${API_URL}/drugs`)
-		console.log(data)
-		return data.map(DrugAdapter.FromRestApi)
+		return data
 	}
 
 	async findByName(name: string): Promise<Drug | null> {
-		throw new Error('To do.')
+		const { data } = await axios.get(`${API_URL}/drugs/${name}`)
+		return DrugAdapter.FromRestApi(data)
 	}
 
 	async update(name: string, newValues: Drug): Promise<void> {

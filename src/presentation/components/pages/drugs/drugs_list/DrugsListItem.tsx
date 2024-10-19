@@ -1,6 +1,7 @@
-import axios from 'axios'
 import React, { useState } from 'react'
-import { API_URL } from '../../../../../utils'
+import Drug from '../../../../../domain/drug/Drug'
+import DrugRepository from '../../../../../domain/drug/DrugRepository'
+import useAppState from '../../../../global_states/appState'
 import DrugItemModal from './modal/DrugItemModal'
 
 type DrugsListItemProps = {
@@ -9,20 +10,23 @@ type DrugsListItemProps = {
 
 const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 	const [modalVisible, setModalVisible] = useState<boolean>(false)
-	const [drug, setDrugInfo] = useState<any>(null)
+	const [drug, setDrug] = useState<Drug | null>(null)
+
+	const drugRepository: DrugRepository = useAppState(
+		(state) => state.drugRepository
+	)
 
 	const onClick = () => {
 		getDrug()
 			.then((data) => {
-				setDrugInfo(data)
+				setDrug(data)
 				setModalVisible(true)
 			})
 			.catch(console.error)
 	}
 
-	const getDrug = async (): Promise<any> => {
-		const { data } = await axios.get(`${API_URL}/drugs/${drugName}`)
-		return data
+	const getDrug = async (): Promise<Drug> => {
+		return (await drugRepository.findByName(drugName)) as Drug
 	}
 
 	const closeModal = () => {
@@ -38,7 +42,9 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 				{drugName}
 			</button>
 
-			{modalVisible && <DrugItemModal closeModal={closeModal} drug={drug} />}
+			{modalVisible && drug !== null && (
+				<DrugItemModal closeModal={closeModal} drug={drug} />
+			)}
 		</>
 	)
 }

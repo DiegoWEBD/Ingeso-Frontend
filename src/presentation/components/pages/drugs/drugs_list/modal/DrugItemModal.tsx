@@ -1,10 +1,11 @@
 import { Pill, X } from 'lucide-react'
 import React from 'react'
 import ModalInfoContainer from './ModalInfoContainer'
+import Drug from '../../../../../../domain/drug/Drug'
 
 type DrugItemModalProps = {
 	closeModal: () => void
-	drug: any
+	drug: Drug
 }
 
 const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
@@ -19,12 +20,12 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 				<ModalInfoContainer>
 					<div>
 						<p className='font-semibold text-blue-700 text-lg '>Nombre:</p>
-						<p className='text-gray-700 '>{drug.name}</p>
+						<p className='text-gray-700 '>{drug.getName()}</p>
 					</div>
 
 					<div>
 						<p className='font-semibold text-blue-700 text-lg '>Descripción:</p>
-						<p className='text-gray-700 break-words'>{drug.description}</p>
+						<p className='text-gray-700 break-words'>{drug.getDescription()}</p>
 					</div>
 
 					<div>
@@ -32,8 +33,9 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 							Procedimientos de administración:
 						</p>
 						<div className=''>
-							{drug.administration_procedures.map(
-								(administrationProcedure: any) => (
+							{drug
+								.getAdministrationProcedures()
+								.map((administrationProcedure: any) => (
 									<div
 										key={administrationProcedure.method}
 										className='text-gray-700 flex gap-2'
@@ -43,8 +45,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 										</p>
 										<p>{administrationProcedure.procedure}</p>
 									</div>
-								)
-							)}
+								))}
 						</div>
 					</div>
 
@@ -53,18 +54,20 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 							Clasificaciones:
 						</p>
 						<div className='flex flex-wrap gap-2 '>
-							{drug.drug_classifications.map(
-								(drugClassification: any, index: number) => (
+							{drug
+								.getDrugClassifications()
+								.map((drugClassification: any, index: number) => (
 									<p
 										key={drugClassification.classification}
 										className='text-gray-700'
 									>
 										{drugClassification.classification}
 										{/** Poner comas entre tipos */}
-										{index === drug.drug_classifications.length - 1 ? '' : ','}
+										{index === drug.getDrugClassifications().length - 1
+											? ''
+											: ','}
 									</p>
-								)
-							)}
+								))}
 						</div>
 					</div>
 				</ModalInfoContainer>
