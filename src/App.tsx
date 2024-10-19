@@ -4,6 +4,8 @@ import Root from './presentation/components/pages/Root'
 import HomePage from './presentation/components/pages/home/HomePage'
 import PageNotFound from './presentation/components/pages/not_found/PageNotFound'
 import DrugsPage from './presentation/components/pages/drugs/DrugsPage'
+import AddDrugPage from './presentation/components/pages/drugs/addDrugPage'
+
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: <PageNotFound />,
+      },
+      {
+        path: '/drugs/add',
+        element: <AddDrugPage />,
       },
     ],
   },
