@@ -11,6 +11,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 
 	async getAll(): Promise<Array<Drug>> {
 		const { data } = await axios.get(`${API_URL}/drugs`)
+		console.log(data)
 		return data.map(DrugAdapter.FromRestApi)
 	}
 
