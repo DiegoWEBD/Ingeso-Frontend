@@ -5,7 +5,9 @@ type BodyContainerProps = {
 }
 
 const BodyContainer: React.FC<BodyContainerProps> = ({ children }) => {
-	return <div className="flex flex-col py-6 px-4 gap-5 w-5/6">{children}</div>
+	return (
+		<div className='flex flex-col mx-6 mt-12 sm:ml-5 gap-5'>{children}</div>
+	)
 }
 
 export default BodyContainer
