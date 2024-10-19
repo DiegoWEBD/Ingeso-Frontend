@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { API_URL } from '../../../../../utils'
-import DrugItemModal from './DrugItemModal'
+import DrugItemModal from './modal/DrugItemModal'
 
 type DrugsListItemProps = {
 	drugName: string
