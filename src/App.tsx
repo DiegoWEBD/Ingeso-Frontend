@@ -21,12 +21,12 @@ const router = createBrowserRouter([
         element: <DrugsPage />,
       },
       {
-        path: '*',
-        element: <PageNotFound />,
-      },
-      {
         path: '/drugs/add',
         element: <AddDrugPage />,
+      },
+      {
+        path: '*',
+        element: <PageNotFound />,
       },
     ],
   },
