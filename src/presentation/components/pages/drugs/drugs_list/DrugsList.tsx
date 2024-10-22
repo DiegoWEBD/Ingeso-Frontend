@@ -7,7 +7,12 @@ type DrugsListProps = {
 
 const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 	return (
-		<div className='grid grid-cols-5 gap-4'>
+		<div
+			className='grid gap-4 overflow-y-auto max-h-[70vh] py-2'
+			style={{
+				gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+			}}
+		>
 			{drugNames.map((drugName) => (
 				<DrugsListItem key={drugName} drugName={drugName} />
 			))}
