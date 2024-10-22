@@ -17,11 +17,11 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: '/drugs',
+        path: '/farmacos',
         element: <DrugsPage />,
       },
       {
-        path: '/drugs/add',
+        path: '/farmacos/agregar',
         element: <AddDrugPage />,
       },
       {
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
 ])
 
 const App: React.FC = () => {
-  return <RouterProvider router={router} />
+	return <RouterProvider router={router} />
 }
 
 export default App
