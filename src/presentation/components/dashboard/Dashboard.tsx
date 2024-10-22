@@ -63,6 +63,7 @@ const Dashboard: React.FC = () => {
 			>
 				<DashboardTab title='Inicio' to='/' />
 				<DashboardTab title='Fármacos' to='/farmacos' />
+
 			</div>
 		</div>
 	)
