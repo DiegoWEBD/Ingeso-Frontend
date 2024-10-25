@@ -19,7 +19,8 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async findByName(name: string): Promise<Drug | null> {
-		const { data } = await axios.get(`${API_URL}/drugs/${name}`)
+		const encodedName = encodeURIComponent(name)
+		const { data } = await axios.get(`${API_URL}/drugs/${encodedName}`)
 		return DrugAdapter.FromRestApi(data)
 	}
 
