@@ -1,11 +1,10 @@
 import React from 'react'
+import AppTitle from '../../AppTitle'
 
 const HomePage: React.FC = () => {
 	return (
 		<div>
-			<p className="text-3xl font-bold tracking-wide pb-5">
-				Guía Administración de Fármacos
-			</p>
+			<AppTitle />
 			<p>Página Inicio</p>
 		</div>
 	)
