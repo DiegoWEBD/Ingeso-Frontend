@@ -7,10 +7,12 @@ import User from '../../../../domain/user/User'
 import AppTitle from '../../AppTitle'
 import LoginButton from './LoginButton'
 import { PRIMARY_COLOR } from '../../../colors'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
 	const [_, setError] = useState<string | null>(null)
+	const navigate = useNavigate()
 
 	const handleSuccess = (
 		response: Omit<TokenResponse, 'err' | 'error_description' | 'error_uri'>
@@ -25,6 +27,7 @@ const LoginForm: React.FC = () => {
 				//console.log(data.message)
 				//console.log(data.access_token)
 				setUser(new User(data.user.name, data.user.institutional_email))
+				navigate('/farmacos')
 			})
 			.catch((err: Error) => handleError(err.message))
 	}
