@@ -5,6 +5,7 @@ import AppContainer from '../containers/AppContainer'
 import BodyContainer from '../containers/BodyContainer'
 import Dashboard from '../dashboard/Dashboard'
 import Header from '../header/Header'
+import ProtectedComponent from './ProtectedComponent'
 
 const Root: React.FC = () => {
 	const { loadInitialData, user } = useAppState()
@@ -16,7 +17,9 @@ const Root: React.FC = () => {
 
 	return (
 		<AppContainer>
-			{user !== null && <Dashboard />}
+			<ProtectedComponent>
+				<Dashboard />
+			</ProtectedComponent>
 			<div className='w-full '>
 				{pathname !== '/login' && <Header />}
 				<BodyContainer>

@@ -7,6 +7,7 @@ import { PRIMARY_COLOR } from '../../../colors'
 import useAppState from '../../../global_states/appState'
 import AppTitle from '../../AppTitle'
 import LoginButton from './LoginButton'
+import Cookies from 'js-cookie'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
@@ -24,6 +25,12 @@ const LoginForm: React.FC = () => {
 			.then((data) => {
 				//console.log(data.message)
 				//console.log(data.access_token)
+				Cookies.set('access_token', data.access_token, {
+					expires: 1,
+					path: '/',
+					secure: true,
+					sameSite: 'Strict',
+				})
 				setUser(new User(data.user.name, data.user.institutional_email))
 			})
 			.catch((err: Error) => handleError(err.message))
