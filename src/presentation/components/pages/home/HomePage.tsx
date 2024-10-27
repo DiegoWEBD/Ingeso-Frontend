@@ -4,7 +4,12 @@ import AppTitle from '../../AppTitle'
 const HomePage: React.FC = () => {
 	return (
 		<div>
-			<AppTitle />
+			<AppTitle
+				className='font-extrabold'
+				style={{
+					color: '#8b5e3c',
+				}}
+			/>
 			<p>Página Inicio</p>
 		</div>
 	)

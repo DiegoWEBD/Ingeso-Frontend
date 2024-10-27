@@ -44,7 +44,7 @@ const DrugsPage: React.FC = () => {
 					onChange={formik.handleChange}
 					value={formik.values.userInput}
 					placeholder='Introduzca nombre de fármaco para filtrar'
-					className={`py-2 px-4 border rounded border-${PRIMARY_COLOR} w-full`}
+					className={`w-full py-2 px-4 border rounded border-${PRIMARY_COLOR}`}
 				/>
 				<button
 					type='button'

@@ -9,13 +9,17 @@ type DashboardTabProps = {
 
 const baseStyles = `w-full rounded-[7px] py-2 px-4 transition-all text-[${PRIMARY_COLOR}] font-semibold`
 const unselectedStyle = `${baseStyles} hover:bg-gray-200`
-const selectedStyle = `${baseStyles} bg-[${PRIMARY_COLOR}] text-white`
+const selectedStyle = {
+	background: PRIMARY_COLOR,
+	color: 'white',
+}
 
 const DashboardTab: React.FC<DashboardTabProps> = ({ title, to }) => {
 	return (
 		<NavLink
 			to={to}
-			className={({ isActive }) => (isActive ? selectedStyle : unselectedStyle)}
+			className={({ isActive }) => (isActive ? baseStyles : unselectedStyle)}
+			style={({ isActive }) => (isActive ? selectedStyle : {})}
 		>
 			{title}
 		</NavLink>

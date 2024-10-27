@@ -67,7 +67,10 @@ const Dashboard: React.FC = () => {
 			>
 				<img src='logo_ucn.png' className='w-[8rem]' />
 				<AppTitle
-					className={`text-[1.7rem] font-extrabold text-[${PRIMARY_COLOR}]`}
+					className='text-[1.7rem] font-extrabold'
+					style={{
+						color: PRIMARY_COLOR,
+					}}
 				/>
 				<div className='flex flex-col w-full gap-2'>
 					<DashboardTab title='Inicio' to='/' />
