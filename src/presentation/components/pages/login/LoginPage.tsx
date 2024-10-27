@@ -1,19 +1,12 @@
-import React, { useEffect } from 'react'
-import useAppState from '../../../global_states/appState'
-import LoginForm from './LoginForm'
-import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import React from 'react'
+import { Navigate } from 'react-router-dom'
+import LoginForm from './LoginForm'
 
 const LoginPage: React.FC = () => {
-	const { user } = useAppState()
-	const navigate = useNavigate()
 	const accessToken = Cookies.get('access_token')
 
-	useEffect(() => {
-		if (accessToken) navigate('/farmacos')
-	}, [user])
-
-	return <LoginForm />
+	return !accessToken ? <LoginForm /> : <Navigate to='/farmacos' replace />
 }
 
 export default LoginPage

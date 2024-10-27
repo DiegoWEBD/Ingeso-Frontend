@@ -8,7 +8,7 @@ type AppTitleProps = {
 const AppTitle: React.FC<AppTitleProps> = ({ className, style }) => {
 	return (
 		<p
-			className={`text-3xl font-bold tracking-wide pb-5 ${
+			className={`text-3xl font-bold tracking-wide ${
 				className ? className : ''
 			}`}
 			style={style}

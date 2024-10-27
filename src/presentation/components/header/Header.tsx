@@ -1,13 +1,15 @@
 import Cookies from 'js-cookie'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import AppTitle from '../AppTitle'
+import { SECONDARY_COLOR } from '../../colors'
 
 const Header: React.FC = () => {
 	const accessToken = Cookies.get('access_token')
 
 	return (
-		<header className='flex justify-between px-6 py-8 bg-white w-full  shadow-md'>
-			<p className='text-[#8b5e3c] text-3xl font-bold'>Bienvenido</p>
+		<header className='flex justify-between px-6 py-8 bg-white w-full  shadow-md items-center'>
+			<AppTitle style={{ color: SECONDARY_COLOR }} className='font-extrabold' />
 			{!accessToken && (
 				<Link
 					to='/login'

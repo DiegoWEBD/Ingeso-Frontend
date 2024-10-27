@@ -5,7 +5,8 @@ import AppContainer from '../containers/AppContainer'
 import BodyContainer from '../containers/BodyContainer'
 import Dashboard from '../dashboard/Dashboard'
 import Header from '../header/Header'
-import ProtectedComponent from './ProtectedComponent'
+
+import Cookies from 'js-cookie'
 
 const Root: React.FC = () => {
 	const { loadInitialData } = useAppState()
@@ -17,10 +18,8 @@ const Root: React.FC = () => {
 
 	return (
 		<AppContainer>
-			<ProtectedComponent>
-				<Dashboard />
-			</ProtectedComponent>
-			<div className='w-full '>
+			{Cookies.get('access_token') && <Dashboard />}
+			<div className='w-full h-full'>
 				{pathname !== '/login' && <Header />}
 				<BodyContainer>
 					<Outlet />
