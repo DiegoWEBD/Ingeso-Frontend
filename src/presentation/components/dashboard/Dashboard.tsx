@@ -1,6 +1,8 @@
 import { Menu } from 'lucide-react'
 import React, { useState, useEffect, useRef } from 'react'
 import DashboardTab from './DashboardTab'
+import AppTitle from '../AppTitle'
+import { PRIMARY_COLOR } from '../../colors'
 
 const Dashboard: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -36,7 +38,7 @@ const Dashboard: React.FC = () => {
 			<div
 				className={`lg:hidden fixed top-0 left-0 right-0 h-14 ${
 					isOpen ? 'bg-white border-r shadow-gray-500/50' : 'bg-background'
-				} z-20 flex items-center px-4 w-64`}
+				} z-20 flex items-center px-4 w-[20rem] xl:w-[23rem]`}
 			>
 				<button
 					ref={buttonRef}
@@ -44,7 +46,9 @@ const Dashboard: React.FC = () => {
 					onClick={toggleMenu}
 					aria-label='Toggle menu'
 				>
-					<Menu className='h-6 w-6 text-gray-600 hover:text-blue-700' />
+					<Menu
+						className={`h-6 w-6 text-gray-600 hover:text-[${PRIMARY_COLOR}]`}
+					/>
 				</button>
 			</div>
 
@@ -56,14 +60,19 @@ const Dashboard: React.FC = () => {
 					}
           lg:relative lg:translate-x-0
           transition duration-200 ease-in-out
-          bg-white px-3 flex flex-col gap-2 shadow-md shadow-gray-500/50
-          w-64 lg:w-72 z-10 h-full
+          bg-white px-4 flex flex-col items-center gap-6 shadow-md shadow-gray-500/50
+          w-[20rem] xl:w-[23rem] z-10 h-full
           mt-14 lg:mt-0 lg:pt-8
         `}
 			>
-				<DashboardTab title='Inicio' to='/' />
-				<DashboardTab title='Fármacos' to='/farmacos' />
-
+				<img src='logo_ucn.png' className='w-[8rem]' />
+				<AppTitle
+					className={`text-[1.7rem] font-extrabold text-[${PRIMARY_COLOR}]`}
+				/>
+				<div className='flex flex-col w-full gap-2'>
+					<DashboardTab title='Inicio' to='/' />
+					<DashboardTab title='Fármacos' to='/farmacos' />
+				</div>
 			</div>
 		</div>
 	)

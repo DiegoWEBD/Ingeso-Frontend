@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import AppContainer from '../containers/AppContainer'
 import BodyContainer from '../containers/BodyContainer'
 import Dashboard from '../dashboard/Dashboard'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import useAppState from '../../global_states/appState'
 
 const Root: React.FC = () => {
 	const loadInitialData = useAppState((state) => state.loadInitialData)
+	const location = useLocation()
 
 	useEffect(() => {
 		loadInitialData()
@@ -14,7 +15,7 @@ const Root: React.FC = () => {
 
 	return (
 		<AppContainer>
-			<Dashboard />
+			{location.pathname !== '/login' && <Dashboard />}
 			<BodyContainer>
 				<Outlet />
 			</BodyContainer>
