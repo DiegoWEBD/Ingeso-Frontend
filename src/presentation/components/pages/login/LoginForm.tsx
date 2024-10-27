@@ -10,7 +10,7 @@ import { PRIMARY_COLOR } from '../../../colors'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
-	const [error, setError] = useState<string | null>(null)
+	const [_, setError] = useState<string | null>(null)
 
 	const handleSuccess = (
 		response: Omit<TokenResponse, 'err' | 'error_description' | 'error_uri'>

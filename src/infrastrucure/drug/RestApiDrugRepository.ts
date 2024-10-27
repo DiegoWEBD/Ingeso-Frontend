@@ -6,6 +6,7 @@ import DrugAdapter from './adapter/DrugAdapter'
 
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
+		console.log(drug)
 		throw new Error('To do.')
 	}
 
@@ -26,10 +27,13 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async update(name: string, newValues: Drug): Promise<void> {
+		console.log(name)
+		console.log(newValues)
 		throw new Error('To do.')
 	}
 
 	async delete(drug: Drug): Promise<void> {
+		console.log(drug)
 		throw new Error('To do.')
 	}
 }
