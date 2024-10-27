@@ -44,8 +44,8 @@ const LoginForm: React.FC = () => {
 			<div className='p-7 text-center bg-white sm:w-[25rem] h-fit flex flex-col items-center gap-5'>
 				<img src='logo_ucn.png' className='w-[9rem]' />
 				<AppTitle className={`text-[${PRIMARY_COLOR}]`} />
-				<LoginButton onClick={() => login()}>Accesso Docentes</LoginButton>
-				<LoginButton onClick={() => login()}>Accesso Estudiantes</LoginButton>
+				<LoginButton onClick={() => login()}>Acceso Docentes</LoginButton>
+				<LoginButton onClick={() => login()}>Acceso Estudiantes</LoginButton>
 			</div>
 		</div>
 	)

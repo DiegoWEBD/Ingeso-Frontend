@@ -1,5 +1,4 @@
 import React from 'react'
-import { PRIMARY_COLOR } from '../../../colors'
 
 type LoginButtonProps = {
 	onClick: () => void
