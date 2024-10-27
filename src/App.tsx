@@ -18,15 +18,15 @@ const router = createBrowserRouter([
 				element: <HomePage />,
 			},
 			{
-				path: '/login',
+				path: 'login',
 				element: <LoginPage />,
 			},
 			{
-				path: '/farmacos',
+				path: 'farmacos',
 				element: <ProtectedPage children={<DrugsPage />} />,
 			},
 			{
-				path: '/farmacos/agregar',
+				path: 'farmacos/agregar',
 				element: <ProtectedPage children={<AddDrugPage />} />,
 			},
 			{
