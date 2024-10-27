@@ -3,7 +3,7 @@ import AppTitle from '../../AppTitle'
 
 const HomePage: React.FC = () => {
 	return (
-		<div>
+		<div className='mt-5'>
 			<AppTitle
 				className='font-extrabold'
 				style={{

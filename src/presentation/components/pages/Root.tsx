@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import useAppState from '../../global_states/appState'
 import AppContainer from '../containers/AppContainer'
 import BodyContainer from '../containers/BodyContainer'
@@ -8,6 +8,7 @@ import Header from '../header/Header'
 
 const Root: React.FC = () => {
 	const { loadInitialData, user } = useAppState()
+	const pathname = useLocation().pathname
 
 	useEffect(() => {
 		loadInitialData()
@@ -16,8 +17,8 @@ const Root: React.FC = () => {
 	return (
 		<AppContainer>
 			{user !== null && <Dashboard />}
-			<div className='w-full'>
-				<Header />
+			<div className='w-full '>
+				{pathname !== '/login' && <Header />}
 				<BodyContainer>
 					<Outlet />
 				</BodyContainer>
