@@ -8,7 +8,7 @@ import Header from '../header/Header'
 import ProtectedComponent from './ProtectedComponent'
 
 const Root: React.FC = () => {
-	const { loadInitialData, user } = useAppState()
+	const { loadInitialData } = useAppState()
 	const pathname = useLocation().pathname
 
 	useEffect(() => {

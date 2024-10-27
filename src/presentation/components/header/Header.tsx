@@ -1,10 +1,8 @@
+import Cookies from 'js-cookie'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import useAppState from '../../global_states/appState'
-import Cookies from 'js-cookie'
 
 const Header: React.FC = () => {
-	const user = useAppState((state) => state.user)
 	const accessToken = Cookies.get('access_token')
 
 	return (
