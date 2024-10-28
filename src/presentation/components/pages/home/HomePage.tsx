@@ -7,7 +7,10 @@ import InititalMessage from './InititalMessage'
 const HomePage: React.FC = () => {
 	return (
 		<div className='p-5 text-center flex flex-col gap-[2.5rem] 2xl:gap-[5rem] overflow-y-auto'>
-			<p className='font-extrabold text-5xl' style={{ color: SECONDARY_COLOR }}>
+			<p
+				className='font-extrabold text-3xl sm:text-4xl lg:text-5xl'
+				style={{ color: SECONDARY_COLOR }}
+			>
 				Bienvenido a tu Guía de Farmacología
 			</p>
 			<InititalMessage />
