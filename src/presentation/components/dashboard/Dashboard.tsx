@@ -1,4 +1,4 @@
-import { Menu } from 'lucide-react'
+import { Home, Menu, Pill } from 'lucide-react'
 import React, { useState, useEffect, useRef } from 'react'
 import DashboardTab from './DashboardTab'
 import AppTitle from '../AppTitle'
@@ -33,11 +33,15 @@ const Dashboard: React.FC = () => {
 		}
 	}, [isOpen])
 
+	const closeDashboard = () => {
+		setIsOpen(false)
+	}
+
 	return (
 		<div className='relative'>
 			<div
 				className={`lg:hidden fixed top-0 left-0 right-0 h-14 ${
-					isOpen ? 'bg-white border-r shadow-gray-500/50' : 'bg-background'
+					isOpen ? 'bg-[#047857] border-r shadow-gray-500/50' : 'bg-background'
 				} z-20 flex items-center px-4 w-[20rem] xl:w-[23rem]`}
 			>
 				<button
@@ -47,7 +51,10 @@ const Dashboard: React.FC = () => {
 					aria-label='Toggle menu'
 				>
 					<Menu
-						className={`h-6 w-6 text-gray-600 hover:text-[${PRIMARY_COLOR}]`}
+						className={`h-6 w-6 hover:text-slate-200`}
+						style={{
+							color: isOpen ? 'white' : PRIMARY_COLOR,
+						}}
 					/>
 				</button>
 			</div>
@@ -60,21 +67,27 @@ const Dashboard: React.FC = () => {
 					}
           lg:relative lg:translate-x-0
           transition duration-200 ease-in-out
-          bg-white px-4 flex flex-col items-center gap-6 shadow-md shadow-gray-500/50
+          px-4 flex flex-col items-center gap-8 shadow-md shadow-gray-500/50
           w-[20rem] xl:w-[23rem] z-10 h-full
           mt-14 lg:mt-0 lg:pt-8
         `}
+				style={{ background: PRIMARY_COLOR }}
 			>
-				<img src='logo_ucn.png' className='w-[8rem]' />
-				<AppTitle
-					className='text-[1.7rem] font-extrabold'
-					style={{
-						color: PRIMARY_COLOR,
-					}}
-				/>
+				<img src='logo_ucn.png' className='w-[10rem]' />
+				{/* <AppTitle className='text-[1.7rem] font-extrabold text-white' /> */}
 				<div className='flex flex-col w-full gap-2'>
-					<DashboardTab title='Inicio' to='/' />
-					<DashboardTab title='Fármacos' to='/farmacos' />
+					<DashboardTab
+						icon={<Home />}
+						title='Inicio'
+						to='/'
+						closeDashboard={closeDashboard}
+					/>
+					<DashboardTab
+						icon={<Pill />}
+						title='Fármacos'
+						to='/farmacos'
+						closeDashboard={closeDashboard}
+					/>
 				</div>
 			</div>
 		</div>

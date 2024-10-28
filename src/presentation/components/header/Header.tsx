@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { SECONDARY_COLOR } from '../../colors'
+import { PRIMARY_COLOR_INTENSE } from '../../colors'
 
 const Header: React.FC = () => {
 	const accessToken = Cookies.get('access_token')
@@ -9,7 +9,7 @@ const Header: React.FC = () => {
 	return (
 		<header className='flex gap-3 justify-between px-6 py-8 bg-white w-full  shadow-md items-center'>
 			<p
-				style={{ color: SECONDARY_COLOR }}
+				style={{ color: PRIMARY_COLOR_INTENSE }}
 				className='font-extrabold text-2xl xs:text-3xl sm:text-4xl tracking-wide'
 			>
 				Guía Farmacología

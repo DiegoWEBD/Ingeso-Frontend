@@ -1,14 +1,14 @@
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import User from '../../../../domain/user/User'
 import { API_URL } from '../../../../utils'
 import { PRIMARY_COLOR } from '../../../colors'
 import useAppState from '../../../global_states/appState'
 import AppTitle from '../../AppTitle'
 import LoginButton from './LoginButton'
-import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
@@ -51,7 +51,7 @@ const LoginForm: React.FC = () => {
 		<div className='h-full flex justify-center items-center'>
 			<div className='p-7 text-center bg-white sm:w-[25rem] h-fit flex flex-col items-center gap-5 shadow-md'>
 				<img src='logo_ucn.png' className='w-[9rem]' />
-				<AppTitle className={`text-[${PRIMARY_COLOR}]`} />
+				<AppTitle style={{ color: PRIMARY_COLOR }} />
 				<LoginButton onClick={() => login()}>Acceso Docentes</LoginButton>
 				<LoginButton onClick={() => login()}>Acceso Estudiantes</LoginButton>
 			</div>

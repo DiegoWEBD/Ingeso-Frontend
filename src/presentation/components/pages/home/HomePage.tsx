@@ -1,15 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { SECONDARY_COLOR } from '../../../colors'
+import { PRIMARY_COLOR } from '../../../colors'
 import InformativeCard from './InformativeCard'
 import InititalMessage from './InititalMessage'
 
 const HomePage: React.FC = () => {
 	return (
-		<div className='p-5 text-center flex flex-col gap-[2.5rem] 2xl:gap-[5rem] overflow-y-auto'>
+		<div className='p-5  flex flex-col gap-[2.5rem] 2xl:gap-[5rem] overflow-y-auto'>
 			<p
 				className='font-extrabold text-3xl sm:text-4xl lg:text-5xl'
-				style={{ color: SECONDARY_COLOR }}
+				style={{ color: PRIMARY_COLOR }}
 			>
 				Bienvenido a tu Guía de Farmacología
 			</p>
@@ -37,7 +37,7 @@ const HomePage: React.FC = () => {
 			</div>
 			<Link
 				to='/farmacos'
-				className='text-white w-fit mx-auto font-bold py-3 px-5 rounded hover:bg-[#5a699e] bg-[#6f7fb7] transition-all hover:shadow-md'
+				className='text-white w-fit mx-auto font-bold py-3 px-5 rounded hover:bg-emerald-700 bg-emerald-600 transition-all hover:shadow-md'
 			>
 				Explorar fármacos
 			</Link>
