@@ -17,7 +17,7 @@ const Header: React.FC = () => {
 			{!accessToken && (
 				<Link
 					to='/login'
-					className='text-sm xs:text-md text-center rounded-md border-2 p-1 sm:px-3 sm:py-2 font-semibold text-[#6f7fb7] border-[#6f7fb7] hover:bg-[#6f7fb7] hover:text-white transition-all'
+					className='text-sm xs:text-md text-center rounded-md border-2 p-1 sm:px-3 sm:py-2 font-semibold text-[#047857] border-[#047857] hover:bg-[#047857] hover:shadow hover:text-white transition-all'
 				>
 					Iniciar sesión
 				</Link>
