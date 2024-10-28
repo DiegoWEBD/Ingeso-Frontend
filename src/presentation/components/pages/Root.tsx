@@ -20,8 +20,8 @@ const Root: React.FC = () => {
 		<AppContainer>
 			{Cookies.get('access_token') && <Dashboard />}
 			<div className='w-full h-full'>
-				{pathname !== '/login' && <Header />}
 				<BodyContainer>
+					{pathname !== '/login' && <Header />}
 					<Outlet />
 				</BodyContainer>
 			</div>

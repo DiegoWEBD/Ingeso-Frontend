@@ -13,7 +13,7 @@ const Header: React.FC = () => {
 			{!accessToken && (
 				<Link
 					to='/login'
-					className='rounded-md border-2 px-3 py-2 font-semibold text-[#6f7fb7] border-[#6f7fb7] hover:bg-[#6f7fb7] hover:text-white transition-all'
+					className='text-center rounded-md border-2 px-3 py-2 font-semibold text-[#6f7fb7] border-[#6f7fb7] hover:bg-[#6f7fb7] hover:text-white transition-all'
 				>
 					Iniciar sesión
 				</Link>

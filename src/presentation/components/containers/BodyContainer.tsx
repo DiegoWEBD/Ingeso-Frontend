@@ -10,7 +10,7 @@ const BodyContainer: React.FC<BodyContainerProps> = ({ children }) => {
 
 	return (
 		<div
-			className='flex flex-col p-5 gap-5 w-full'
+			className='flex flex-col p-5 gap-5 w-full bg-gray-100 h-full'
 			style={{
 				height: location.pathname === '/login' ? '100%' : '',
 			}}
