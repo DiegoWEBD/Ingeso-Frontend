@@ -1,8 +1,7 @@
 import { Home, Menu, Pill } from 'lucide-react'
-import React, { useState, useEffect, useRef } from 'react'
-import DashboardTab from './DashboardTab'
-import AppTitle from '../AppTitle'
+import React, { useEffect, useRef, useState } from 'react'
 import { PRIMARY_COLOR } from '../../colors'
+import DashboardTab from './DashboardTab'
 
 const Dashboard: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
