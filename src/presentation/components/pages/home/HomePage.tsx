@@ -20,7 +20,9 @@ const HomePage: React.FC = () => {
 						<li>Información detallada sobre diversos fármacos.</li>
 						<li>Guías de dosificación y administración.</li>
 						<li>Reacciones adversas a medicamentos.</li>
-						<li>Actualizaciones regulares basadas en la últimas evidencia.</li>
+						<li>
+							Actualizaciones regulares basadas en las últimas evidencias.
+						</li>
 					</ul>
 				</InformativeCard>
 
