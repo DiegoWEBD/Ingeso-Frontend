@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { PRIMARY_COLOR } from '../../../colors'
 import InformativeCard from './InformativeCard'
 import InititalMessage from './InititalMessage'
+import InstallButton from '../../buttons/InstallButton'
 
 const HomePage: React.FC = () => {
 	return (
@@ -37,12 +38,15 @@ const HomePage: React.FC = () => {
 					</ul>
 				</InformativeCard>
 			</div>
-			<Link
-				to='/farmacos'
-				className='text-white w-fit mx-auto font-bold py-3 px-5 rounded hover:bg-emerald-700 bg-emerald-600 transition-all hover:shadow-md'
-			>
-				Explorar fármacos
-			</Link>
+			<div className='flex flex-col gap-3'>
+				<InstallButton className='flex w-[12rem] items-center justify-center gap-3 text-white mx-auto font-bold py-3 px-5 rounded hover:bg-emerald-700 bg-emerald-600 transition-all hover:shadow-md' />
+				<Link
+					to='/farmacos'
+					className='text-white w-[12rem] text-center mx-auto font-bold py-3 px-5 rounded hover:bg-emerald-700 bg-emerald-600 transition-all hover:shadow-md'
+				>
+					Explorar fármacos
+				</Link>
+			</div>
 		</div>
 	)
 }
