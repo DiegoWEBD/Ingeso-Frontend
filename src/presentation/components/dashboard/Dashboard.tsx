@@ -1,5 +1,5 @@
-import { Home, Menu, Pill, X } from 'lucide-react'
-import React, { useEffect, useRef, useState } from 'react'
+import { Home, Menu, Pill } from 'lucide-react'
+import React, { useState } from 'react'
 import { PRIMARY_COLOR } from '../../colors'
 import DashboardTab from './DashboardTab'
 
