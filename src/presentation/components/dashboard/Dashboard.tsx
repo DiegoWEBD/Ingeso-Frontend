@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { PRIMARY_COLOR } from '../../colors'
 import DashboardTab from './DashboardTab'
 
-export default function Dashboard() {
+const Dashboard: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const closeDashboard = () => {
@@ -46,3 +46,5 @@ export default function Dashboard() {
 		</div>
 	)
 }
+
+export default Dashboard
