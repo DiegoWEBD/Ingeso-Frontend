@@ -11,10 +11,11 @@ import Cookies from 'js-cookie'
 const Root: React.FC = () => {
 	const { loadInitialData } = useAppState()
 	const pathname = useLocation().pathname
+	const accessToken = Cookies.get('access_token')
 
 	useEffect(() => {
-		loadInitialData()
-	}, [])
+		if (accessToken) loadInitialData()
+	}, [accessToken])
 
 	return (
 		<AppContainer>

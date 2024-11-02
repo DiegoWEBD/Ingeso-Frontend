@@ -3,6 +3,7 @@ import Drug from '../../domain/drug/Drug'
 import DrugRepository from '../../domain/drug/DrugRepository'
 import { API_URL } from '../../utils'
 import DrugAdapter from './adapter/DrugAdapter'
+import Cookies from 'js-cookie'
 
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
@@ -15,13 +16,24 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async getAllNames(): Promise<Array<string>> {
-		const { data } = await axios.get(`${API_URL}/drugs`)
+		const accessToken = Cookies.get('access_token')
+		const { data } = await axios.get(`${API_URL}/drugs`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		})
 		return data
 	}
 
 	async findByName(name: string): Promise<Drug | null> {
+		const accessToken = Cookies.get('access_token')
 		const { data } = await axios.get(
-			`${API_URL}/drugs/${encodeURIComponent(name)}`
+			`${API_URL}/drugs/${encodeURIComponent(name)}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
 		)
 		return DrugAdapter.FromRestApi(data)
 	}
