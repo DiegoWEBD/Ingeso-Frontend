@@ -9,6 +9,7 @@ export default class DrugAdapter {
 	static FromRestApi(drug: any): Drug {
 		return new Drug(
 			drug.name,
+			'',
 			drug.description,
 			drug.drug_classifications.map(
 				(drug_classification: any) =>
