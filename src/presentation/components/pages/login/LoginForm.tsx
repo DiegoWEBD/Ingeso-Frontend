@@ -3,12 +3,13 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import User from '../../../../domain/user/User'
+
 import { API_URL } from '../../../../utils'
 import { PRIMARY_COLOR } from '../../../colors'
 import useAppState from '../../../global_states/appState'
 import AppTitle from '../../AppTitle'
 import LoginButton from './LoginButton'
+import User from '../../../../domain/user/User'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
