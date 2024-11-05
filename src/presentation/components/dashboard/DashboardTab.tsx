@@ -6,7 +6,7 @@ type DashboardTabProps = {
 	icon: ReactElement
 	title: string
 	to: string
-	closeDashboard: () => void
+	closeNav: () => void
 }
 
 const baseStyles = `w-full rounded-[7px] py-2 px-4 transition-all text-white font-semibold flex gap-5 items-center`
@@ -19,14 +19,14 @@ const DashboardTab: React.FC<DashboardTabProps> = ({
 	icon,
 	title,
 	to,
-	closeDashboard,
+	closeNav,
 }) => {
 	return (
 		<NavLink
 			to={to}
 			className={({ isActive }) => (isActive ? baseStyles : unselectedStyle)}
 			style={({ isActive }) => (isActive ? selectedStyle : {})}
-			onClick={closeDashboard}
+			onClick={closeNav}
 		>
 			{icon}
 			<p className='text-lg'>{title}</p>

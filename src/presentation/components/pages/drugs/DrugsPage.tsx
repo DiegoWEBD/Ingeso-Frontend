@@ -33,7 +33,7 @@ const DrugsPage: React.FC = () => {
 	}
 
 	return (
-		<div className='flex flex-col gap-5 mt-5'>
+		<div className='flex flex-col gap-5'>
 			<h1 className='text-3xl font-bold'>Fármacos</h1>
 
 			<form onSubmit={formik.handleSubmit} className='flex gap-5'>
