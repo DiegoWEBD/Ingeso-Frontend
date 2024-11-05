@@ -7,6 +7,7 @@ import DrugsPage from './presentation/components/pages/drugs/DrugsPage'
 import AddDrugPage from './presentation/components/pages/drugs/AddDrugPage'
 import LoginPage from './presentation/components/pages/login/LoginPage'
 import ProtectedComponent from './presentation/components/pages/ProtectedComponent'
+import ProfilePage from './presentation/components/pages/profile/ProfilePage'
 
 const router = createBrowserRouter([
 	{
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
 			{
 				path: 'farmacos/agregar',
 				element: <ProtectedComponent children={<AddDrugPage />} />,
+			},
+			{
+				path: 'perfil',
+				element: <ProtectedComponent children={<ProfilePage />} />,
 			},
 			{
 				path: '*',

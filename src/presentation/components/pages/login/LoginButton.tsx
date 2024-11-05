@@ -9,7 +9,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onClick, children }) => {
 	return (
 		<button
 			onClick={onClick}
-			className={`flex items-center bg-[#047857] hover:bg-[#065f46] transition-all rounded w-full text-white font-bold tracking-wide py-3`}
+			className='flex items-center bg-[#047857] hover:bg-[#065f46] transition-all rounded w-full text-white font-bold tracking-wide py-3'
 		>
 			<div className='w-[10%] pl-8'>
 				<svg
