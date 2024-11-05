@@ -13,7 +13,7 @@ const AppTitle: React.FC<AppTitleProps> = ({ className, style }) => {
 			}`}
 			style={style}
 		>
-			Guía Administración de Fármacos
+			Guía Farmacología
 		</p>
 	)
 }
