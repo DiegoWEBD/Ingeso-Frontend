@@ -9,8 +9,8 @@ const ProfilePage: React.FC = () => {
 	const user: User | null = useAppState((state) => state.user)
 
 	return (
-		<div className='flex flex-col gap-6'>
-			<div className='flex flex-col gap-3 border border-gray-300 w-[25rem] rounded-md p-5'>
+		<div className='flex flex-col gap-8 items-center'>
+			<div className='bg-white shadow-md flex flex-col gap-3 sm:w-[25rem] rounded-md p-5 break-words'>
 				<p className='text-xl font-bold'>Información Personal</p>
 				<div className='flex flex-col gap-1'>
 					<p>Nombre Completo</p>

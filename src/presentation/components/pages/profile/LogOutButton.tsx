@@ -1,14 +1,11 @@
+import Cookies from 'js-cookie'
 import { LogOut } from 'lucide-react'
 import React from 'react'
-import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
 
 const LogOutButton: React.FC = () => {
-	const navigate = useNavigate()
-
 	const logOut = () => {
 		Cookies.remove('access_token')
-		navigate('/login')
+		window.location.reload()
 	}
 
 	return (
