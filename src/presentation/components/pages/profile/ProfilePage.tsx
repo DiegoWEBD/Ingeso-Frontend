@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import User from '../../../../domain/user/User'
 import useAppState from '../../../global_states/appState'
-import Cookies from 'js-cookie'
 import LogOutButton from './LogOutButton'
 
 const ProfilePage: React.FC = () => {
@@ -13,8 +12,7 @@ const ProfilePage: React.FC = () => {
 
 	return (
 		<div>
-			{' '}
-			<LogOutButton />{' '}
+			<LogOutButton />
 		</div>
 	)
 }
