@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { PRIMARY_COLOR } from '../../colors'
 import AppTitle from '../AppTitle'
 import DashboardNav from './DashboardNav'
+import { Link } from 'react-router-dom'
 
 const Dashboard: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -33,11 +34,13 @@ const Dashboard: React.FC = () => {
 		>
 			<div className='flex items-center gap-5 w-full justify-between'>
 				<div className='flex items-center gap-5 lg:flex-col'>
-					<img
-						src='logo_ucn.png'
-						alt='UCN Logo'
-						className='w-12 md:w-16 lg:w-32'
-					/>
+					<Link to='/'>
+						<img
+							src='logo_ucn.png'
+							alt='UCN Logo'
+							className='w-12 md:w-16 lg:w-32'
+						/>
+					</Link>
 					<AppTitle className='text-white text-xl sm:text-3xl md:text-4xl' />
 				</div>
 				<button
