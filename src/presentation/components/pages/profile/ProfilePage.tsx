@@ -1,8 +1,9 @@
 import React from 'react'
-import Teacher from '../../../../domain/teacher/Teacher'
-import User from '../../../../domain/user/User'
+
 import useAppState from '../../../global_states/appState'
 import LogOutButton from './LogOutButton'
+import Teacher from '../../../../domain/teacher/Teacher'
+import User from '../../../../domain/user/User'
 
 const ProfilePage: React.FC = () => {
 	const user: User | null = useAppState((state) => state.user)
