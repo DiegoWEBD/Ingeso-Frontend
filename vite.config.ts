@@ -16,16 +16,16 @@ export default defineConfig({
 				theme_color: '#ffffff',
 				icons: [
 					{
-						src: '/android-chrome-192x192.png',
+						purpose: 'maskable',
 						sizes: '192x192',
+						src: 'maskable_icon_x192.png',
 						type: 'image/png',
-						purpose: 'any maskable',
 					},
 					{
-						src: '/android-chrome-512x512.png',
+						purpose: 'maskable',
 						sizes: '512x512',
+						src: 'maskable_icon_x512.png',
 						type: 'image/png',
-						purpose: 'any maskable',
 					},
 				],
 			},
