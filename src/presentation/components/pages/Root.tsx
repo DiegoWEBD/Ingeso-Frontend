@@ -6,13 +6,21 @@ import BodyContainer from '../containers/BodyContainer'
 import Dashboard from '../dashboard/Dashboard'
 
 import Cookies from 'js-cookie'
+import { useErrorBoundary } from 'react-error-boundary'
 
 const Root: React.FC = () => {
 	const { loadInitialData } = useAppState()
 	const accessToken = Cookies.get('access_token')
+	const { showBoundary } = useErrorBoundary()
 
 	useEffect(() => {
-		if (accessToken) loadInitialData()
+		if (!accessToken) return
+
+		try {
+			loadInitialData()
+		} catch (error) {
+			showBoundary(error)
+		}
 	}, [accessToken])
 
 	return (
