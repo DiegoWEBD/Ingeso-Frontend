@@ -6,7 +6,6 @@ import InititalMessage from './InititalMessage'
 import InstallButton from '../../buttons/InstallButton'
 
 const HomePage: React.FC = () => {
-	throw new Error('error')
 	return (
 		<div className='px-5 flex flex-col overflow-y-auto'>
 			<p

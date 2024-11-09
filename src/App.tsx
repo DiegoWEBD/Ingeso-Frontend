@@ -8,11 +8,17 @@ import AddDrugPage from './presentation/components/pages/drugs/AddDrugPage'
 import LoginPage from './presentation/components/pages/login/LoginPage'
 import ProtectedComponent from './presentation/components/pages/ProtectedComponent'
 import ProfilePage from './presentation/components/pages/profile/ProfilePage'
+import { ErrorBoundary } from 'react-error-boundary'
+import ErrorFallback from './presentation/components/error/ErrorFallback'
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Root />,
+		element: (
+			<ErrorBoundary FallbackComponent={ErrorFallback}>
+				<Root />
+			</ErrorBoundary>
+		),
 		children: [
 			{
 				path: '/',
