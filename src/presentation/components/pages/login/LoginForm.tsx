@@ -1,5 +1,5 @@
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -36,8 +36,8 @@ const LoginForm: React.FC = () => {
 				setUser(UserAdapter.FromRestApi(data.user))
 				navigate('/farmacos')
 			})
-			.catch((error: Error) => {
-				handleError(error)
+			.catch((error: AxiosError) => {
+				handleError(error.response?.data)
 			})
 	}
 
