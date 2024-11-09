@@ -1,20 +1,20 @@
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useErrorBoundary } from 'react-error-boundary'
 import UserAdapter from '../../../../infrastrucure/user/adapter/UserAdapter'
 import { API_URL } from '../../../../utils'
 import { PRIMARY_COLOR } from '../../../colors'
 import useAppState from '../../../global_states/appState'
 import AppTitle from '../../AppTitle'
 import LoginButton from './LoginButton'
-import { useErrorBoundary } from 'react-error-boundary'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
-	const [_, setError] = useState<string | null>(null)
+
 	const navigate = useNavigate()
 	const { showBoundary } = useErrorBoundary()
 
