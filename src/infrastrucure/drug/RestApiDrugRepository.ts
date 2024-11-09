@@ -2,8 +2,8 @@ import axios from 'axios'
 import Drug from '../../domain/drug/Drug'
 import DrugRepository from '../../domain/drug/DrugRepository'
 import { API_URL } from '../../utils'
-import DrugAdapter from './adapter/DrugAdapter'
 import Cookies from 'js-cookie'
+import DrugAdapter from './adapter/DrugAdapter'
 
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {

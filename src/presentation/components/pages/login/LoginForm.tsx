@@ -4,17 +4,19 @@ import Cookies from 'js-cookie'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import UserAdapter from '../../../../infrastrucure/user/adapter/UserAdapter'
 import { API_URL } from '../../../../utils'
 import { PRIMARY_COLOR } from '../../../colors'
 import useAppState from '../../../global_states/appState'
 import AppTitle from '../../AppTitle'
 import LoginButton from './LoginButton'
-import User from '../../../../domain/user/User'
+import { useErrorBoundary } from 'react-error-boundary'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
 	const [_, setError] = useState<string | null>(null)
 	const navigate = useNavigate()
+	const { showBoundary } = useErrorBoundary()
 
 	const handleSuccess = (
 		response: Omit<TokenResponse, 'err' | 'error_description' | 'error_uri'>
@@ -26,25 +28,26 @@ const LoginForm: React.FC = () => {
 			})
 			.then((res) => res.data)
 			.then((data) => {
-				//console.log(data.message)
 				Cookies.set('access_token', data.access_token, {
 					expires: 7,
 					secure: true,
 					sameSite: 'Lax',
 				})
-				setUser(new User(data.user.name, data.user.institutional_email))
+				setUser(UserAdapter.FromRestApi(data.user))
 				navigate('/farmacos')
 			})
-			.catch((err: Error) => handleError(err.message))
+			.catch((error: Error) => {
+				handleError(error)
+			})
 	}
 
-	const handleError = (err: string) => {
-		setError(err)
+	const handleError = (err: any) => {
+		showBoundary(err)
 	}
 
 	const login = useGoogleLogin({
 		onSuccess: handleSuccess,
-		onError: (err: any) => handleError(err.message),
+		onError: (err: any) => handleError(err),
 		scope: 'email profile',
 	})
 
