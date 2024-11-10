@@ -41,13 +41,13 @@ const LoginForm: React.FC = () => {
 			})
 	}
 
-	const handleError = (err: any) => {
-		showBoundary(err)
+	const handleError = (error: any) => {
+		showBoundary(error)
 	}
 
 	const login = useGoogleLogin({
 		onSuccess: handleSuccess,
-		onError: (err: any) => handleError(err),
+		onError: (error: any) => handleError(error),
 		scope: 'email profile',
 	})
 
