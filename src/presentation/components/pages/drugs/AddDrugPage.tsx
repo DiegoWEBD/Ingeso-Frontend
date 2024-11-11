@@ -1,145 +1,142 @@
-import React, { useState } from 'react'
-//import DrugService from '../../../application/services/DrugService';
+import React, { useState } from 'react';
+import DrugRepository from '../../../../domain/drug/DrugRepository';
+import Drug from '../../../../domain/drug/Drug';
+import DrugClassification from '../../../../domain/drug_classification/DrugClassification';
+import Ram from '../../../../domain/ram/Ram';
+import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure';
+import useAppState from '../../../global_states/appState';
 
-const AddDrugPage: React.FC = () => {
-	const [name, setName] = useState('')
-	const [description, setDescription] = useState('')
-	const [classifications, setClassifications] = useState<string[]>([])
-	const [rams, setRams] = useState<string[]>([])
-	const [
-		administrationProceduresWithMethod,
-		setAdministrationProceduresWithMethod,
-	] = useState<Map<string, string>>(new Map())
 
-	// Inputs para agregar valores a los arrays/mapa
-	const [classificationInput, setClassificationInput] = useState('')
-	const [ramInput, setRamInput] = useState('')
-	const [procedureInput, setProcedureInput] = useState('')
-	const [methodInput, setMethodInput] = useState('')
 
-	const handleAddClassification = () => {
-		setClassifications([...classifications, classificationInput])
-		setClassificationInput('')
-	}
+type AddDrugPageProps = {};
 
-	const handleAddRam = () => {
-		setRams([...rams, ramInput])
-		setRamInput('')
-	}
+const AddDrugPage: React.FC<AddDrugPageProps> = () => {
+  const drugRepository: DrugRepository = useAppState((state) => state.drugRepository);
 
-	const handleAddProcedureWithMethod = () => {
-		setAdministrationProceduresWithMethod(
-			new Map(
-				administrationProceduresWithMethod.set(procedureInput, methodInput)
-			)
-		)
-		setProcedureInput('')
-		setMethodInput('')
-	}
+  const [name, setName] = useState('');
+  const [presentation, setPresentation] = useState(''); // Agregado para la presentación
+  const [description, setDescription] = useState('');
+  const [classifications, setClassifications] = useState<DrugClassification[]>([]);
+  const [rams, setRams] = useState<Ram[]>([]);
+  const [administrationProcedures, setAdministrationProcedures] = useState<AdministrationProcedure[]>([]);
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault()
 
-		const drug = {
-			name,
-			description,
-			classifications,
-			rams,
-			administrationProceduresWithMethod,
-		}
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-		console.log(drug)
+    // Verificar si los campos requeridos están completos
+    if (!name || !presentation || !description || classifications.length === 0 || rams.length === 0 || administrationProcedures.length === 0) {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
 
-		/*try {
-      const registeredDrug = await DrugService.registerDrug(drug);
-      console.log('Fármaco registrado:', registeredDrug);
+    // Crea una instancia de la clase Drug usando el constructor
+    const drug = new Drug(name, presentation, description, classifications, rams, administrationProcedures);
+
+
+    try {
+      await drugRepository.add(drug);
+      console.log('Fármaco registrado:', drug);
     } catch (error) {
       console.error('Error al registrar el fármaco:', error);
-    }*/
-	}
+    }
+  };
 
-	return (
-		<div>
-			<h1>Registrar nuevo fármaco</h1>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Nombre</label>
-					<input
-						type='text'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-					/>
-				</div>
-				<div>
-					<label>Descripción</label>
-					<input
-						type='text'
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
-					/>
-				</div>
-				<div>
-					<label>Clasificaciones</label>
-					<input
-						type='text'
-						value={classificationInput}
-						onChange={(e) => setClassificationInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddClassification}>
-						Agregar Clasificación
-					</button>
-					<ul>
-						{classifications.map((classification, index) => (
-							<li key={index}>{classification}</li>
-						))}
-					</ul>
-				</div>
-				<div>
-					<label>RAMs</label>
-					<input
-						type='text'
-						value={ramInput}
-						onChange={(e) => setRamInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddRam}>
-						Agregar RAM
-					</button>
-					<ul>
-						{rams.map((ram, index) => (
-							<li key={index}>{ram}</li>
-						))}
-					</ul>
-				</div>
-				<div>
-					<label>Procedimiento</label>
-					<input
-						type='text'
-						value={procedureInput}
-						onChange={(e) => setProcedureInput(e.target.value)}
-					/>
-					<label>Método</label>
-					<input
-						type='text'
-						value={methodInput}
-						onChange={(e) => setMethodInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddProcedureWithMethod}>
-						Agregar Procedimiento y Método
-					</button>
-					<ul>
-						{[...administrationProceduresWithMethod].map(
-							([procedure, method], index) => (
-								<li key={index}>
-									{procedure} - {method}
-								</li>
-							)
-						)}
-					</ul>
-				</div>
-				<button type='submit'>Registrar Fármaco</button>
-			</form>
-		</div>
-	)
-}
+  return (
+    <div>
+      <h1>Registrar nuevo fármaco</h1>
+      <form onSubmit={handleSubmit}>
+  
+        {/* Campo Nombre */}
+        <div>
+          <label>Nombre</label>
+          <input 
+            type="text" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
+            required 
+          />
+        </div>
 
-export default AddDrugPage
+        {/* Campo Presentación */}
+        <div>
+          <label>Presentación</label>
+          <input 
+            type="text" 
+            value={presentation} 
+            onChange={(e) => setPresentation(e.target.value)} 
+            required 
+          />
+        </div>
+  
+        {/* Campo Descripción */}
+        <div>
+          <label>Descripción</label>
+          <textarea 
+            value={description} 
+            onChange={(e) => setDescription(e.target.value)} 
+            required 
+          />
+        </div>
+  
+        {/* Clasificaciones */}
+        <div>
+          <label>Clasificaciones</label>
+          <input 
+            type="text" 
+            onChange={(e) => {
+              // Aquí se agrega la clasificación
+              const classification = new DrugClassification(e.target.value, 'Descripción'); // Aquí deberías añadir una descripción si es necesario
+              setClassifications((prev) => [...prev, classification]);
+            }} 
+          />
+          <ul>
+            {classifications.map((classification, index) => (
+              <li key={index}>{classification.getClassification()}</li>
+            ))}
+          </ul>
+        </div>
+  
+        {/* RAMs */}
+        <div>
+          <label>RAMs</label>
+          <input 
+            type="text" 
+            onChange={(e) => {
+              const ram = new Ram(e.target.value);
+              setRams((prev) => [...prev, ram]);
+            }} 
+          />
+          <ul>
+            {rams.map((ram, index) => (
+              <li key={index}>{ram.getReaction()}</li>
+            ))}
+          </ul>
+        </div>
+  
+        {/* Procedimientos de Administración */}
+        <div>
+          <label>Procedimiento de Administración</label>
+          <input 
+            type="text" 
+            onChange={(e) => {
+              // Aquí se agrega el procedimiento de administración
+              const procedure = new AdministrationProcedure(e.target.value, 'Descripción del procedimiento');
+              setAdministrationProcedures((prev) => [...prev, procedure]);
+            }} 
+          />
+          <ul>
+            {administrationProcedures.map((procedure, index) => (
+              <li key={index}>{procedure.getMethod()} - {procedure.getProcedure()}</li>
+            ))}
+          </ul>
+        </div>
+  
+        {/* Botón de Envío */}
+        <button type="submit">Registrar Fármaco</button>
+  
+      </form>
+    </div>
+  );
+};
+export default AddDrugPage;
