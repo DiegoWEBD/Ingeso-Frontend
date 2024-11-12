@@ -10,7 +10,7 @@ import useAppState from '../../../global_states/appState';
 type AddDrugPageProps = {};
 
 const AddDrugPage: React.FC<AddDrugPageProps> = () => {
-  const {drugRepository, drugsNames} = useAppState();
+  const {drugRepository, drugsNames, setDrugsNames} = useAppState();
 
   const [name, setName] = useState('');
   const [presentation, setPresentation] = useState(''); // Agregado para la presentación
@@ -35,7 +35,8 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 
     try {
       await drugRepository.add(drug);
-      drugsNames.push(drug.getName())
+      setDrugsNames([...drugsNames, drug.getName()])
+
       console.log('Fármaco registrado:', drug);
     } catch (error) {
       console.error('Error al registrar el fármaco:', error);

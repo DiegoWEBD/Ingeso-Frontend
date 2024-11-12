@@ -7,6 +7,7 @@ import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepositor
 import Cookies from 'js-cookie'
 
 type AppState = {
+	setDrugsNames: (drugsNames: string[]) => void
 	user: User | null
 	drugsNames: Array<string>
 	drugRepository: DrugRepository
@@ -37,6 +38,10 @@ const useAppState = create<AppState>((set) => {
 
 		setUser: (user: User) => {
 			set({ user })
+		},
+
+		setDrugsNames: (drugsNames: string[]) => {
+			set({ drugsNames})
 		},
 	}
 })
