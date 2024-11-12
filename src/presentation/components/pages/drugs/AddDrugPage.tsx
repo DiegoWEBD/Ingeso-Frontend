@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import DrugRepository from '../../../../domain/drug/DrugRepository';
 import Drug from '../../../../domain/drug/Drug';
 import DrugClassification from '../../../../domain/drug_classification/DrugClassification';
 import Ram from '../../../../domain/ram/Ram';
@@ -11,7 +10,7 @@ import useAppState from '../../../global_states/appState';
 type AddDrugPageProps = {};
 
 const AddDrugPage: React.FC<AddDrugPageProps> = () => {
-  const drugRepository: DrugRepository = useAppState((state) => state.drugRepository);
+  const {drugRepository, drugsNames} = useAppState();
 
   const [name, setName] = useState('');
   const [presentation, setPresentation] = useState(''); // Agregado para la presentación
@@ -36,6 +35,7 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 
     try {
       await drugRepository.add(drug);
+      drugsNames.push(drug.getName())
       console.log('Fármaco registrado:', drug);
     } catch (error) {
       console.error('Error al registrar el fármaco:', error);
