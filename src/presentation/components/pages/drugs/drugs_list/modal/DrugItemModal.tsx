@@ -1,8 +1,9 @@
-import { Pill, X } from 'lucide-react'
+import { Delete, Pill, Trash, X } from 'lucide-react'
 import React from 'react'
 import Drug from '../../../../../../domain/drug/Drug'
 import { PRIMARY_COLOR, PRIMARY_COLOR_INTENSE } from '../../../../../colors'
 import ModalInfoContainer from './ModalInfoContainer'
+import RestApiDrugRepository from '../../../../../../infrastrucure/drug/RestApiDrugRepository'
 
 type DrugItemModalProps = {
 	closeModal: () => void
@@ -58,6 +59,23 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 											{administrationProcedure.method}:
 										</p>
 										<p>{administrationProcedure.procedure}</p>
+										{/* Botón para eliminar*/}
+										<button
+											onClick={async () => {
+												const repository = new RestApiDrugRepository();
+												try {
+													await repository.update("",drug);
+													alert('Procedimiento eliminado con éxito.');
+												} catch (error) {
+													console.error('Error al eliminar el procedimiento:', error);
+													alert('No se pudo eliminar el procedimiento.');
+												}
+											}}
+											className="px-100 py-200 text-red-500 rounded focus:outline-none">
+											<Trash/>
+											
+										</button>
+										
 									</div>
 								))}
 						</div>
