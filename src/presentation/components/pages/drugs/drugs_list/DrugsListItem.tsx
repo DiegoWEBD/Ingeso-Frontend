@@ -11,27 +11,29 @@ type DrugsListItemProps = {
 const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 	const [modalVisible, setModalVisible] = useState<boolean>(false)
 	const [drug, setDrug] = useState<Drug | null>(null)
+	const [loading, setLoading] = useState<boolean>(false)
 
 	const drugRepository: DrugRepository = useAppState(
 		(state) => state.drugRepository
 	)
 
 	const onClick = () => {
+		openModal()
 		getDrug()
 			.then((data) => {
 				setDrug(data)
-				setModalVisible(true)
+				setLoading(false)
 			})
 			.catch(console.error)
 	}
 
 	const getDrug = async (): Promise<Drug> => {
+		setLoading(true)
 		return (await drugRepository.findByName(drugName)) as Drug
 	}
 
-	const closeModal = () => {
-		setModalVisible(false)
-	}
+	const openModal = () => setModalVisible(true)
+	const closeModal = () => setModalVisible(false)
 
 	return (
 		<>
@@ -42,8 +44,8 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 				{drugName}
 			</button>
 
-			{modalVisible && drug !== null && (
-				<DrugItemModal closeModal={closeModal} drug={drug} />
+			{modalVisible && (
+				<DrugItemModal closeModal={closeModal} drug={drug} loading={loading} />
 			)}
 		</>
 	)
