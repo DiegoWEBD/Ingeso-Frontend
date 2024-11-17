@@ -6,13 +6,11 @@ import AdministrationProcedure from '../../../../domain/administration_procedure
 import useAppState from '../../../global_states/appState'
 import { useErrorBoundary } from 'react-error-boundary'
 
-type AddDrugPageProps = {}
-
-const AddDrugPage: React.FC<AddDrugPageProps> = () => {
+const AddDrugPage: React.FC = () => {
 	const { drugRepository, drugsNames, setDrugsNames } = useAppState()
 
 	const [name, setName] = useState('')
-	const [presentation, setPresentation] = useState('') // Agregado para la presentación
+	const [presentation, setPresentation] = useState('')
 	const [description, setDescription] = useState('')
 	const [classifications, setClassifications] = useState<DrugClassification[]>(
 		[]
@@ -21,25 +19,21 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 	const [administrationProcedures, setAdministrationProcedures] = useState<
 		AdministrationProcedure[]
 	>([])
+
+	const [tempClassification, setTempClassification] = useState('')
+	const [tempRam, setTempRam] = useState('')
+	const [tempProcedure, setTempProcedure] = useState('')
+
 	const { showBoundary } = useErrorBoundary()
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
-		// Verificar si los campos requeridos están completos
-		if (
-			!name ||
-			!presentation ||
-			!description ||
-			classifications.length === 0 ||
-			rams.length === 0 ||
-			administrationProcedures.length === 0
-		) {
-			alert('Por favor, complete todos los campos.')
+		if (!name || !presentation || !description) {
+			alert('Por favor, complete todos los campos obligatorios.')
 			return
 		}
 
-		// Crea una instancia de la clase Drug usando el constructor
 		const drug = new Drug(
 			name,
 			presentation,
@@ -52,8 +46,18 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 		try {
 			await drugRepository.add(drug)
 			setDrugsNames([...drugsNames, drug.getName()])
-
 			console.log('Fármaco registrado:', drug)
+
+			// Limpiar los campos
+			setName('')
+			setPresentation('')
+			setDescription('')
+			setClassifications([])
+			setRams([])
+			setAdministrationProcedures([])
+			setTempClassification('')
+			setTempRam('')
+			setTempProcedure('')
 		} catch (error) {
 			showBoundary(error)
 			console.error('Error al registrar el fármaco:', error)
@@ -101,15 +105,23 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 					<label>Clasificaciones</label>
 					<input
 						type="text"
-						onChange={(e) => {
-							// Aquí se agrega la clasificación
-							const classification = new DrugClassification(
-								e.target.value,
-								'Descripción'
-							) // Aquí deberías añadir una descripción si es necesario
-							setClassifications((prev) => [...prev, classification])
-						}}
+						value={tempClassification}
+						onChange={(e) => setTempClassification(e.target.value)}
 					/>
+					<button
+						type="button"
+						onClick={() => {
+							if (tempClassification) {
+								setClassifications((prev) => [
+									...prev,
+									new DrugClassification(tempClassification, 'Descripción'),
+								])
+								setTempClassification('')
+							}
+						}}
+					>
+						Agregar
+					</button>
 					<ul>
 						{classifications.map((classification, index) => (
 							<li key={index}>{classification.getClassification()}</li>
@@ -122,11 +134,20 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 					<label>RAMs</label>
 					<input
 						type="text"
-						onChange={(e) => {
-							const ram = new Ram(e.target.value)
-							setRams((prev) => [...prev, ram])
-						}}
+						value={tempRam}
+						onChange={(e) => setTempRam(e.target.value)}
 					/>
+					<button
+						type="button"
+						onClick={() => {
+							if (tempRam) {
+								setRams((prev) => [...prev, new Ram(tempRam)])
+								setTempRam('')
+							}
+						}}
+					>
+						Agregar
+					</button>
 					<ul>
 						{rams.map((ram, index) => (
 							<li key={index}>{ram.getReaction()}</li>
@@ -136,18 +157,29 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 
 				{/* Procedimientos de Administración */}
 				<div>
-					<label>Procedimiento de Administración</label>
+					<label>Procedimientos de Administración</label>
 					<input
 						type="text"
-						onChange={(e) => {
-							// Aquí se agrega el procedimiento de administración
-							const procedure = new AdministrationProcedure(
-								e.target.value,
-								'Descripción del procedimiento'
-							)
-							setAdministrationProcedures((prev) => [...prev, procedure])
-						}}
+						value={tempProcedure}
+						onChange={(e) => setTempProcedure(e.target.value)}
 					/>
+					<button
+						type="button"
+						onClick={() => {
+							if (tempProcedure) {
+								setAdministrationProcedures((prev) => [
+									...prev,
+									new AdministrationProcedure(
+										tempProcedure,
+										'Descripción del procedimiento'
+									),
+								])
+								setTempProcedure('')
+							}
+						}}
+					>
+						Agregar
+					</button>
 					<ul>
 						{administrationProcedures.map((procedure, index) => (
 							<li key={index}>
@@ -163,4 +195,5 @@ const AddDrugPage: React.FC<AddDrugPageProps> = () => {
 		</div>
 	)
 }
+
 export default AddDrugPage

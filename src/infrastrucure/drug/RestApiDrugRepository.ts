@@ -8,7 +8,41 @@ import DrugAdapter from './adapter/DrugAdapter'
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
 		console.log(drug)
-		throw new Error('To do.')
+
+		const accessToken = Cookies.get('access_token')
+
+		const drugData = {
+			name: drug.getName(),
+			presentation: drug.getPresentation(),
+			description: drug.getDescription(),
+			classifications: drug
+				.getDrugClassifications()
+				.map((c) => c.getClassification()),
+			rams: drug.getRams().map((r) => r.getReaction()),
+			administrationProceduresWithMethod: Object.fromEntries(
+				drug
+					.getAdministrationProcedures()
+					.map((p) => [p.getMethod(), p.getProcedure()])
+			),
+		}
+
+		try {
+			await axios.post(
+				`${API_URL}/drugs/${encodeURIComponent(drug.getName())}`,
+				drugData,
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						'Content-Type': 'application/json',
+					},
+				}
+			)
+		} catch (error) {
+			console.error('Error al agregar el fármaco:', error)
+			throw new Error(
+				'No se pudo agregar el fármaco. Por favor, inténtelo de nuevo.'
+			)
+		}
 	}
 
 	async getAll(): Promise<Array<Drug>> {
