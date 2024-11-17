@@ -15,4 +15,25 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	--primary-color-weak: #059669;
+	--primary-color: #047857;
+	--primary-color-intense: #065f46;
+}
+
+[data-theme='indigo'] {
+	--primary-color: #4338ca;
+	--primary-color-intense: #3730a3;
+}
+
+.bg-primary {
+	background: var(--primary-color);
+}
+
+.text-primary {
+	color: var(--primary-color);
+}
+
+.text-primary-intense {
+	color: var(--primary-color-intense);
 }
