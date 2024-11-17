@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Drug from '../../../../../domain/drug/Drug'
 import DrugRepository from '../../../../../domain/drug/DrugRepository'
 import useAppState from '../../../../global_states/appState'
 import DrugItemModal from './modal/DrugItemModal'
+import Drug from '../../../../../domain/drug/Drug'
 
 type DrugsListItemProps = {
 	drugName: string
