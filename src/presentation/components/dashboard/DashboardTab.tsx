@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react'
 import { NavLink } from 'react-router-dom'
-import { SECONDARY_COLOR } from '../../colors'
 
 type DashboardTabProps = {
 	icon: ReactElement
@@ -9,11 +8,8 @@ type DashboardTabProps = {
 	closeNav: () => void
 }
 
-const baseStyles = `w-full rounded-[7px] py-2 px-4 transition-all text-white font-semibold flex gap-5 items-center`
-const unselectedStyle = `${baseStyles} hover:bg-[#059669]`
-const selectedStyle = {
-	background: SECONDARY_COLOR,
-}
+const baseStyles = `w-full rounded-[7px] py-2 px-4 transition-all text-white font-semibold flex gap-5 items-center bg-primary hover:bg-[var(--primary-color-weak)]`
+const selectedStyle = `${baseStyles} bg-primary-weak`
 
 const DashboardTab: React.FC<DashboardTabProps> = ({
 	icon,
@@ -24,8 +20,7 @@ const DashboardTab: React.FC<DashboardTabProps> = ({
 	return (
 		<NavLink
 			to={to}
-			className={({ isActive }) => (isActive ? baseStyles : unselectedStyle)}
-			style={({ isActive }) => (isActive ? selectedStyle : {})}
+			className={({ isActive }) => (isActive ? selectedStyle : baseStyles)}
 			onClick={closeNav}
 		>
 			{icon}
