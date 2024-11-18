@@ -1,141 +1,158 @@
 import React, { useState } from 'react'
-//import DrugService from '../../../application/services/DrugService';
+import { useErrorBoundary } from 'react-error-boundary'
+import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
+import Drug from '../../../../domain/drug/Drug'
+import Ram from '../../../../domain/ram/Ram'
+import useAppState from '../../../global_states/appState'
 
 const AddDrugPage: React.FC = () => {
+	const { drugRepository, drugsNames, setDrugsNames } = useAppState()
+
 	const [name, setName] = useState('')
+	const [presentation, setPresentation] = useState('')
 	const [description, setDescription] = useState('')
-	const [classifications, setClassifications] = useState<string[]>([])
-	const [rams, setRams] = useState<string[]>([])
-	const [
-		administrationProceduresWithMethod,
-		setAdministrationProceduresWithMethod,
-	] = useState<Map<string, string>>(new Map())
+	const [rams, setRams] = useState<Ram[]>([])
+	const [administrationProcedures, setAdministrationProcedures] = useState<
+		AdministrationProcedure[]
+	>([])
 
-	// Inputs para agregar valores a los arrays/mapa
-	const [classificationInput, setClassificationInput] = useState('')
-	const [ramInput, setRamInput] = useState('')
-	const [procedureInput, setProcedureInput] = useState('')
-	const [methodInput, setMethodInput] = useState('')
+	const [tempRam, setTempRam] = useState('')
+	const [tempProcedure, setTempProcedure] = useState('')
 
-	const handleAddClassification = () => {
-		setClassifications([...classifications, classificationInput])
-		setClassificationInput('')
-	}
-
-	const handleAddRam = () => {
-		setRams([...rams, ramInput])
-		setRamInput('')
-	}
-
-	const handleAddProcedureWithMethod = () => {
-		setAdministrationProceduresWithMethod(
-			new Map(
-				administrationProceduresWithMethod.set(procedureInput, methodInput)
-			)
-		)
-		setProcedureInput('')
-		setMethodInput('')
-	}
+	const { showBoundary } = useErrorBoundary()
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
-		const drug = {
-			name,
-			description,
-			classifications,
-			rams,
-			administrationProceduresWithMethod,
+		if (!name || !presentation || !description) {
+			alert('Por favor, complete todos los campos obligatorios.')
+			return
 		}
 
-		console.log(drug)
+		const drug = new Drug(
+			name,
+			presentation,
+			description,
+			rams,
+			administrationProcedures
+		)
 
-		/*try {
-      const registeredDrug = await DrugService.registerDrug(drug);
-      console.log('Fármaco registrado:', registeredDrug);
-    } catch (error) {
-      console.error('Error al registrar el fármaco:', error);
-    }*/
+		try {
+			await drugRepository.add(drug)
+			setDrugsNames([...drugsNames, drug.getName()])
+			console.log('Fármaco registrado:', drug)
+
+			// Limpiar los campos
+			setName('')
+			setPresentation('')
+			setDescription('')
+			setRams([])
+			setAdministrationProcedures([])
+			setTempRam('')
+			setTempProcedure('')
+		} catch (error) {
+			showBoundary(error)
+			console.error('Error al registrar el fármaco:', error)
+		}
 	}
 
 	return (
 		<div>
 			<h1>Registrar nuevo fármaco</h1>
 			<form onSubmit={handleSubmit}>
+				{/* Campo Nombre */}
 				<div>
 					<label>Nombre</label>
 					<input
 						type='text'
 						value={name}
 						onChange={(e) => setName(e.target.value)}
+						required
 					/>
 				</div>
+
+				{/* Campo Presentación */}
+				<div>
+					<label>Presentación</label>
+					<input
+						type='text'
+						value={presentation}
+						onChange={(e) => setPresentation(e.target.value)}
+						required
+					/>
+				</div>
+
+				{/* Campo Descripción */}
 				<div>
 					<label>Descripción</label>
-					<input
-						type='text'
+					<textarea
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
+						required
 					/>
 				</div>
-				<div>
-					<label>Clasificaciones</label>
-					<input
-						type='text'
-						value={classificationInput}
-						onChange={(e) => setClassificationInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddClassification}>
-						Agregar Clasificación
-					</button>
-					<ul>
-						{classifications.map((classification, index) => (
-							<li key={index}>{classification}</li>
-						))}
-					</ul>
-				</div>
+
+				{/* RAMs */}
 				<div>
 					<label>RAMs</label>
 					<input
 						type='text'
-						value={ramInput}
-						onChange={(e) => setRamInput(e.target.value)}
+						value={tempRam}
+						onChange={(e) => setTempRam(e.target.value)}
 					/>
-					<button type='button' onClick={handleAddRam}>
-						Agregar RAM
+					<button
+						type='button'
+						onClick={() => {
+							if (tempRam) {
+								setRams((prev) => [...prev, new Ram(tempRam)])
+								setTempRam('')
+							}
+						}}
+					>
+						Agregar
 					</button>
 					<ul>
 						{rams.map((ram, index) => (
-							<li key={index}>{ram}</li>
+							<li key={index}>{ram.getReaction()}</li>
 						))}
 					</ul>
 				</div>
+
+				{/* Procedimientos de Administración */}
 				<div>
-					<label>Procedimiento</label>
+					<label>Procedimientos de Administración</label>
 					<input
 						type='text'
-						value={procedureInput}
-						onChange={(e) => setProcedureInput(e.target.value)}
+						value={tempProcedure}
+						onChange={(e) => setTempProcedure(e.target.value)}
 					/>
-					<label>Método</label>
-					<input
-						type='text'
-						value={methodInput}
-						onChange={(e) => setMethodInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddProcedureWithMethod}>
-						Agregar Procedimiento y Método
+					<button
+						type='button'
+						onClick={() => {
+							if (tempProcedure) {
+								setAdministrationProcedures((prev) => [
+									...prev,
+									new AdministrationProcedure(
+										tempProcedure,
+										'Descripción del procedimiento'
+									),
+								])
+								setTempProcedure('')
+							}
+						}}
+					>
+						Agregar
 					</button>
 					<ul>
-						{[...administrationProceduresWithMethod].map(
-							([procedure, method], index) => (
-								<li key={index}>
-									{procedure} - {method}
-								</li>
-							)
-						)}
+						{administrationProcedures.map((procedure, index) => (
+							<li key={index}>
+								{procedure.getMethod()} - {procedure.getProcedure()}
+							</li>
+						))}
 					</ul>
 				</div>
+
+				{/* Botón de Envío */}
 				<button type='submit'>Registrar Fármaco</button>
 			</form>
 		</div>

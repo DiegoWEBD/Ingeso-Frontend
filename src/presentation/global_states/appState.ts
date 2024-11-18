@@ -14,6 +14,7 @@ type AppState = {
 	loadingInitialData: boolean
 	loadInitialData: () => Promise<void>
 	setUser: (user: User) => void
+	setDrugsNames: (drugsNames: string[]) => void
 }
 
 const useAppState = create<AppState>((set) => {
@@ -41,6 +42,10 @@ const useAppState = create<AppState>((set) => {
 
 		setUser: (user: User) => {
 			set({ user })
+		},
+
+		setDrugsNames: (drugsNames: string[]) => {
+			set({ drugsNames })
 		},
 	}
 })

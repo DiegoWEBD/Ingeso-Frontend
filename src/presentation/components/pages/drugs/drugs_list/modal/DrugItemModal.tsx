@@ -1,10 +1,9 @@
 import { Pill, X } from 'lucide-react'
 import React from 'react'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 import Drug from '../../../../../../domain/drug/Drug'
 import { PRIMARY_COLOR, PRIMARY_COLOR_INTENSE } from '../../../../../colors'
 import ModalInfoContainer from './ModalInfoContainer'
+import Skeleton from 'react-loading-skeleton'
 
 type DrugItemModalProps = {
 	closeModal: () => void
