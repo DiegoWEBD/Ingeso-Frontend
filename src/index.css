@@ -22,12 +22,27 @@
 }
 
 [data-theme='indigo'] {
+	--primary-color-weak: #4f46e5;
 	--primary-color: #4338ca;
 	--primary-color-intense: #3730a3;
 }
 
+[data-theme='dark'] {
+	--primary-color-weak: #1e293b;
+	--primary-color: #0f172a;
+	--primary-color-intense: #020617;
+}
+
 .bg-primary {
 	background: var(--primary-color);
+}
+
+.bg-primary-weak {
+	background: var(--primary-color-weak);
+}
+
+.bg-primary-intense {
+	background: var(--primary-color-intense);
 }
 
 .text-primary {

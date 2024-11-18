@@ -1,17 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { PRIMARY_COLOR } from '../../../colors'
+import InstallButton from '../../buttons/InstallButton'
 import InformativeCard from './InformativeCard'
 import InititalMessage from './InititalMessage'
-import InstallButton from '../../buttons/InstallButton'
 
 const HomePage: React.FC = () => {
 	return (
 		<div className='px-5 flex flex-col overflow-y-auto'>
-			<p
-				className='font-extrabold text-xl sm:text-3xl lg:text-4xl xl:pt-5'
-				style={{ color: PRIMARY_COLOR }}
-			>
+			<p className='font-extrabold text-xl sm:text-3xl lg:text-4xl xl:pt-5 text-primary-intense'>
 				Bienvenido a tu Guía de Farmacología
 			</p>
 			<div className='flex flex-col gap-[2rem] md:gap-[5rem] pt-5 sm:pt-10'>
@@ -41,10 +37,10 @@ const HomePage: React.FC = () => {
 					</InformativeCard>
 				</div>
 				<div className='flex flex-col gap-3'>
-					<InstallButton className='flex w-[12rem] items-center justify-center gap-3 text-white mx-auto font-bold py-3 px-5 rounded hover:bg-emerald-700 bg-emerald-600 transition-all hover:shadow-md' />
+					<InstallButton className='flex w-[12rem] items-center justify-center gap-3 text-white mx-auto font-bold py-3 px-5 rounded bg-primary-weak hover:bg-[var(primary-color)] transition-all hover:shadow-md' />
 					<Link
 						to='/farmacos'
-						className='text-white w-[12rem] text-center mx-auto font-bold py-3 px-5 rounded hover:bg-emerald-700 bg-emerald-600 transition-all hover:shadow-md'
+						className='text-white w-[12rem] text-center mx-auto font-bold py-3 px-5 rounded bg-primary-weak hover:bg-[var(--primary-color)] transition-all hover:shadow-md'
 					>
 						Explorar fármacos
 					</Link>

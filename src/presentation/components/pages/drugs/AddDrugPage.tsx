@@ -1,144 +1,222 @@
-import React, { useState } from 'react'
-//import DrugService from '../../../application/services/DrugService';
+import { Pill, PlusCircle, X } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { useErrorBoundary } from 'react-error-boundary'
+import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
+import Drug from '../../../../domain/drug/Drug'
+import Ram from '../../../../domain/ram/Ram'
+import useAppState from '../../../global_states/appState'
+import ModalContainer from '../../containers/ModalContainer'
+import DrugInfoContainer from './drugs_list/modal/DrugInfoContainer'
 
-const AddDrugPage: React.FC = () => {
+type AddDrugPageProps = {
+	closeModal: () => void
+}
+
+const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
+	const { drugRepository, drugsNames, setDrugsNames } = useAppState()
+
 	const [name, setName] = useState('')
+	const [presentation, setPresentation] = useState('')
 	const [description, setDescription] = useState('')
-	const [classifications, setClassifications] = useState<string[]>([])
-	const [rams, setRams] = useState<string[]>([])
-	const [
-		administrationProceduresWithMethod,
-		setAdministrationProceduresWithMethod,
-	] = useState<Map<string, string>>(new Map())
+	const [rams, setRams] = useState<Ram[]>([])
+	const [administrationProcedures, setAdministrationProcedures] = useState<
+		AdministrationProcedure[]
+	>([])
+	const [submitEnabled, setSubmitEnabled] = useState<boolean>(false)
 
-	// Inputs para agregar valores a los arrays/mapa
-	const [classificationInput, setClassificationInput] = useState('')
-	const [ramInput, setRamInput] = useState('')
-	const [procedureInput, setProcedureInput] = useState('')
-	const [methodInput, setMethodInput] = useState('')
+	const [tempRam, setTempRam] = useState('')
+	const [tempProcedure, setTempProcedure] = useState('')
 
-	const handleAddClassification = () => {
-		setClassifications([...classifications, classificationInput])
-		setClassificationInput('')
-	}
+	const { showBoundary } = useErrorBoundary()
 
-	const handleAddRam = () => {
-		setRams([...rams, ramInput])
-		setRamInput('')
-	}
-
-	const handleAddProcedureWithMethod = () => {
-		setAdministrationProceduresWithMethod(
-			new Map(
-				administrationProceduresWithMethod.set(procedureInput, methodInput)
-			)
-		)
-		setProcedureInput('')
-		setMethodInput('')
-	}
+	useEffect(() => {
+		setSubmitEnabled(name !== '' && presentation !== '' && description !== '')
+	}, [name, presentation, description])
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
-		const drug = {
-			name,
-			description,
-			classifications,
-			rams,
-			administrationProceduresWithMethod,
+		if (!name || !presentation || !description) {
+			alert('Por favor, complete todos los campos obligatorios.')
+			return
 		}
 
-		console.log(drug)
+		const drug = new Drug(
+			name,
+			presentation,
+			description,
+			rams,
+			administrationProcedures
+		)
 
-		/*try {
-      const registeredDrug = await DrugService.registerDrug(drug);
-      console.log('Fármaco registrado:', registeredDrug);
-    } catch (error) {
-      console.error('Error al registrar el fármaco:', error);
-    }*/
+		try {
+			console.log('trying to add')
+			await drugRepository.add(drug)
+			setDrugsNames([...drugsNames, drug.getName()])
+			console.log('Fármaco registrado:', drug)
+
+			// Limpiar los campos
+			setName('')
+			setPresentation('')
+			setDescription('')
+			setRams([])
+			setAdministrationProcedures([])
+			setTempRam('')
+			setTempProcedure('')
+		} catch (error) {
+			showBoundary(error)
+			console.error('Error al registrar el fármaco:', error)
+		}
 	}
 
 	return (
-		<div>
-			<h1>Registrar nuevo fármaco</h1>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Nombre</label>
-					<input
-						type='text'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-					/>
+		<ModalContainer>
+			<div className='relative bg-white rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4'>
+				<div className=' text-2xl font-bold flex items-center gap-2 mb-4'>
+					<Pill className='h-6 w-6 text-primary' />
+					<h1 className='font-bold tracking-wide text-primary-intense'>
+						Registrar nuevo fármaco
+					</h1>
 				</div>
-				<div>
-					<label>Descripción</label>
-					<input
-						type='text'
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
-					/>
-				</div>
-				<div>
-					<label>Clasificaciones</label>
-					<input
-						type='text'
-						value={classificationInput}
-						onChange={(e) => setClassificationInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddClassification}>
-						Agregar Clasificación
+
+				<form onSubmit={handleSubmit}>
+					<DrugInfoContainer>
+						{/* Campo Nombre */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>Nombre</label>
+							<input
+								className='text-gray-700 border rounded-md border-gray-300 w-full'
+								type='text'
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								required
+							/>
+						</div>
+
+						{/* Campo Presentación */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>
+								Presentación
+							</label>
+							<input
+								className='text-gray-700 border rounded-md border-gray-300 w-full'
+								type='text'
+								value={presentation}
+								onChange={(e) => setPresentation(e.target.value)}
+								required
+							/>
+						</div>
+
+						{/* Campo Descripción */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>
+								Descripción
+							</label>
+							<textarea
+								className='text-gray-700 border rounded-md border-gray-300 w-full'
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								required
+							/>
+						</div>
+
+						{/* RAMs */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>RAMs</label>
+							<div className='flex gap-2'>
+								<input
+									className='text-gray-700 border rounded-md border-gray-300 w-full'
+									type='text'
+									value={tempRam}
+									onChange={(e) => setTempRam(e.target.value)}
+								/>
+								{tempRam !== '' && (
+									<button
+										type='button'
+										onClick={() => {
+											if (tempRam) {
+												setRams((prev) => [...prev, new Ram(tempRam)])
+												setTempRam('')
+											}
+										}}
+									>
+										<PlusCircle
+											size={'1.5rem'}
+											className='text-primary hover:text-[var(--primary-color-intense)] transition-all'
+										/>
+									</button>
+								)}
+							</div>
+							<ul>
+								{rams.map((ram, index) => (
+									<li key={index}>{ram.getReaction()}</li>
+								))}
+							</ul>
+						</div>
+
+						{/* Procedimientos de Administración */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>
+								Procedimientos de Administración
+							</label>
+							<div className='flex gap-2'>
+								<input
+									className='text-gray-700 border rounded-md border-gray-300 w-full'
+									type='text'
+									value={tempProcedure}
+									onChange={(e) => setTempProcedure(e.target.value)}
+								/>
+								{tempProcedure !== '' && (
+									<button
+										type='button'
+										onClick={() => {
+											if (tempProcedure) {
+												setAdministrationProcedures((prev) => [
+													...prev,
+													new AdministrationProcedure(
+														tempProcedure,
+														'Descripción del procedimiento'
+													),
+												])
+												setTempProcedure('')
+											}
+										}}
+									>
+										<PlusCircle
+											size={'1.5rem'}
+											className='text-primary hover:text-[var(--primary-color-intense)] transition-all'
+										/>
+									</button>
+								)}
+							</div>
+							<ul>
+								{administrationProcedures.map((procedure, index) => (
+									<li key={index}>
+										{procedure.getMethod()} - {procedure.getProcedure()}
+									</li>
+								))}
+							</ul>
+						</div>
+					</DrugInfoContainer>
+					{/* Botón de Envío */}
+					<button
+						type='submit'
+						disabled={!submitEnabled}
+						className='w-full mt-4 bg-primary text-white font-semibold tracking-wider rounded-md py-2 hover:bg-[var(--primary-color-intense)] transition-all'
+					>
+						Registrar Fármaco
 					</button>
-					<ul>
-						{classifications.map((classification, index) => (
-							<li key={index}>{classification}</li>
-						))}
-					</ul>
-				</div>
-				<div>
-					<label>RAMs</label>
-					<input
-						type='text'
-						value={ramInput}
-						onChange={(e) => setRamInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddRam}>
-						Agregar RAM
-					</button>
-					<ul>
-						{rams.map((ram, index) => (
-							<li key={index}>{ram}</li>
-						))}
-					</ul>
-				</div>
-				<div>
-					<label>Procedimiento</label>
-					<input
-						type='text'
-						value={procedureInput}
-						onChange={(e) => setProcedureInput(e.target.value)}
-					/>
-					<label>Método</label>
-					<input
-						type='text'
-						value={methodInput}
-						onChange={(e) => setMethodInput(e.target.value)}
-					/>
-					<button type='button' onClick={handleAddProcedureWithMethod}>
-						Agregar Procedimiento y Método
-					</button>
-					<ul>
-						{[...administrationProceduresWithMethod].map(
-							([procedure, method], index) => (
-								<li key={index}>
-									{procedure} - {method}
-								</li>
-							)
-						)}
-					</ul>
-				</div>
-				<button type='submit'>Registrar Fármaco</button>
-			</form>
-		</div>
+				</form>
+
+				{/* Botón para cerrar ventana */}
+				<button
+					onClick={closeModal}
+					className='absolute top-2 right-2 p-2 hover:text-[var(--primary-color-intense)] transition-all'
+				>
+					<X className='h-6 w-6' />
+				</button>
+			</div>
+		</ModalContainer>
 	)
 }
 
