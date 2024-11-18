@@ -2,7 +2,6 @@ import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import useAppState from '../../../global_states/appState'
 import DrugsList from './drugs_list/DrugsList'
-import { PRIMARY_COLOR } from '../../../colors'
 
 const DrugsPage: React.FC = () => {
 	const drugsNames: Array<string> = useAppState((state) => state.drugsNames)
@@ -44,12 +43,12 @@ const DrugsPage: React.FC = () => {
 					onChange={formik.handleChange}
 					value={formik.values.userInput}
 					placeholder='Introduzca nombre de fármaco para filtrar'
-					className={`w-full py-2 px-4 border rounded border-${PRIMARY_COLOR}`}
+					className='w-full py-2 px-4 border rounded border-[var(--primary-color)]'
 				/>
 				<button
 					type='button'
 					onClick={() => formik.resetForm()}
-					className={`bg-[${PRIMARY_COLOR}] text-white font-semibold rounded py-2 px-4  hover:shadow hover:shadow-blue-600 transition-all`}
+					className='bg-primary-weak hover:bg-[var(--primary-color)] text-white font-semibold rounded py-2 px-4 hover:shadow hover:shadow-[var(--primary-color-intense)] transition-all'
 				>
 					Borrar
 				</button>

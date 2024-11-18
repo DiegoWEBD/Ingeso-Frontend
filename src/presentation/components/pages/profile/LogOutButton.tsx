@@ -12,7 +12,7 @@ const LogOutButton: React.FC = () => {
 		<button
 			type='button'
 			onClick={logOut}
-			className='w-fit flex items-center gap-3 bg-[#047857] hover:bg-[#065f46] transition-all rounded text-white font-bold tracking-wide p-3'
+			className='w-fit flex items-center gap-3 bg-primary-weak hover:bg-[var(--primary-color)] transition-all rounded text-white font-bold tracking-wide p-3'
 		>
 			<LogOut />
 			<p>Cerrar sesión</p>

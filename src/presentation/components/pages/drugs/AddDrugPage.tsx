@@ -1,11 +1,18 @@
-import React, { useState } from 'react'
+import { Pill, PlusCircle, X } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
 import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
 import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
 import useAppState from '../../../global_states/appState'
+import ModalContainer from '../../containers/ModalContainer'
+import DrugInfoContainer from './drugs_list/modal/DrugInfoContainer'
 
-const AddDrugPage: React.FC = () => {
+type AddDrugPageProps = {
+	closeModal: () => void
+}
+
+const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 	const { drugRepository, drugsNames, setDrugsNames } = useAppState()
 
 	const [name, setName] = useState('')
@@ -15,11 +22,16 @@ const AddDrugPage: React.FC = () => {
 	const [administrationProcedures, setAdministrationProcedures] = useState<
 		AdministrationProcedure[]
 	>([])
+	const [submitEnabled, setSubmitEnabled] = useState<boolean>(false)
 
 	const [tempRam, setTempRam] = useState('')
 	const [tempProcedure, setTempProcedure] = useState('')
 
 	const { showBoundary } = useErrorBoundary()
+
+	useEffect(() => {
+		setSubmitEnabled(name !== '' && presentation !== '' && description !== '')
+	}, [name, presentation, description])
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -38,6 +50,7 @@ const AddDrugPage: React.FC = () => {
 		)
 
 		try {
+			console.log('trying to add')
 			await drugRepository.add(drug)
 			setDrugsNames([...drugsNames, drug.getName()])
 			console.log('Fármaco registrado:', drug)
@@ -57,105 +70,153 @@ const AddDrugPage: React.FC = () => {
 	}
 
 	return (
-		<div>
-			<h1>Registrar nuevo fármaco</h1>
-			<form onSubmit={handleSubmit}>
-				{/* Campo Nombre */}
-				<div>
-					<label>Nombre</label>
-					<input
-						type='text'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-						required
-					/>
+		<ModalContainer>
+			<div className='relative bg-white rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4'>
+				<div className=' text-2xl font-bold flex items-center gap-2 mb-4'>
+					<Pill className='h-6 w-6 text-primary' />
+					<h1 className='font-bold tracking-wide text-primary-intense'>
+						Registrar nuevo fármaco
+					</h1>
 				</div>
 
-				{/* Campo Presentación */}
-				<div>
-					<label>Presentación</label>
-					<input
-						type='text'
-						value={presentation}
-						onChange={(e) => setPresentation(e.target.value)}
-						required
-					/>
-				</div>
+				<form onSubmit={handleSubmit}>
+					<DrugInfoContainer>
+						{/* Campo Nombre */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>Nombre</label>
+							<input
+								className='text-gray-700 border rounded-md border-gray-300 w-full'
+								type='text'
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								required
+							/>
+						</div>
 
-				{/* Campo Descripción */}
-				<div>
-					<label>Descripción</label>
-					<textarea
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
-						required
-					/>
-				</div>
+						{/* Campo Presentación */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>
+								Presentación
+							</label>
+							<input
+								className='text-gray-700 border rounded-md border-gray-300 w-full'
+								type='text'
+								value={presentation}
+								onChange={(e) => setPresentation(e.target.value)}
+								required
+							/>
+						</div>
 
-				{/* RAMs */}
-				<div>
-					<label>RAMs</label>
-					<input
-						type='text'
-						value={tempRam}
-						onChange={(e) => setTempRam(e.target.value)}
-					/>
+						{/* Campo Descripción */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>
+								Descripción
+							</label>
+							<textarea
+								className='text-gray-700 border rounded-md border-gray-300 w-full'
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								required
+							/>
+						</div>
+
+						{/* RAMs */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>RAMs</label>
+							<div className='flex gap-2'>
+								<input
+									className='text-gray-700 border rounded-md border-gray-300 w-full'
+									type='text'
+									value={tempRam}
+									onChange={(e) => setTempRam(e.target.value)}
+								/>
+								{tempRam !== '' && (
+									<button
+										type='button'
+										onClick={() => {
+											if (tempRam) {
+												setRams((prev) => [...prev, new Ram(tempRam)])
+												setTempRam('')
+											}
+										}}
+									>
+										<PlusCircle
+											size={'1.5rem'}
+											className='text-primary hover:text-[var(--primary-color-intense)] transition-all'
+										/>
+									</button>
+								)}
+							</div>
+							<ul>
+								{rams.map((ram, index) => (
+									<li key={index}>{ram.getReaction()}</li>
+								))}
+							</ul>
+						</div>
+
+						{/* Procedimientos de Administración */}
+						<div className='flex flex-col gap-1'>
+							<label className='font-bold text-lg text-primary'>
+								Procedimientos de Administración
+							</label>
+							<div className='flex gap-2'>
+								<input
+									className='text-gray-700 border rounded-md border-gray-300 w-full'
+									type='text'
+									value={tempProcedure}
+									onChange={(e) => setTempProcedure(e.target.value)}
+								/>
+								{tempProcedure !== '' && (
+									<button
+										type='button'
+										onClick={() => {
+											if (tempProcedure) {
+												setAdministrationProcedures((prev) => [
+													...prev,
+													new AdministrationProcedure(
+														tempProcedure,
+														'Descripción del procedimiento'
+													),
+												])
+												setTempProcedure('')
+											}
+										}}
+									>
+										<PlusCircle
+											size={'1.5rem'}
+											className='text-primary hover:text-[var(--primary-color-intense)] transition-all'
+										/>
+									</button>
+								)}
+							</div>
+							<ul>
+								{administrationProcedures.map((procedure, index) => (
+									<li key={index}>
+										{procedure.getMethod()} - {procedure.getProcedure()}
+									</li>
+								))}
+							</ul>
+						</div>
+					</DrugInfoContainer>
+					{/* Botón de Envío */}
 					<button
-						type='button'
-						onClick={() => {
-							if (tempRam) {
-								setRams((prev) => [...prev, new Ram(tempRam)])
-								setTempRam('')
-							}
-						}}
+						type='submit'
+						disabled={!submitEnabled}
+						className='w-full mt-4 bg-primary text-white font-semibold tracking-wider rounded-md py-2 hover:bg-[var(--primary-color-intense)] transition-all'
 					>
-						Agregar
+						Registrar Fármaco
 					</button>
-					<ul>
-						{rams.map((ram, index) => (
-							<li key={index}>{ram.getReaction()}</li>
-						))}
-					</ul>
-				</div>
+				</form>
 
-				{/* Procedimientos de Administración */}
-				<div>
-					<label>Procedimientos de Administración</label>
-					<input
-						type='text'
-						value={tempProcedure}
-						onChange={(e) => setTempProcedure(e.target.value)}
-					/>
-					<button
-						type='button'
-						onClick={() => {
-							if (tempProcedure) {
-								setAdministrationProcedures((prev) => [
-									...prev,
-									new AdministrationProcedure(
-										tempProcedure,
-										'Descripción del procedimiento'
-									),
-								])
-								setTempProcedure('')
-							}
-						}}
-					>
-						Agregar
-					</button>
-					<ul>
-						{administrationProcedures.map((procedure, index) => (
-							<li key={index}>
-								{procedure.getMethod()} - {procedure.getProcedure()}
-							</li>
-						))}
-					</ul>
-				</div>
-
-				{/* Botón de Envío */}
-				<button type='submit'>Registrar Fármaco</button>
-			</form>
-		</div>
+				{/* Botón para cerrar ventana */}
+				<button
+					onClick={closeModal}
+					className='absolute top-2 right-2 p-2 hover:text-[var(--primary-color-intense)] transition-all'
+				>
+					<X className='h-6 w-6' />
+				</button>
+			</div>
+		</ModalContainer>
 	)
 }
 
