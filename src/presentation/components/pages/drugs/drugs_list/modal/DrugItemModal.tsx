@@ -62,9 +62,10 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({ closeModal, drug }) => {
 										{/* Botón para eliminar*/}
 										<button
 											onClick={async () => {
-												const repository = new RestApiDrugRepository();
+												
 												try {
-													await repository.update("",drug);
+													const repository = new RestApiDrugRepository();
+													await repository.update(drug.getName(),drug);
 													alert('Procedimiento eliminado con éxito.');
 												} catch (error) {
 													console.error('Error al eliminar el procedimiento:', error);
