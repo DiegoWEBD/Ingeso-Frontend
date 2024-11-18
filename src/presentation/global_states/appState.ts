@@ -11,6 +11,7 @@ type AppState = {
 	drugsNames: Array<string>
 	drugRepository: DrugRepository
 	userRepository: UserRepository
+	loadingInitialData: boolean
 	loadInitialData: () => Promise<void>
 	setUser: (user: User) => void
 }
@@ -22,6 +23,7 @@ const useAppState = create<AppState>((set) => {
 	return {
 		user: null,
 		drugsNames: [],
+		loadingInitialData: false,
 		drugRepository,
 		userRepository,
 
@@ -29,10 +31,12 @@ const useAppState = create<AppState>((set) => {
 			const accessToken = Cookies.get('access_token')
 			if (!accessToken) return
 
+			set({ loadingInitialData: true })
+
 			const user = await userRepository.getByAccessToken(accessToken)
 			const drugsNames: Array<string> = await drugRepository.getAllNames()
 
-			set({ drugsNames, user })
+			set({ drugsNames, user, loadingInitialData: false })
 		},
 
 		setUser: (user: User) => {

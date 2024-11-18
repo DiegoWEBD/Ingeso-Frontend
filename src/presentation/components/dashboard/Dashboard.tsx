@@ -1,9 +1,8 @@
 import { Menu } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { PRIMARY_COLOR } from '../../colors'
+import { Link } from 'react-router-dom'
 import AppTitle from '../AppTitle'
 import DashboardNav from './DashboardNav'
-import { Link } from 'react-router-dom'
 
 const Dashboard: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -28,10 +27,7 @@ const Dashboard: React.FC = () => {
 	const isBigScreen = (): boolean => window.innerWidth >= 1024
 
 	return (
-		<div
-			style={{ background: PRIMARY_COLOR }}
-			className='fixed left-0 right-0 top-0 z-40 flex flex-col items-center gap-4 p-4 lg:p-5 lg:bottom-0 lg:w-[25rem]'
-		>
+		<div className='fixed left-0 right-0 top-0 z-40 flex flex-col items-center gap-4 p-4 lg:p-5 lg:bottom-0 lg:w-[25rem] bg-primary'>
 			<div className='flex items-center gap-5 w-full justify-between'>
 				<div className='flex items-center gap-5 lg:flex-col'>
 					<Link to='/'>

@@ -1,11 +1,16 @@
 import React from 'react'
 import DrugsListItem from './DrugsListItem'
+import useAppState from '../../../../global_states/appState'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 type DrugsListProps = {
 	drugNames: string[]
 }
 
 const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
+	const { loadingInitialData } = useAppState()
+
 	return (
 		<div
 			className='grid gap-4 max-h-[70vh] py-2'
@@ -13,9 +18,13 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 				gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 			}}
 		>
-			{drugNames.map((drugName) => (
-				<DrugsListItem key={drugName} drugName={drugName} />
-			))}
+			{loadingInitialData
+				? Array.from({ length: 6 }).map((_, index) => (
+						<Skeleton key={index} className='h-[80px]' />
+				  ))
+				: drugNames.map((drugName) => (
+						<DrugsListItem key={drugName} drugName={drugName} />
+				  ))}
 		</div>
 	)
 }

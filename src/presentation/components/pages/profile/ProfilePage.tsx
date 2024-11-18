@@ -1,9 +1,10 @@
 import React from 'react'
 
-import useAppState from '../../../global_states/appState'
-import LogOutButton from './LogOutButton'
 import Teacher from '../../../../domain/teacher/Teacher'
 import User from '../../../../domain/user/User'
+import useAppState from '../../../global_states/appState'
+import LogOutButton from './LogOutButton'
+import UserDataItem from './UserDataItem'
 
 const ProfilePage: React.FC = () => {
 	const user: User | null = useAppState((state) => state.user)
@@ -14,23 +15,23 @@ const ProfilePage: React.FC = () => {
 				<p className='text-xl font-bold'>Información Personal</p>
 				<div className='flex flex-col gap-1'>
 					<p>Nombre Completo</p>
-					<p className='border rounded-md py-1 px-2 text-sm text-gray-500'>
-						{user?.getName()}
-					</p>
+					<UserDataItem item={user?.getName()} />
 				</div>
 				<div className='flex flex-col gap-1'>
 					<p>Correo Institucional</p>
-					<p className='border rounded-md py-1 px-2 text-sm text-gray-500'>
-						{user?.getInstitutionalEmail()}
-					</p>
+					<UserDataItem item={user?.getInstitutionalEmail()} />
 				</div>
 				<div className='flex flex-col gap-1'>
 					<p>Rol</p>
-					{user && (
-						<p className='border rounded-md py-1 px-2 text-sm text-gray-500'>
-							{user instanceof Teacher ? 'Profesor' : 'Estudiante'}
-						</p>
-					)}
+					<UserDataItem
+						item={
+							user
+								? user instanceof Teacher
+									? 'Profesor'
+									: 'Estudiante'
+								: undefined
+						}
+					/>
 				</div>
 			</div>
 
