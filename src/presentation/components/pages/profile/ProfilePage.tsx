@@ -13,7 +13,7 @@ const ProfilePage: React.FC = () => {
 	return (
 		<div className='flex flex-col gap-8 items-center'>
 			<div className='flex flex-col xl:flex-row gap-x-10 gap-y-7'>
-				<div className='bg-white shadow-md flex flex-col gap-3 sm:w-[25rem] rounded-md p-5 break-words'>
+				<div className='bg-white shadow-md flex flex-col gap-3 sm:w-[25rem] rounded-md p-5 break-words bg-card'>
 					<p className='text-xl font-bold text-primary-intense pb-3'>
 						Información Personal
 					</p>

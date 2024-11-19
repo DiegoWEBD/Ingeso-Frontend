@@ -18,7 +18,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 }) => {
 	return (
 		<ModalContainer>
-			<div className='relative bg-white rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4'>
+			<div className='relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4'>
 				<div className='mb-4 text-2xl font-bold flex items-center gap-2'>
 					<Pill className='h-6 w-6 text-primary' />
 					<h2 className='font-bold tracking-wide text-primary-intense'>
@@ -32,7 +32,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 						{loading ? (
 							<Skeleton className='h-6 w-3/4' />
 						) : (
-							<p className='text-gray-700'>{drug?.getName()}</p>
+							<p className='text-secondary-weak'>{drug?.getName()}</p>
 						)}
 					</div>
 
@@ -45,7 +45,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 								<Skeleton className='h-4 w-5/6' />
 							</>
 						) : (
-							<p className='text-gray-700 break-words'>
+							<p className='text-secondary-weak break-words'>
 								{drug?.getDescription()}
 							</p>
 						)}
@@ -68,7 +68,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 									.map((administrationProcedure: any) => (
 										<div
 											key={administrationProcedure.method}
-											className='text-gray-700 flex gap-2'
+											className='text-secondary-weak flex gap-2'
 										>
 											<p className='whitespace-nowrap font-medium'>
 												{administrationProcedure.method}:
@@ -83,7 +83,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 
 				<button
 					onClick={closeModal}
-					className='absolute top-2 right-2 p-2 hover:text-[var(--primary-color-intense)] transition-all'
+					className='absolute top-2 right-2 p-2 text-primary hover:text-[var(--primary-text-color-intense)] transition-all'
 				>
 					<X className='h-6 w-6' />
 				</button>

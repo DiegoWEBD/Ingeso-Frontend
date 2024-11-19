@@ -9,19 +9,23 @@ import Cookies from 'js-cookie'
 import { useErrorBoundary } from 'react-error-boundary'
 
 const Root: React.FC = () => {
-	const { loadInitialData } = useAppState()
+	const { loadInitialData, setTheme } = useAppState()
 	const accessToken = Cookies.get('access_token')
 	const { showBoundary } = useErrorBoundary()
 
 	useEffect(() => {
 		if (!accessToken) return
 
-		try {
-			loadInitialData()
-		} catch (error) {
-			showBoundary(error)
-		}
+		loadInitialData()
+			.then(() => console.log('Datos iniciales cargados.'))
+			.catch((error) => showBoundary(error))
 	}, [accessToken])
+
+	useEffect(() => {
+		const dataTheme = localStorage.getItem('data-theme')
+
+		if (dataTheme) setTheme(dataTheme)
+	}, [])
 
 	return (
 		<AppContainer>

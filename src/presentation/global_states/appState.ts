@@ -15,6 +15,7 @@ type AppState = {
 	loadInitialData: () => Promise<void>
 	setUser: (user: User) => void
 	setDrugsNames: (drugsNames: string[]) => void
+	setTheme: (themeId: string) => void
 }
 
 const useAppState = create<AppState>((set) => {
@@ -46,6 +47,11 @@ const useAppState = create<AppState>((set) => {
 
 		setDrugsNames: (drugsNames: string[]) => {
 			set({ drugsNames })
+		},
+
+		setTheme: (themeId: string) => {
+			document.querySelector('body')?.setAttribute('data-theme', themeId)
+			localStorage.setItem('data-theme', themeId)
 		},
 	}
 })
