@@ -1,18 +1,18 @@
+import useAppState from '../../../../global_states/appState'
+
 type ThemeOptionProps = {
 	themeName: string
 	themeId: string
 }
 
 const ThemeOption: React.FC<ThemeOptionProps> = ({ themeName, themeId }) => {
-	const setTheme = () => {
-		document.querySelector('body')?.setAttribute('data-theme', themeId)
-	}
+	const { setTheme } = useAppState()
 
 	return (
 		<button
 			type='button'
-			onClick={setTheme}
-			className='hover:text-[var(--primary-color)]'
+			onClick={() => setTheme(themeId)}
+			className='hover:text-[var(--primary-text-color-intense)] transition-all hover:font-bold'
 		>
 			{themeName}
 		</button>

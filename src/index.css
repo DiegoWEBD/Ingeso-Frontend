@@ -16,25 +16,75 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
+	--primary-color-extra-weak: #d1fae5;
 	--primary-color-weak: #059669;
 	--primary-color: #047857;
 	--primary-color-intense: #065f46;
+
+	--primary-text-color: #047857;
+	--primary-text-color-intense: #065f46;
+	--secondary-text-color: black;
+	--secondary-text-color-weak: #475569;
+
+	--secondary-color: #f1f5f9;
+
+	--card-bg-color: white;
 }
 
 [data-theme='indigo'] {
+	--primary-color-extra-weak: #e0e7ff;
 	--primary-color-weak: #4f46e5;
 	--primary-color: #4338ca;
 	--primary-color-intense: #3730a3;
+
+	--primary-text-color: #4338ca;
+	--primary-text-color-intense: #3730a3;
+	--secondary-text-color: black;
+	--secondary-text-color-weak: #475569;
+
+	--secondary-color: #f1f5f9;
+
+	--card-bg-color: white;
+}
+
+[data-theme='violet'] {
+	--primary-color-extra-weak: #ede9fe;
+	--primary-color-weak: #7c3aed;
+	--primary-color: #6d28d9;
+	--primary-color-intense: #5b21b6;
+
+	--primary-text-color: #6d28d9;
+	--primary-text-color-intense: #5b21b6;
+	--secondary-text-color: black;
+	--secondary-text-color-weak: #475569;
+
+	--secondary-color: #f1f5f9;
+
+	--card-bg-color: white;
 }
 
 [data-theme='dark'] {
-	--primary-color-weak: #1e293b;
-	--primary-color: #0f172a;
-	--primary-color-intense: #020617;
+	--primary-color-extra-weak: #e5e7eb;
+	--primary-color-weak: #1f2937;
+	--primary-color: #111827;
+	--primary-color-intense: #030712;
+
+	--primary-text-color-intense: white;
+	--primary-text-color: #e2e8f0;
+	--secondary-text-color: #e2e8f0;
+	--secondary-text-color-weak: #94a3b8;
+
+	--secondary-color: #030712;
+
+	--card-bg-color: #111827;
 }
 
 .bg-primary {
 	background: var(--primary-color);
+}
+
+.bg-primary-extra-weak {
+	background: var(--primary-color-extra-weak);
 }
 
 .bg-primary-weak {
@@ -46,9 +96,29 @@
 }
 
 .text-primary {
-	color: var(--primary-color);
+	color: var(--primary-text-color);
+}
+
+.text-secondary {
+	color: var(--secondary-text-color);
+}
+
+.text-secondary-weak {
+	color: var(--secondary-text-color-weak);
 }
 
 .text-primary-intense {
-	color: var(--primary-color-intense);
+	color: var(--primary-text-color-intense);
+}
+
+.bg-secondary {
+	background: var(--secondary-color);
+}
+
+.bg-card {
+	background: var(--card-bg-color);
+}
+
+.app-container {
+	transition: background-color 0.5s ease, color 0.5s ease;
 }

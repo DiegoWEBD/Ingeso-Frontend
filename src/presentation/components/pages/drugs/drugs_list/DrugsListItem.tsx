@@ -39,7 +39,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 		<>
 			<button
 				onClick={onClick}
-				className='w-full rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all'
+				className='w-full bg-card text-secondary hover:font-bold transition-all rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all'
 			>
 				{drugName}
 			</button>
