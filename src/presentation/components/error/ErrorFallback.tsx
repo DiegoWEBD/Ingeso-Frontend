@@ -13,7 +13,11 @@ const ErrorFallback: React.FC<FallbackProps> = ({
 					<AlertCircle className='text-primary w-12 h-12' />
 				</div>
 				<p className='text-2xl font-bold'>Ha ocurrido un error</p>
-				<p className='text-gray-600'>{error.message || error}</p>
+				{error && (
+					<p className='text-gray-600'>
+						{error.message !== undefined ? error.message : ''}
+					</p>
+				)}
 				<button
 					onClick={resetErrorBoundary}
 					className='flex items-center bg-primary-weak hover:bg-[var(--primary-color)] transition-all rounded text-white font-bold tracking-wide py-2 px-5'

@@ -27,6 +27,7 @@
 	--secondary-text-color-weak: #475569;
 
 	--secondary-color: #f1f5f9;
+	--secondary-color-intense: #e5e7eb;
 
 	--card-bg-color: white;
 }
@@ -43,6 +44,7 @@
 	--secondary-text-color-weak: #475569;
 
 	--secondary-color: #f1f5f9;
+	--secondary-color-intense: #e5e7eb;
 
 	--card-bg-color: white;
 }
@@ -59,6 +61,7 @@
 	--secondary-text-color-weak: #475569;
 
 	--secondary-color: #f1f5f9;
+	--secondary-color-intense: #e5e7eb;
 
 	--card-bg-color: white;
 }
@@ -75,6 +78,7 @@
 	--secondary-text-color-weak: #94a3b8;
 
 	--secondary-color: #030712;
+	--secondary-color-intense: #111827;
 
 	--card-bg-color: #111827;
 }

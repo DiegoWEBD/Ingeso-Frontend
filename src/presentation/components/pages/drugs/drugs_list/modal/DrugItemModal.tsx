@@ -30,7 +30,11 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 					<div>
 						<p className='font-bold text-lg text-primary'>Nombre</p>
 						{loading ? (
-							<Skeleton className='h-6 w-3/4' />
+							<Skeleton
+								className='h-6 w-3/4'
+								baseColor='var(--secondary-color)'
+								highlightColor='var(--secondary-color-intense)'
+							/>
 						) : (
 							<p className='text-secondary-weak'>{drug?.getName()}</p>
 						)}
@@ -40,9 +44,21 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 						<p className='font-bold text-lg text-primary'>Descripción</p>
 						{loading ? (
 							<>
-								<Skeleton className='h-4 w-full mb-2' />
-								<Skeleton className='h-4 w-full mb-2' />
-								<Skeleton className='h-4 w-5/6' />
+								<Skeleton
+									className='h-4 w-full mb-2'
+									baseColor='var(--secondary-color)'
+									highlightColor='var(--secondary-color-intense)'
+								/>
+								<Skeleton
+									className='h-4 w-full mb-2'
+									baseColor='var(--secondary-color)'
+									highlightColor='var(--secondary-color-intense)'
+								/>
+								<Skeleton
+									className='h-4 w-5/6'
+									baseColor='var(--secondary-color)'
+									highlightColor='var(--secondary-color-intense)'
+								/>
 							</>
 						) : (
 							<p className='text-secondary-weak break-words'>
@@ -57,9 +73,21 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 						</p>
 						{loading ? (
 							<>
-								<Skeleton className='h-4 w-full mb-2' />
-								<Skeleton className='h-4 w-5/6 mb-2' />
-								<Skeleton className='h-4 w-4/6' />
+								<Skeleton
+									className='h-4 w-full mb-2'
+									baseColor='var(--secondary-color)'
+									highlightColor='var(--secondary-color-intense)'
+								/>
+								<Skeleton
+									className='h-4 w-5/6 mb-2'
+									baseColor='var(--secondary-color)'
+									highlightColor='var(--secondary-color-intense)'
+								/>
+								<Skeleton
+									className='h-4 w-4/6'
+									baseColor='var(--secondary-color)'
+									highlightColor='var(--secondary-color-intense)'
+								/>
 							</>
 						) : (
 							<div className='space-y-2'>

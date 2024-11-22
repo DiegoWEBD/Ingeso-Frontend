@@ -52,7 +52,7 @@ const LoginForm: React.FC = () => {
 
 	return (
 		<div className='h-full flex justify-center items-center'>
-			<div className='p-7 text-center bg-white sm:w-[25rem] h-fit flex flex-col items-center gap-5 shadow-md'>
+			<div className='rounded-md p-7 text-center bg-card text-primary sm:w-[25rem] h-fit flex flex-col items-center gap-5 shadow-md'>
 				<img src='logo_ucn.png' className='w-[9rem]' />
 				<AppTitle className='text-primary' />
 				<LoginButton onClick={() => login()}>Acceso Docentes</LoginButton>
