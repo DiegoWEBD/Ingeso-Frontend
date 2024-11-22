@@ -20,9 +20,15 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 			}}
 		>
 			{!loadingInitialData && <AddDrugButton />}
+
 			{loadingInitialData
 				? Array.from({ length: 6 }).map((_, index) => (
-						<Skeleton key={index} className='h-[80px]' />
+						<Skeleton
+							key={index}
+							className='h-[4rem] border shadow'
+							baseColor='var(--secondary-color-intense)'
+							highlightColor='var(--secondary-color)'
+						/>
 				  ))
 				: drugNames.map((drugName) => (
 						<DrugsListItem key={drugName} drugName={drugName} />
