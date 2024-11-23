@@ -32,6 +32,10 @@
 	--card-bg-color: white;
 }
 
+body {
+	background: var(--secondary-color);
+}
+
 [data-theme='indigo'] {
 	--primary-color-extra-weak: #e0e7ff;
 	--primary-color-weak: #4f46e5;

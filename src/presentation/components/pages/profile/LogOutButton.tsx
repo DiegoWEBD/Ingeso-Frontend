@@ -5,6 +5,7 @@ import React from 'react'
 const LogOutButton: React.FC = () => {
 	const logOut = () => {
 		Cookies.remove('access_token')
+		Cookies.remove('refresh_token')
 		window.location.reload()
 	}
 

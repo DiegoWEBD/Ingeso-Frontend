@@ -27,15 +27,24 @@ const LoginForm: React.FC = () => {
 			})
 			.then((res) => res.data)
 			.then((data) => {
+				console.log(data)
 				Cookies.set('access_token', data.access_token, {
-					expires: 7,
+					expires: 1,
 					secure: true,
 					sameSite: 'Lax',
 				})
+
+				Cookies.set('refresh_token', data.refresh_token, {
+					expires: 28,
+					secure: true,
+					sameSite: 'Lax',
+				})
+
 				setUser(UserAdapter.FromRestApi(data.user))
 				navigate('/farmacos')
 			})
 			.catch((error: AxiosError) => {
+				console.log(error)
 				handleError(error.response?.data)
 			})
 	}

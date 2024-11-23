@@ -31,11 +31,12 @@ const useAppState = create<AppState>((set) => {
 
 		loadInitialData: async () => {
 			const accessToken = Cookies.get('access_token')
-			if (!accessToken) return
+			const refreshToken = Cookies.get('refresh_token')
+			if (!accessToken || !refreshToken) return
 
 			set({ loadingInitialData: true })
 
-			const user = await userRepository.getByAccessToken(accessToken)
+			const user = await userRepository.getByToken(accessToken, refreshToken)
 			const drugsNames: Array<string> = await drugRepository.getAllNames()
 
 			set({ drugsNames, user, loadingInitialData: false })
