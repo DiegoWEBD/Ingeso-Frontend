@@ -14,7 +14,7 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 
 	return (
 		<div
-			className='grid gap-4 max-h-[70vh] py-2'
+			className='grid gap-4  py-2'
 			style={{
 				gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 			}}
