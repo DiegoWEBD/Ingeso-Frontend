@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
 	const isBigScreen = (): boolean => window.innerWidth >= 1024
 
 	return (
-		<div className='fixed left-0 right-0 top-0 z-40 flex flex-col items-center gap-8 p-4 lg:p-5 lg:bottom-0 lg:w-[25rem] bg-primary'>
+		<div className='fixed left-0 right-0 top-0 z-40 flex flex-col items-center gap-8 px-4 pb-4 pt-10 lg:pt-5 lg:px-5 lg:pb-5 lg:bottom-0 lg:w-[25rem] bg-primary'>
 			<div className='flex items-center gap-5 w-full justify-between'>
 				<div className='flex items-center gap-5 lg:flex-col w-full'>
 					<Link to='/'>
