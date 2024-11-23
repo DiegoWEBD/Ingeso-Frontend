@@ -16,6 +16,7 @@ type AppState = {
 	setUser: (user: User) => void
 	setDrugsNames: (drugsNames: string[]) => void
 	setTheme: (themeId: string) => void
+	isAppInstaled: () => boolean
 }
 
 const useAppState = create<AppState>((set) => {
@@ -53,6 +54,10 @@ const useAppState = create<AppState>((set) => {
 		setTheme: (themeId: string) => {
 			document.querySelector('body')?.setAttribute('data-theme', themeId)
 			localStorage.setItem('data-theme', themeId)
+		},
+
+		isAppInstaled: (): boolean => {
+			return window.matchMedia('(display-mode: standalone)').matches
 		},
 	}
 })

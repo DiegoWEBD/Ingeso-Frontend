@@ -3,17 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AppTitle from '../AppTitle'
 import DashboardNav from './DashboardNav'
+import useAppState from '../../global_states/appState'
 
 const Dashboard: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
+	const { isAppInstaled } = useAppState()
 
 	const closeNav = () => {
 		if (isBigScreen()) return
 		setIsOpen(false)
-	}
-
-	const isAppInstaled = (): boolean => {
-		return window.matchMedia('(display-mode: standalone)').matches
 	}
 
 	useEffect(() => {
