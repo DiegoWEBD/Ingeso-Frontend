@@ -33,7 +33,7 @@
 }
 
 body {
-	background: var(--secondary-color);
+	background: var(--primary-color);
 }
 
 [data-theme='indigo'] {
