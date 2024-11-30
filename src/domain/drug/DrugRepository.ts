@@ -7,4 +7,6 @@ export default interface DrugRepository {
 	findByName: (name: string) => Promise<Drug | null>
 	update: (name: string, newValues: Drug) => Promise<void>
 	delete: (drug: Drug) => Promise<void>
+	addFavorite: (drugName: string) => Promise<void>
+	removeFavorite: (drugName: string) => Promise<void>
 }
