@@ -1,9 +1,10 @@
-import { Pill, X } from 'lucide-react'
+import { Pill, X, Trash} from 'lucide-react'
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
 import Drug from '../../../../../../domain/drug/Drug'
 import ModalContainer from '../../../../containers/ModalContainer'
 import DrugInfoContainer from './DrugInfoContainer'
+import useAppState from '../../../../../global_states/appState'
 
 type DrugItemModalProps = {
 	closeModal: () => void
@@ -16,6 +17,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 	drug,
 	loading,
 }) => {
+	const { drugRepository  } = useAppState()
 	return (
 		<ModalContainer>
 			<div className='relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4'>
@@ -102,8 +104,42 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 												{administrationProcedure.method}:
 											</p>
 											<p>{administrationProcedure.procedure}</p>
+											{/* Botón para eliminar*/}
+											<button
+												onClick={async () => {
+													const nuevo = drug.getAdministrationProcedures().filter(
+													(procedure) => procedure.getMethod() !== administrationProcedure.getMethod())
+													
+													drug.setAdministrationProcedures(nuevo)
+												
+												}}
+												className="px-100 py-200 text-red-500 rounded focus:outline-none">
+												<Trash/>
+												
+											</button>
+
+
 										</div>
 									))}
+									{/* Botón "Guardar" dentro de esta sección */}
+									<div className="mt-4 flex justify-center w-full">
+										<button
+											onClick={async () => {
+												if(drug != null){
+													drugRepository.update(drug.getName(),drug)
+													alert('Cambios guardados')
+												}
+												else{
+													alert('Cambios no guardados')
+												}
+												
+											}}
+											className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-all focus:outline-none"
+										>
+											Guardar
+										</button>
+									</div>
+
 							</div>
 						)}
 					</div>

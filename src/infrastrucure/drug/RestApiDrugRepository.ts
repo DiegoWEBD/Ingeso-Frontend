@@ -39,9 +39,21 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async update(name: string, newValues: Drug): Promise<void> {
-		console.log(name)
-		console.log(newValues)
-		throw new Error('To do.')
+		const accessToken = Cookies.get('access_token');
+		const updatedDrugData = {
+			name: name,
+			new_name: newValues.getName(),
+			new_presentation: newValues.getPresentation(),
+			new_description: newValues.getDescription(),
+			new_reactions: newValues.getRams(),
+			new_administration_procedures: newValues.getAdministrationProcedures(),
+		};
+
+		await axios.put(`${API_URL}/drugs/${encodeURIComponent(name)}`, updatedDrugData, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 	}
 
 	async delete(drug: Drug): Promise<void> {
