@@ -32,25 +32,25 @@ const Dashboard: React.FC = () => {
 		<div
 			className={`fixed left-0 right-0 top-0 z-40 flex flex-col items-center gap-8 px-4 pb-4 ${
 				isAppInstaled() ? 'pt-12' : 'pt-4'
-			}  lg:pt-5 lg:px-5 lg:pb-5 lg:bottom-0 lg:w-[25rem] bg-primary`}
+			}  lg:pt-5 lg:px-5 lg:pb-5 lg:bottom-0 lg:w-[25rem] bg-primary animate-bg-transition`}
 		>
-			<div className='flex items-center gap-5 w-full justify-between'>
-				<div className='flex items-center gap-5 lg:flex-col w-full'>
-					<Link to='/'>
+			<div className="flex items-center gap-5 w-full justify-between">
+				<div className="flex items-center gap-5 lg:flex-col w-full">
+					<Link to="/">
 						<img
-							src='logo_ucn.png'
-							alt='UCN Logo'
-							className='w-12 md:w-16 lg:w-32'
+							src="logo_ucn.png"
+							alt="UCN Logo"
+							className="w-12 md:w-16 lg:w-32"
 						/>
 					</Link>
-					<AppTitle className='text-white text-xl sm:text-3xl md:text-4xl' />
+					<AppTitle className="text-white text-xl sm:text-3xl md:text-4xl" />
 				</div>
 				<button
-					className=' p-2 text-white transition-all hover:text-slate-200 lg:hidden'
-					type='button'
+					className=" p-2 text-white transition-all hover:text-slate-200 lg:hidden"
+					type="button"
 					onClick={() => setIsOpen(!isOpen)}
 				>
-					<Menu size='1.8rem' />
+					<Menu size="1.8rem" />
 				</button>
 			</div>
 			{isOpen && <DashboardNav isOpen={isOpen} closeNav={closeNav} />}

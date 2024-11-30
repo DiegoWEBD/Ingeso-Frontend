@@ -8,7 +8,7 @@ type DashboardTabProps = {
 	closeNav: () => void
 }
 
-const baseStyles = `w-full rounded-[7px] py-2 px-4 transition-all text-white font-semibold flex gap-5 items-center bg-primary hover:bg-[var(--primary-color-weak)]`
+const baseStyles = `w-full rounded-[7px] py-2 px-4 animate-bg-transition text-white font-semibold flex gap-5 items-center bg-primary hover:bg-[var(--primary-color-weak)]`
 const selectedStyle = `${baseStyles} bg-primary-weak`
 
 const DashboardTab: React.FC<DashboardTabProps> = ({
@@ -20,11 +20,13 @@ const DashboardTab: React.FC<DashboardTabProps> = ({
 	return (
 		<NavLink
 			to={to}
-			className={({ isActive }) => (isActive ? selectedStyle : baseStyles)}
+			className={({ isActive }) =>
+				isActive ? selectedStyle : baseStyles
+			}
 			onClick={closeNav}
 		>
 			{icon}
-			<p className='text-lg'>{title}</p>
+			<p className="text-lg">{title}</p>
 		</NavLink>
 	)
 }
