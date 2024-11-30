@@ -125,6 +125,7 @@ body {
 
 .bg-card {
 	background: var(--card-bg-color);
+	transition: background-color 0.5s ease, color 0.2s ease;
 }
 
 .animate-bg-transition {

@@ -1,9 +1,10 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
+import Drug from '../../domain/drug/Drug'
 import DrugRepository from '../../domain/drug/DrugRepository'
 import { API_URL } from '../../utils'
-import Cookies from 'js-cookie'
 import DrugAdapter from './adapter/DrugAdapter'
-import Drug from '../../domain/drug/Drug'
+import DrugJSONAdapter from './adapter/DrugJSONAdapter'
 
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
@@ -39,9 +40,16 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async update(name: string, newValues: Drug): Promise<void> {
-		console.log(name)
-		console.log(newValues)
-		throw new Error('To do.')
+		const accessToken = Cookies.get('access_token')
+		await axios.put(
+			`${API_URL}/drugs/${encodeURIComponent(name)}`,
+			new DrugJSONAdapter(newValues),
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		)
 	}
 
 	async delete(drug: Drug): Promise<void> {
