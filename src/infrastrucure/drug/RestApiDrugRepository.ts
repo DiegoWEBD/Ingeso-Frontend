@@ -51,15 +51,22 @@ export default class RestApiDrugRepository implements DrugRepository {
 
 	async addFavorite(drugName: string): Promise<void> {
 		const accessToken = Cookies.get('access_token')
-		await axios.post(`${API_URL}/favorites`, { drugName }, {
-		  headers: { Authorization: `Bearer ${accessToken}` },
-		})
+		await axios.post(
+		  `${API_URL}/favorites/${encodeURIComponent(drugName)}`,
+		  null,
+		  {
+			headers: { Authorization: `Bearer ${accessToken}` },
+		  }
+		)
 	  }
 	
 	  async removeFavorite(drugName: string): Promise<void> {
 		const accessToken = Cookies.get('access_token')
-		await axios.delete(`${API_URL}/favorites/${encodeURIComponent(drugName)}`, {
-		  headers: { Authorization: `Bearer ${accessToken}` },
-		})
+		await axios.delete(
+		  `${API_URL}/favorites/${encodeURIComponent(drugName)}`,
+		  {
+			headers: { Authorization: `Bearer ${accessToken}` },
+		  }
+		)
 	  }
 }
