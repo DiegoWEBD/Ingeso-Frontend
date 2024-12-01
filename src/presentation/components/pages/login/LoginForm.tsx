@@ -27,7 +27,6 @@ const LoginForm: React.FC = () => {
 			})
 			.then((res) => res.data)
 			.then((data) => {
-				console.log(data)
 				Cookies.set('access_token', data.access_token, {
 					expires: 1,
 					secure: true,
@@ -44,7 +43,6 @@ const LoginForm: React.FC = () => {
 				navigate('/farmacos')
 			})
 			.catch((error: AxiosError) => {
-				console.log(error)
 				handleError(error.response?.data)
 			})
 	}
@@ -60,12 +58,16 @@ const LoginForm: React.FC = () => {
 	})
 
 	return (
-		<div className='h-full flex justify-center items-center'>
-			<div className='rounded-md p-7 text-center bg-card text-primary sm:w-[25rem] h-fit flex flex-col items-center gap-5 shadow-md'>
-				<img src='logo_ucn.png' className='w-[9rem]' />
-				<AppTitle className='text-primary' />
-				<LoginButton onClick={() => login()}>Acceso Docentes</LoginButton>
-				<LoginButton onClick={() => login()}>Acceso Estudiantes</LoginButton>
+		<div className="h-full flex justify-center items-center">
+			<div className="rounded-md p-7 text-center bg-card text-primary sm:w-[25rem] h-fit flex flex-col items-center gap-5 shadow-md">
+				<img src="logo_ucn.png" className="w-[9rem]" />
+				<AppTitle className="text-primary" />
+				<LoginButton onClick={() => login()}>
+					Acceso Docentes
+				</LoginButton>
+				<LoginButton onClick={() => login()}>
+					Acceso Estudiantes
+				</LoginButton>
 			</div>
 		</div>
 	)

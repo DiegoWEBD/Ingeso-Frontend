@@ -127,6 +127,6 @@ body {
 	background: var(--card-bg-color);
 }
 
-.app-container {
+.animate-bg-transition {
 	transition: background-color 0.5s ease, color 0.5s ease;
 }

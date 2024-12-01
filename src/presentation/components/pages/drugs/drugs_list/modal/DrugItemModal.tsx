@@ -5,7 +5,7 @@ import Drug from '../../../../../../domain/drug/Drug'
 import ModalContainer from '../../../../containers/ModalContainer'
 import DrugInfoContainer from './DrugInfoContainer'
 import useAppState from '../../../../../global_states/appState'
-
+import { motion } from "framer-motion"
 type DrugItemModalProps = {
 	closeModal: () => void
 	drug: Drug | null
@@ -28,22 +28,26 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 
 	return (
 		<ModalContainer>
-			<div className='relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4'>
-				<div className='mb-4 text-2xl font-bold flex items-center gap-2'>
-					<Pill className='h-6 w-6 text-primary' />
-					<h2 className='font-bold tracking-wide text-primary-intense'>
+			<motion.div
+				initial={{ scale: 0 }}
+				animate={{ scale: 1 }}
+				className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4"
+			>
+				<div className="mb-4 text-2xl font-bold flex items-center gap-2">
+					<Pill className="h-6 w-6 text-primary" />
+					<h2 className="font-bold tracking-wide text-primary-intense">
 						Detalles del fármaco
 					</h2>
 				</div>
 
 				<DrugInfoContainer>
 					<div>
-						<p className='font-bold text-lg text-primary'>Nombre</p>
+						<p className="font-bold text-lg text-primary">Nombre</p>
 						{loading ? (
 							<Skeleton
-								className='h-6 w-3/4'
-								baseColor='var(--secondary-color)'
-								highlightColor='var(--secondary-color-intense)'
+								className="h-6 w-3/4"
+								baseColor="var(--secondary-color)"
+								highlightColor="var(--secondary-color-intense)"
 							/>
 						) : (
 							<p className='text-secondary-weak'>{currentDrug?.getName()}</p>
@@ -51,23 +55,25 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 					</div>
 
 					<div>
-						<p className='font-bold text-lg text-primary'>Descripción</p>
+						<p className="font-bold text-lg text-primary">
+							Descripción
+						</p>
 						{loading ? (
 							<>
 								<Skeleton
-									className='h-4 w-full mb-2'
-									baseColor='var(--secondary-color)'
-									highlightColor='var(--secondary-color-intense)'
+									className="h-4 w-full mb-2"
+									baseColor="var(--secondary-color)"
+									highlightColor="var(--secondary-color-intense)"
 								/>
 								<Skeleton
-									className='h-4 w-full mb-2'
-									baseColor='var(--secondary-color)'
-									highlightColor='var(--secondary-color-intense)'
+									className="h-4 w-full mb-2"
+									baseColor="var(--secondary-color)"
+									highlightColor="var(--secondary-color-intense)"
 								/>
 								<Skeleton
-									className='h-4 w-5/6'
-									baseColor='var(--secondary-color)'
-									highlightColor='var(--secondary-color-intense)'
+									className="h-4 w-5/6"
+									baseColor="var(--secondary-color)"
+									highlightColor="var(--secondary-color-intense)"
 								/>
 							</>
 						) : (
@@ -78,25 +84,25 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 					</div>
 
 					<div>
-						<p className='font-bold text-lg text-primary'>
+						<p className="font-bold text-lg text-primary">
 							Procedimientos de administración
 						</p>
 						{loading ? (
 							<>
 								<Skeleton
-									className='h-4 w-full mb-2'
-									baseColor='var(--secondary-color)'
-									highlightColor='var(--secondary-color-intense)'
+									className="h-4 w-full mb-2"
+									baseColor="var(--secondary-color)"
+									highlightColor="var(--secondary-color-intense)"
 								/>
 								<Skeleton
-									className='h-4 w-5/6 mb-2'
-									baseColor='var(--secondary-color)'
-									highlightColor='var(--secondary-color-intense)'
+									className="h-4 w-5/6 mb-2"
+									baseColor="var(--secondary-color)"
+									highlightColor="var(--secondary-color-intense)"
 								/>
 								<Skeleton
-									className='h-4 w-4/6'
-									baseColor='var(--secondary-color)'
-									highlightColor='var(--secondary-color-intense)'
+									className="h-4 w-4/6"
+									baseColor="var(--secondary-color)"
+									highlightColor="var(--secondary-color-intense)"
 								/>
 							</>
 						) : (
@@ -106,10 +112,16 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 									.map((administrationProcedure: any) => (
 										<div
 											key={administrationProcedure.method}
-											className='text-secondary-weak flex gap-2'
+											className="text-secondary-weak flex gap-2"
 										>
-											<p className='whitespace-nowrap font-medium'>
-												{administrationProcedure.method}:
+											<p className="whitespace-nowrap font-medium">
+												{administrationProcedure.method}
+												:
+											</p>
+											<p>
+												{
+													administrationProcedure.procedure
+												}
 											</p>
 											<p>{administrationProcedure.procedure}</p>
 											{/* Botón para eliminar*/}
@@ -155,11 +167,11 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 
 				<button
 					onClick={closeModal}
-					className='absolute top-2 right-2 p-2 text-primary hover:text-[var(--primary-text-color-intense)] transition-all'
+					className="absolute top-2 right-2 p-2 text-primary hover:text-[var(--primary-text-color-intense)] transition-all"
 				>
-					<X className='h-6 w-6' />
+					<X className="h-6 w-6" />
 				</button>
-			</div>
+			</motion.div>
 		</ModalContainer>
 	)
 }
