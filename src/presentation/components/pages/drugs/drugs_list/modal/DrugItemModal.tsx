@@ -18,6 +18,14 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 	loading,
 }) => {
 	const { drugRepository  } = useAppState()
+	const [currentDrug, setCurrentDrug] = React.useState<Drug | null>(null);
+
+	React.useEffect(() => {
+		setCurrentDrug(drug);
+	}, [drug])
+
+
+
 	return (
 		<ModalContainer>
 			<div className='relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4'>
@@ -38,7 +46,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 								highlightColor='var(--secondary-color-intense)'
 							/>
 						) : (
-							<p className='text-secondary-weak'>{drug?.getName()}</p>
+							<p className='text-secondary-weak'>{currentDrug?.getName()}</p>
 						)}
 					</div>
 
@@ -64,7 +72,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 							</>
 						) : (
 							<p className='text-secondary-weak break-words'>
-								{drug?.getDescription()}
+								{currentDrug?.getDescription()}
 							</p>
 						)}
 					</div>
@@ -93,7 +101,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 							</>
 						) : (
 							<div className='space-y-2'>
-								{drug
+								{currentDrug
 									?.getAdministrationProcedures()
 									.map((administrationProcedure: any) => (
 										<div
@@ -106,12 +114,12 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 											<p>{administrationProcedure.procedure}</p>
 											{/* Botón para eliminar*/}
 											<button
-												onClick={async () => {
-													const nuevo = drug.getAdministrationProcedures().filter(
-													(procedure) => procedure.getMethod() !== administrationProcedure.getMethod())
-													
-													drug.setAdministrationProcedures(nuevo)
+												onClick={ () => {
+													const nuevo = currentDrug.getAdministrationProcedures().filter(
+													(procedure) => procedure.getMethod() === administrationProcedure.getMethod())
 												
+													currentDrug.setAdministrationProcedures(nuevo)
+													
 												}}
 												className="px-100 py-200 text-red-500 rounded focus:outline-none">
 												<Trash/>
@@ -125,8 +133,8 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 									<div className="mt-4 flex justify-center w-full">
 										<button
 											onClick={async () => {
-												if(drug != null){
-													drugRepository.update(drug.getName(),drug)
+												if(currentDrug != null){
+													await drugRepository.update(currentDrug.getName(),currentDrug)
 													alert('Cambios guardados')
 												}
 												else{
