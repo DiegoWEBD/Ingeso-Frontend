@@ -1,10 +1,13 @@
-import { Pill, X } from 'lucide-react'
+import { Pill, X, Trash} from 'lucide-react'
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
 import Drug from '../../../../../../domain/drug/Drug'
 import ModalContainer from '../../../../containers/ModalContainer'
 import DrugInfoContainer from './DrugInfoContainer'
-import { motion } from 'framer-motion'
+import useAppState from '../../../../../global_states/appState'
+import { motion } from "framer-motion"
+import { useErrorBoundary } from 'react-error-boundary'
+import Teacher from '../../../../../../domain/teacher/Teacher'
 
 type DrugItemModalProps = {
 	closeModal: () => void
@@ -17,6 +20,9 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 	drug,
 	loading,
 }) => {
+	const { drugRepository  } = useAppState()
+	const { showBoundary } = useErrorBoundary()
+	const user = useAppState((state) => state.user)
 	return (
 		<ModalContainer>
 			<motion.div
@@ -116,8 +122,47 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 													administrationProcedure.procedure
 												}
 											</p>
+											{/* Botón para eliminar*/}
+											{
+											user instanceof Teacher && <button
+												onClick={ () => {
+													const nuevo = drug.getAdministrationProcedures().filter(
+													(procedure) => procedure.getMethod() === administrationProcedure.getMethod())
+												
+													drug.setAdministrationProcedures(nuevo)
+													
+												}}
+												className="px-100 py-200 text-red-500 rounded focus:outline-none">
+												<Trash/>
+												
+											</button>
+											}
 										</div>
 									))}
+									{/* Botón "Guardar" dentro de esta sección */}
+									<div className="mt-4 flex justify-center w-full">
+										{
+										user instanceof Teacher && <button
+											onClick={async () => {
+												if(drug != null){
+													try {
+														await drugRepository.update(drug.getName(),drug)
+														alert('Cambios guardados')
+													} catch (error) {
+														showBoundary(error)
+													}
+												}
+												else{
+													alert('Cambios no guardados')
+												}
+												
+											}}
+											className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-all focus:outline-none"
+										>
+											Guardar
+										</button>
+										}
+									</div>
 							</div>
 						)}
 					</div>
