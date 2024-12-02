@@ -52,6 +52,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 				<DrugItemModal
 					closeModal={closeModal}
 					drug={drug}
+					setDrug={setDrug}
 					loading={loading}
 				/>
 			)}

@@ -8,12 +8,14 @@ import DrugJSONAdapter from './adapter/DrugJSONAdapter'
 
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
-		console.log(drug)
-		throw new Error('To do.')
-	}
+		const accessToken = Cookies.get('access_token')
 
-	async getAll(): Promise<Array<Drug>> {
-		throw new Error('To do.')
+		await axios.post(`${API_URL}/drugs`, new DrugJSONAdapter(drug), {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'application/json',
+			},
+		})
 	}
 
 	async getAllNames(): Promise<Array<string>> {
@@ -53,7 +55,14 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async delete(drug: Drug): Promise<void> {
-		console.log(drug)
-		throw new Error('To do.')
+		const accessToken = Cookies.get('access_token')
+		await axios.delete(
+			`${API_URL}/drugs/${encodeURIComponent(drug.getName())}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		)
 	}
 }

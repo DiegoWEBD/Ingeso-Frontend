@@ -14,7 +14,7 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 
 	return (
 		<div
-			className='grid gap-4  py-2'
+			className="grid gap-4  py-2"
 			style={{
 				gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 			}}
@@ -25,9 +25,9 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 				? Array.from({ length: 6 }).map((_, index) => (
 						<Skeleton
 							key={index}
-							className='h-[4rem] border shadow'
-							baseColor='var(--secondary-color-intense)'
-							highlightColor='var(--secondary-color)'
+							className="h-[4rem] border shadow"
+							baseColor="var(--secondary-color-intense)"
+							highlightColor="var(--secondary-color)"
 						/>
 				  ))
 				: drugNames.map((drugName) => (
