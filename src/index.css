@@ -29,6 +29,10 @@
 	--secondary-color: #f1f5f9;
 	--secondary-color-intense: #e5e7eb;
 
+	--input-bg-color: white;
+	--input-text-color: #1f2937;
+	--input-border-color: #d1d5db;
+
 	--card-bg-color: white;
 }
 
@@ -50,6 +54,10 @@ body {
 	--secondary-color: #f1f5f9;
 	--secondary-color-intense: #e5e7eb;
 
+	--input-bg-color: white;
+	--input-text-color: #1f2937;
+	--input-border-color: #d1d5db;
+
 	--card-bg-color: white;
 }
 
@@ -67,6 +75,10 @@ body {
 	--secondary-color: #f1f5f9;
 	--secondary-color-intense: #e5e7eb;
 
+	--input-bg-color: white;
+	--input-text-color: #1f2937;
+	--input-border-color: #d1d5db;
+
 	--card-bg-color: white;
 }
 
@@ -83,6 +95,10 @@ body {
 
 	--secondary-color: #030712;
 	--secondary-color-intense: #111827;
+
+	--input-bg-color: #1f2937;
+	--input-text-color: #f3f4f6;
+	--input-border-color: #1f2937;
 
 	--card-bg-color: #111827;
 }
@@ -119,6 +135,11 @@ body {
 	--secondary-color-intense: #fda4af;
 
 	--card-bg-color: white;
+}
+
+.input {
+	background: var(--input-bg-color);
+	color: var(--input-text-color);
 }
 
 .bg-primary {

@@ -49,4 +49,16 @@ export default class Drug {
 	): void {
 		this.administrationProcedures = newProcedures
 	}
+
+	clone(): Drug {
+		return new Drug(
+			this.name,
+			this.presentation,
+			this.description,
+			this.rams.map((ram) => ram.clone()),
+			this.administrationProcedures.map((administrationProcedure) =>
+				administrationProcedure.clone()
+			)
+		)
+	}
 }

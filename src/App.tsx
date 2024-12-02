@@ -2,7 +2,7 @@ import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ErrorFallback from './presentation/components/error/ErrorFallback'
-import ProtectedComponent from './presentation/components/pages/ProtectedComponent'
+import ProtectedRoute from './presentation/components/pages/ProtectedRoute'
 import Root from './presentation/components/pages/Root'
 import DrugsPage from './presentation/components/pages/drugs/DrugsPage'
 import HomePage from './presentation/components/pages/home/HomePage'
@@ -29,12 +29,12 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'farmacos',
-				element: <ProtectedComponent children={<DrugsPage />} />,
+				element: <ProtectedRoute children={<DrugsPage />} />,
 			},
 
 			{
 				path: 'perfil',
-				element: <ProtectedComponent children={<ProfilePage />} />,
+				element: <ProtectedRoute children={<ProfilePage />} />,
 			},
 			{
 				path: '*',
