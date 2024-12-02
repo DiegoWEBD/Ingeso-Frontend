@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { useErrorBoundary } from 'react-error-boundary'
+import Drug from '../../../../../domain/drug/Drug'
 import DrugRepository from '../../../../../domain/drug/DrugRepository'
 import useAppState from '../../../../global_states/appState'
 import DrugItemModal from './modal/DrugItemModal'
-import Drug from '../../../../../domain/drug/Drug'
 import {Star} from 'lucide-react'
 
 type DrugsListItemProps = {
@@ -14,6 +15,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 	const [drug, setDrug] = useState<Drug | null>(null)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [isFavorite, setIsFavorite] = useState<boolean>(false)
+	const { showBoundary } = useErrorBoundary()
 
 	const drugRepository: DrugRepository = useAppState(
 		(state) => state.drugRepository
@@ -35,7 +37,9 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 				setDrug(data)
 				setLoading(false)
 			})
-			.catch(console.error)
+			.catch((error) => {
+				showBoundary(error)
+			})
 	}
 
 	const getDrug = async (): Promise<Drug> => {
@@ -66,13 +70,18 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 		<>
 			<button
 				onClick={onClick}
-				className='min-h-[4rem] w-full bg-card text-secondary hover:font-bold transition-all rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all'
+				className="min-h-[4rem] w-full bg-card text-secondary hover:font-bold transition-all rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all"
 			>
 				{drugName}
 			</button>
 
 			{modalVisible && (
-				<DrugItemModal closeModal={closeModal} drug={drug} loading={loading} />
+				<DrugItemModal
+					closeModal={closeModal}
+					drug={drug}
+					setDrug={setDrug}
+					loading={loading}
+				/>
 			)}
 		</>
 	)

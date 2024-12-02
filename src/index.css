@@ -29,6 +29,10 @@
 	--secondary-color: #f1f5f9;
 	--secondary-color-intense: #e5e7eb;
 
+	--input-bg-color: white;
+	--input-text-color: #1f2937;
+	--input-border-color: #d1d5db;
+
 	--card-bg-color: white;
 }
 
@@ -50,6 +54,10 @@ body {
 	--secondary-color: #f1f5f9;
 	--secondary-color-intense: #e5e7eb;
 
+	--input-bg-color: white;
+	--input-text-color: #1f2937;
+	--input-border-color: #d1d5db;
+
 	--card-bg-color: white;
 }
 
@@ -66,6 +74,10 @@ body {
 
 	--secondary-color: #f1f5f9;
 	--secondary-color-intense: #e5e7eb;
+
+	--input-bg-color: white;
+	--input-text-color: #1f2937;
+	--input-border-color: #d1d5db;
 
 	--card-bg-color: white;
 }
@@ -84,7 +96,50 @@ body {
 	--secondary-color: #030712;
 	--secondary-color-intense: #111827;
 
+	--input-bg-color: #1f2937;
+	--input-text-color: #f3f4f6;
+	--input-border-color: #1f2937;
+
 	--card-bg-color: #111827;
+}
+
+[data-theme='grey'] {
+	--primary-color-extra-weak: #e5e7eb;
+	--primary-color-weak: #334155; /* Color 3; */
+	--primary-color: #1e293b; /* Color 2; */
+	--primary-color-intense: #0f172a; /* Color 1; */
+
+	--primary-text-color: white; /* Color 2; */
+	--primary-text-color-intense: white; /* Color 1; */
+	--secondary-text-color: white;
+	--secondary-text-color-weak: #94a3b8;
+
+	--secondary-color: #64748b;
+	--secondary-color-intense: #1e293b; /* Carga..; */
+
+	--card-bg-color: #1e293b;
+}
+
+[data-theme='pink'] {
+	--primary-color-extra-weak: #e0fcff;
+	--primary-color-weak: #fda4af;
+	--primary-color: #fb7185;
+	--primary-color-intense: white;
+
+	--primary-text-color: #881337;
+	--primary-text-color-intense: #4c0519;
+	--secondary-text-color: #4c0519;
+	--secondary-text-color-weak: #475569;
+
+	--secondary-color: #fecdd3;
+	--secondary-color-intense: #fda4af;
+
+	--card-bg-color: white;
+}
+
+.input {
+	background: var(--input-bg-color);
+	color: var(--input-text-color);
 }
 
 .bg-primary {
@@ -125,8 +180,9 @@ body {
 
 .bg-card {
 	background: var(--card-bg-color);
+	transition: background-color 0.5s ease, color 0.2s ease;
 }
 
-.app-container {
+.animate-bg-transition {
 	transition: background-color 0.5s ease, color 0.5s ease;
 }

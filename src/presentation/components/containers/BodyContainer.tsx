@@ -12,7 +12,7 @@ const BodyContainer: React.FC<BodyContainerProps> = ({ children }) => {
 
 	return (
 		<div
-			className='pt-[5rem] md:pt-[6rem] lg:pt-0 lg:pl-[25rem] bg-secondary overflow-y-auto'
+			className="pt-[5rem] md:pt-[6rem] lg:pt-0 lg:pl-[25rem] bg-secondary overflow-y-auto animate-bg-transition"
 			style={{
 				height: pathname === '/login' ? '100%' : '',
 			}}
