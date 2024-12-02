@@ -5,16 +5,17 @@ import User from '../../domain/user/User'
 import UserRepository from '../../domain/user/UserRepository'
 import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepository'
 import Cookies from 'js-cookie'
+import DrugInitialData from '../../infrastrucure/drug/DrugInitialData'
 
 type AppState = {
 	user: User | null
-	drugsNames: Array<string>
+	drugsInitialData: Array<DrugInitialData>
 	drugRepository: DrugRepository
 	userRepository: UserRepository
 	loadingInitialData: boolean
 	loadInitialData: () => Promise<void>
 	setUser: (user: User) => void
-	setDrugsNames: (drugsNames: string[]) => void
+	setDrugsNames: (drugsInitialData: DrugInitialData[]) => void
 	setTheme: (themeId: string) => void
 	isAppInstaled: () => boolean
 }
@@ -25,7 +26,7 @@ const useAppState = create<AppState>((set) => {
 
 	return {
 		user: null,
-		drugsNames: [],
+		drugsInitialData: [],
 		loadingInitialData: false,
 		drugRepository,
 		userRepository,
@@ -37,18 +38,26 @@ const useAppState = create<AppState>((set) => {
 
 			set({ loadingInitialData: true })
 
-			const user = await userRepository.getByToken(accessToken, refreshToken)
-			const drugsNames: Array<string> = await drugRepository.getAllNames()
+			const user = await userRepository.getByToken(
+				accessToken,
+				refreshToken
+			)
+			const drugsInitialData: Array<DrugInitialData> =
+				await drugRepository.getDrugsInitialData()
 
-			set({ drugsNames, user, loadingInitialData: false })
+			set({
+				drugsInitialData,
+				user,
+				loadingInitialData: false,
+			})
 		},
 
 		setUser: (user: User) => {
 			set({ user })
 		},
 
-		setDrugsNames: (drugsNames: string[]) => {
-			set({ drugsNames })
+		setDrugsNames: (drugsInitialData: DrugInitialData[]) => {
+			set({ drugsInitialData })
 		},
 
 		setTheme: (themeId: string) => {

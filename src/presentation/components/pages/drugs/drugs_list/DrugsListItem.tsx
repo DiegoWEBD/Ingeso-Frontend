@@ -1,20 +1,23 @@
+import { Star } from 'lucide-react'
 import React, { useState } from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
 import Drug from '../../../../../domain/drug/Drug'
 import DrugRepository from '../../../../../domain/drug/DrugRepository'
 import useAppState from '../../../../global_states/appState'
 import DrugItemModal from './modal/DrugItemModal'
-import {Star} from 'lucide-react'
+import DrugInitialData from '../../../../../infrastrucure/drug/DrugInitialData'
 
 type DrugsListItemProps = {
-	drugName: string
+	drugInitialData: DrugInitialData
 }
 
-const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
+const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugInitialData }) => {
 	const [modalVisible, setModalVisible] = useState<boolean>(false)
 	const [drug, setDrug] = useState<Drug | null>(null)
 	const [loading, setLoading] = useState<boolean>(false)
-	const [isFavorite, setIsFavorite] = useState<boolean>(false)
+	const [isFavorite, setIsFavorite] = useState<boolean>(
+		drugInitialData.favorite
+	)
 	const { showBoundary } = useErrorBoundary()
 
 	const drugRepository: DrugRepository = useAppState(
@@ -23,12 +26,12 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 
 	const handleFavoriteClick = async () => {
 		if (isFavorite) {
-		  await drugRepository.removeFavorite(drugName)
+			await drugRepository.removeFavorite(drugInitialData.name)
 		} else {
-		  await drugRepository.addFavorite(drugName)
+			await drugRepository.addFavorite(drugInitialData.name)
 		}
 		setIsFavorite(!isFavorite)
-	  }
+	}
 
 	const onClick = () => {
 		openModal()
@@ -44,46 +47,38 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugName }) => {
 
 	const getDrug = async (): Promise<Drug> => {
 		setLoading(true)
-		return (await drugRepository.findByName(drugName)) as Drug
+		return (await drugRepository.findByName(drugInitialData.name)) as Drug
 	}
 
 	const openModal = () => setModalVisible(true)
 	const closeModal = () => setModalVisible(false)
 
-
 	return (
-		<div className='relative'>
-		  <button onClick={onClick} className='min-h-[4rem] w-full bg-card text-secondary hover:font-bold transition-all rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all'>
-			{drugName}
-		  </button>
-		  {modalVisible && (
-				<DrugItemModal closeModal={closeModal} drug={drug} loading={loading} />
-			)}
-		  <Star
-			onClick={handleFavoriteClick}
-			className={`absolute top-2 right-2 cursor-pointer ${isFavorite ? 'text-yellow-500' : 'text-gray-400'}`}
-		  />
-		</div>
-	  )
-
-	return (
-		<>
+		<div className="relative">
 			<button
 				onClick={onClick}
-				className="min-h-[4rem] w-full bg-card text-secondary hover:font-bold transition-all rounded border font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[0.8rem] hover:shadow-md hover:shadow-black/30 transition-all"
+				className="min-h-[4rem] w-full bg-card text-secondary hover:font-bold transition-all rounded font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[1.8rem] hover:shadow-md hover:shadow-black/30"
 			>
-				{drugName}
+				<p className="break-words">{drugInitialData.name}</p>
 			</button>
+
+			<Star
+				onClick={handleFavoriteClick}
+				size={'1.3rem'}
+				className={`absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer ${
+					isFavorite ? 'text-yellow-500' : 'text-gray-400'
+				}`}
+			/>
 
 			{modalVisible && (
 				<DrugItemModal
 					closeModal={closeModal}
 					drug={drug}
-					setDrug={setDrug}
 					loading={loading}
+					setDrug={setDrug}
 				/>
 			)}
-		</>
+		</div>
 	)
 }
 

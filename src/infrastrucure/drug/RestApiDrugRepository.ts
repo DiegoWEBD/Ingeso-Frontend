@@ -5,6 +5,7 @@ import DrugRepository from '../../domain/drug/DrugRepository'
 import { API_URL } from '../../utils'
 import DrugAdapter from './adapter/DrugAdapter'
 import DrugJSONAdapter from './adapter/DrugJSONAdapter'
+import DrugInitialData from './DrugInitialData'
 
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
@@ -18,13 +19,14 @@ export default class RestApiDrugRepository implements DrugRepository {
 		})
 	}
 
-	async getAllNames(): Promise<Array<string>> {
+	async getDrugsInitialData(): Promise<Array<DrugInitialData>> {
 		const accessToken = Cookies.get('access_token')
 		const { data } = await axios.get(`${API_URL}/drugs`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		})
+		console.log(data)
 		return data
 	}
 
@@ -69,21 +71,21 @@ export default class RestApiDrugRepository implements DrugRepository {
 	async addFavorite(drugName: string): Promise<void> {
 		const accessToken = Cookies.get('access_token')
 		await axios.post(
-		  `${API_URL}/favorites/${encodeURIComponent(drugName)}`,
-		  null,
-		  {
-			headers: { Authorization: `Bearer ${accessToken}` },
-		  }
+			`${API_URL}/favorites/${encodeURIComponent(drugName)}`,
+			null,
+			{
+				headers: { Authorization: `Bearer ${accessToken}` },
+			}
 		)
-	  }
-	
-	  async removeFavorite(drugName: string): Promise<void> {
+	}
+
+	async removeFavorite(drugName: string): Promise<void> {
 		const accessToken = Cookies.get('access_token')
 		await axios.delete(
-		  `${API_URL}/favorites/${encodeURIComponent(drugName)}`,
-		  {
-			headers: { Authorization: `Bearer ${accessToken}` },
-		  }
+			`${API_URL}/favorites/${encodeURIComponent(drugName)}`,
+			{
+				headers: { Authorization: `Bearer ${accessToken}` },
+			}
 		)
-	  }
+	}
 }

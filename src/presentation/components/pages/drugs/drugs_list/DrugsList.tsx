@@ -4,12 +4,13 @@ import useAppState from '../../../../global_states/appState'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import AddDrugButton from './AddDrugButton'
+import DrugInitialData from '../../../../../infrastrucure/drug/DrugInitialData'
 
 type DrugsListProps = {
-	drugNames: string[]
+	drugsInitialData: DrugInitialData[]
 }
 
-const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
+const DrugsList: React.FC<DrugsListProps> = ({ drugsInitialData }) => {
 	const { loadingInitialData } = useAppState()
 
 	return (
@@ -30,8 +31,8 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugNames }) => {
 							highlightColor="var(--secondary-color)"
 						/>
 				  ))
-				: drugNames.map((drugName) => (
-						<DrugsListItem key={drugName} drugName={drugName} />
+				: drugsInitialData.map((data) => (
+						<DrugsListItem key={data.name} drugInitialData={data} />
 				  ))}
 		</div>
 	)

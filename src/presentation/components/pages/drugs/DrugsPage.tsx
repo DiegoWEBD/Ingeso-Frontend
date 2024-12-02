@@ -2,10 +2,15 @@ import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import useAppState from '../../../global_states/appState'
 import DrugsList from './drugs_list/DrugsList'
+import DrugInitialData from '../../../../infrastrucure/drug/DrugInitialData'
 
 const DrugsPage: React.FC = () => {
-	const drugsNames: Array<string> = useAppState((state) => state.drugsNames)
-	const [filteredDrugNames, setFilteredDrugNames] = useState<string[]>([])
+	const drugsInitialData: Array<DrugInitialData> = useAppState(
+		(state) => state.drugsInitialData
+	)
+	const [filteredDrugsInitialData, setFilteredDrugsInitialData] = useState<
+		DrugInitialData[]
+	>([])
 
 	const formik = useFormik({
 		initialValues: {
@@ -22,38 +27,40 @@ const DrugsPage: React.FC = () => {
 		}, waitTime)
 
 		return () => clearTimeout(timeout)
-	}, [drugsNames, formik.values.userInput])
+	}, [drugsInitialData, formik.values.userInput])
 
 	const filterDrugNames = () => {
-		const filtered = drugsNames.filter((name) =>
-			name.toLowerCase().includes(formik.values.userInput.toLowerCase())
+		const filtered = drugsInitialData.filter((drugInitialData) =>
+			drugInitialData.name
+				.toLowerCase()
+				.includes(formik.values.userInput.toLowerCase())
 		)
-		setFilteredDrugNames(filtered)
+		setFilteredDrugsInitialData(filtered)
 	}
 
 	return (
-		<div className='flex flex-col gap-5'>
-			<h1 className='text-3xl font-bold text-secondary'>Fármacos</h1>
+		<div className="flex flex-col gap-5">
+			<h1 className="text-3xl font-bold text-secondary">Fármacos</h1>
 
-			<form onSubmit={formik.handleSubmit} className='flex gap-5'>
+			<form onSubmit={formik.handleSubmit} className="flex gap-5">
 				<input
-					id='userInput'
-					name='userInput'
-					type='text'
+					id="userInput"
+					name="userInput"
+					type="text"
 					onChange={formik.handleChange}
 					value={formik.values.userInput}
-					placeholder='Introduzca nombre de fármaco para filtrar'
-					className='w-full py-2 px-4 border rounded border-[var(--primary-color)]'
+					placeholder="Introduzca nombre de fármaco para filtrar"
+					className="w-full py-2 px-4 border rounded border-[var(--primary-color)]"
 				/>
 				<button
-					type='button'
+					type="button"
 					onClick={() => formik.resetForm()}
-					className='bg-primary-weak hover:bg-[var(--primary-color)] text-white font-semibold rounded py-2 px-4 hover:shadow hover:shadow-[var(--primary-color-intense)] transition-all'
+					className="bg-primary-weak hover:bg-[var(--primary-color)] text-white font-semibold rounded py-2 px-4 hover:shadow hover:shadow-[var(--primary-color-intense)] transition-all"
 				>
 					Borrar
 				</button>
 			</form>
-			<DrugsList drugNames={filteredDrugNames} />
+			<DrugsList drugsInitialData={filteredDrugsInitialData} />
 		</div>
 	)
 }
