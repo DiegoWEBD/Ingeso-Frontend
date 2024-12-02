@@ -16,7 +16,9 @@ const DrugsPage: React.FC = () => {
 		initialValues: {
 			userInput: '',
 		},
-		onSubmit() {},
+		onSubmit() {
+			return
+		},
 	})
 
 	useEffect(() => {

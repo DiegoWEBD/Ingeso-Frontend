@@ -26,7 +26,6 @@ export default class RestApiDrugRepository implements DrugRepository {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		})
-		console.log(data)
 		return data
 	}
 
