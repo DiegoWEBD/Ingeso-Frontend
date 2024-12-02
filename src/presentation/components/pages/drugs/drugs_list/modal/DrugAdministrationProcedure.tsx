@@ -72,7 +72,7 @@ const DrugAdministrationProcedure: React.FC<
 							return (
 								<div
 									key={administrationProcedure.getMethod()}
-									className="text-secondary-weak flex gap-2 items-start flex flex-col md:flex-row"
+									className="flex gap-2 items-start flex flex-col md:flex-row"
 								>
 									<select
 										name={`administrationProcedures[${index}].method`}
@@ -83,7 +83,7 @@ const DrugAdministrationProcedure: React.FC<
 												e.target.value
 											)
 										}}
-										className="whitespace-nowrap font-medium border border-gray-300 rounded-md px-2 py-1"
+										className="whitespace-nowrap font-medium border border-[var(--input-border-color)] rounded-md px-2 py-1 input"
 									>
 										{availableMethodsForCurrent.map(
 											(method) => (
@@ -102,7 +102,7 @@ const DrugAdministrationProcedure: React.FC<
 											index
 										].getProcedure()}
 										onChange={formik.handleChange}
-										className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full"
+										className="input border border-[var(--input-border-color)] rounded-md px-2 py-1 w-full"
 									/>
 									<button
 										disabled={

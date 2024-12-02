@@ -94,6 +94,21 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 			.catch((error) => showBoundary(error))
 	}
 
+	const handleDeleteDrug = () => {
+		if (!drug) return
+
+		drugRepository
+			.delete(drug)
+			.then(() => {
+				console.log('Fármaco eliminado correctamente.')
+				setDrugsNames(
+					drugsNames.filter((name) => name !== drug.getName())
+				)
+				closeModal()
+			})
+			.catch((error) => showBoundary(error))
+	}
+
 	return (
 		<ModalContainer>
 			<motion.div
@@ -172,7 +187,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 													index
 												].getReaction()}
 												onChange={formik.handleChange}
-												className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full"
+												className="input border border-[var(--input-border-color)] rounded-md px-2 py-1 w-full"
 											/>
 										)
 									)}
@@ -184,16 +199,25 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 					<button
 						type="button"
 						onClick={closeModal}
-						className="absolute top-2 right-2 p-2 text-primary hover:text-primary-intense transition-all"
+						className="absolute top-2 right-2 p-2 text-primary hover:text-[var(--primary-text-color-intense)] transition-all"
 					>
 						<X className="h-6 w-6" />
 					</button>
-					<button
-						type="submit"
-						className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense w-full"
-					>
-						Guardar
-					</button>
+					<div className="space-y-3">
+						<button
+							type="button"
+							className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 hover:font-bold w-full transition-all"
+							onClick={handleDeleteDrug}
+						>
+							Eliminar Fármaco
+						</button>
+						<button
+							type="submit"
+							className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-[var(--primary-color-intense)] hover:font-bold w-full transition-all"
+						>
+							Guardar
+						</button>
+					</div>
 				</form>
 			</motion.div>
 		</ModalContainer>

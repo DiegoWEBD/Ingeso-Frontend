@@ -31,7 +31,7 @@ const Input: React.FC<DrugPresentationProps> = ({
 					name={name}
 					value={value}
 					onChange={onChange}
-					className="text-secondary-weak border rounded-md px-2 py-1 w-full"
+					className="border rounded-md px-2 py-1 w-full input border-[var(--input-border-color)]"
 				/>
 			)}
 		</div>

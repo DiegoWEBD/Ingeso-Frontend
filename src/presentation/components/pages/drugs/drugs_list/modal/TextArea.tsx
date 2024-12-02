@@ -43,7 +43,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 					name={name}
 					value={value}
 					onChange={onChange}
-					className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full h-[7rem] resize-none"
+					className="input border border-[var(--input-border-color)] rounded-md px-2 py-1 w-full h-[7rem] resize-none"
 				/>
 			)}
 		</div>
