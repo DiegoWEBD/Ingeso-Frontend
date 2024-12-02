@@ -87,6 +87,40 @@ body {
 	--card-bg-color: #111827;
 }
 
+[data-theme='grey'] {
+	--primary-color-extra-weak: #e5e7eb;
+	--primary-color-weak: #334155; /* Color 3; */
+	--primary-color: #1e293b; /* Color 2; */
+	--primary-color-intense: #0f172a; /* Color 1; */
+
+	--primary-text-color: white; /* Color 2; */
+	--primary-text-color-intense: white; /* Color 1; */
+	--secondary-text-color: white;
+	--secondary-text-color-weak: #94a3b8;
+
+	--secondary-color: #64748b;
+	--secondary-color-intense: #1e293b; /* Carga..; */
+
+	--card-bg-color: #1e293b;
+}
+
+[data-theme='pink'] {
+	--primary-color-extra-weak: #e0fcff;
+	--primary-color-weak: #fda4af;
+	--primary-color: #fb7185;
+	--primary-color-intense: white;
+
+	--primary-text-color: #881337;
+	--primary-text-color-intense: #4c0519;
+	--secondary-text-color: #4c0519;
+	--secondary-text-color-weak: #475569;
+
+	--secondary-color: #fecdd3;
+	--secondary-color-intense: #fda4af;
+
+	--card-bg-color: white;
+}
+
 .bg-primary {
 	background: var(--primary-color);
 }

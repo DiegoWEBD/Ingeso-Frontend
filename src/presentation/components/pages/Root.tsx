@@ -30,7 +30,7 @@ const Root: React.FC = () => {
 	return (
 		<AppContainer>
 			<Dashboard />
-			<div className='w-full h-full'>
+			<div className="w-full h-full">
 				<BodyContainer>
 					<Outlet />
 				</BodyContainer>
