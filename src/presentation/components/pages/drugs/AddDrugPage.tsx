@@ -14,7 +14,7 @@ type AddDrugPageProps = {
 }
 
 const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
-	const { drugRepository, drugsNames, setDrugsNames } = useAppState()
+	const { drugRepository, drugsInitialData, setDrugsNames } = useAppState()
 
 	const [name, setName] = useState('')
 	const [presentation, setPresentation] = useState('')
@@ -55,7 +55,10 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 		try {
 			console.log('trying to add')
 			await drugRepository.add(drug)
-			setDrugsNames([...drugsNames, drug.getName()])
+			setDrugsNames([
+				...drugsInitialData,
+				{ name: drug.getName(), favorite: false },
+			])
 			console.log('Fármaco registrado:', drug)
 
 			// Limpiar los campos

@@ -26,7 +26,7 @@ export interface FormValues {
 }
 
 const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
-	const { drugRepository, setDrugsNames, drugsNames } = useAppState()
+	const { drugRepository, setDrugsNames, drugsInitialData } = useAppState()
 	const { showBoundary } = useErrorBoundary()
 
 	const validate = (values: FormValues): FormikErrors<FormValues> => {
@@ -71,7 +71,10 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 			.add(drug)
 			.then(() => {
 				console.log('Fármaco agregado correctamente')
-				setDrugsNames([...drugsNames, drug.getName()])
+				setDrugsNames([
+					...drugsInitialData,
+					{ name: drug.getName(), favorite: false },
+				])
 				closeModal()
 			})
 			.catch((error) => showBoundary(error))

@@ -36,7 +36,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 	loading,
 	setDrug,
 }) => {
-	const { drugRepository, setDrugsNames, drugsNames } = useAppState()
+	const { drugRepository, setDrugsNames, drugsInitialData } = useAppState()
 	const { showBoundary } = useErrorBoundary()
 
 	const validate = (values: FormValues): FormikErrors<FormValues> => {
@@ -84,8 +84,13 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 			.then(() => {
 				console.log('Fármaco modificado correctamente')
 				setDrugsNames(
-					drugsNames.map((name) =>
-						name === drug.getName() ? newValues.getName() : name
+					drugsInitialData.map((data) =>
+						data.name === drug.getName()
+							? {
+									name: newValues.getName(),
+									favorite: data.favorite,
+							  }
+							: data
 					)
 				)
 				setDrug(newValues)
@@ -102,7 +107,9 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 			.then(() => {
 				console.log('Fármaco eliminado correctamente.')
 				setDrugsNames(
-					drugsNames.filter((name) => name !== drug.getName())
+					drugsInitialData.filter(
+						(data) => data.name !== drug.getName()
+					)
 				)
 				closeModal()
 			})
