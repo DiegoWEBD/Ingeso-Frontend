@@ -6,7 +6,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({
 	error,
 	resetErrorBoundary,
 }) => {
-	console.log('from error fallback', error)
+	console.log('from error fallback', error) // Error, AxiosError
 	return (
 		<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
 			<div className="text-center bg-white border flex flex-col items-center gap-4 px-5 py-7 rounded-md shadow-md md:w-[25rem]">

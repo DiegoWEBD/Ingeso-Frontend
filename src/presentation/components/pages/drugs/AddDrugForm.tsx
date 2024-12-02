@@ -1,25 +1,20 @@
 import { FormikErrors, useFormik } from 'formik'
 import { motion } from 'framer-motion'
 import { Pill, X } from 'lucide-react'
-import React from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
-import Skeleton from 'react-loading-skeleton'
-import AdministrationProcedure from '../../../../../../domain/administration_procedure/AdministrationProcedure'
-import Drug from '../../../../../../domain/drug/Drug'
-import Ram from '../../../../../../domain/ram/Ram'
-import useAppState from '../../../../../global_states/appState'
-import ModalContainer from '../../../../containers/ModalContainer'
-import DrugAdministrationProcedure from './DrugAdministrationProcedure'
-import DrugInfoContainer from './DrugInfoContainer'
-import DrugInfoLabel from './DrugInfoLabel'
-import Input from './Input'
-import TextArea from './TextArea'
+import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
+import Drug from '../../../../domain/drug/Drug'
+import Ram from '../../../../domain/ram/Ram'
+import useAppState from '../../../global_states/appState'
+import ModalContainer from '../../containers/ModalContainer'
+import DrugAdministrationProcedure from './drugs_list/modal/DrugAdministrationProcedure'
+import DrugInfoContainer from './drugs_list/modal/DrugInfoContainer'
+import DrugInfoLabel from './drugs_list/modal/DrugInfoLabel'
+import Input from './drugs_list/modal/Input'
+import TextArea from './drugs_list/modal/TextArea'
 
 type DrugItemModalProps = {
 	closeModal: () => void
-	setDrug: (drug: Drug) => void
-	drug: Drug | null
-	loading: boolean
 }
 
 export interface FormValues {
@@ -30,12 +25,7 @@ export interface FormValues {
 	rams: Array<Ram>
 }
 
-const DrugItemModal: React.FC<DrugItemModalProps> = ({
-	closeModal,
-	drug,
-	loading,
-	setDrug,
-}) => {
+const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 	const { drugRepository, setDrugsNames, drugsNames } = useAppState()
 	const { showBoundary } = useErrorBoundary()
 
@@ -55,11 +45,11 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 
 	const formik = useFormik<FormValues>({
 		initialValues: {
-			name: drug?.getName() || '',
-			presentation: drug?.getPresentation() || '',
-			description: drug?.getDescription() || '',
-			administrationProcedures: drug?.getAdministrationProcedures() || [],
-			rams: drug?.getRams() || [],
+			name: '',
+			presentation: '',
+			description: '',
+			administrationProcedures: [],
+			rams: [new Ram('')],
 		},
 		onSubmit: (values) => {
 			handleSubmit(values)
@@ -69,9 +59,7 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 	})
 
 	const handleSubmit = (values: FormValues) => {
-		if (!drug) return
-
-		const newValues = new Drug(
+		const drug = new Drug(
 			values.name,
 			values.presentation,
 			values.description,
@@ -80,15 +68,10 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 		)
 
 		drugRepository
-			.update(drug.getName(), newValues)
+			.add(drug)
 			.then(() => {
-				console.log('Fármaco modificado correctamente')
-				setDrugsNames(
-					drugsNames.map((name) =>
-						name === drug.getName() ? newValues.getName() : name
-					)
-				)
-				setDrug(newValues)
+				console.log('Fármaco agregado correctamente')
+				setDrugsNames([...drugsNames, drug.getName()])
 				closeModal()
 			})
 			.catch((error) => showBoundary(error))
@@ -113,7 +96,6 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 						<Input
 							name="name"
 							label="Nombre"
-							loading={loading}
 							value={formik.values.name}
 							onChange={formik.handleChange}
 						/>
@@ -121,7 +103,6 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 						<Input
 							name="presentation"
 							label="Presentación"
-							loading={loading}
 							value={formik.values.presentation}
 							onChange={formik.handleChange}
 						/>
@@ -131,13 +112,9 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 							label="Descripción"
 							value={formik.values.description}
 							onChange={formik.handleChange}
-							loading={loading}
 						/>
 
-						<DrugAdministrationProcedure
-							loading={loading}
-							formik={formik}
-						/>
+						<DrugAdministrationProcedure formik={formik} />
 						{formik.errors.administrationProcedures && (
 							<p className="text-xs text-red-500 italic">
 								{formik.errors.administrationProcedures.toString()}
@@ -148,36 +125,14 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 							<DrugInfoLabel>
 								Reacciones adversas a medicamentos
 							</DrugInfoLabel>
-							{loading ? (
-								<>
-									<Skeleton
-										className="h-4 w-full mb-2"
-										baseColor="var(--secondary-color)"
-										highlightColor="var(--secondary-color-intense)"
-									/>
-									<Skeleton
-										className="h-4 w-5/6 mb-2"
-										baseColor="var(--secondary-color)"
-										highlightColor="var(--secondary-color-intense)"
-									/>
-								</>
-							) : (
-								<div className="space-y-2">
-									{formik.values.rams.map(
-										(_, index: number) => (
-											<textarea
-												key={index}
-												name={`rams[${index}].reaction`}
-												value={formik.values.rams[
-													index
-												].getReaction()}
-												onChange={formik.handleChange}
-												className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full"
-											/>
-										)
-									)}
-								</div>
-							)}
+							<div className="space-y-2">
+								<textarea
+									name={`rams[0].reaction`}
+									value={formik.values.rams[0].getReaction()}
+									onChange={formik.handleChange}
+									className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full"
+								/>
+							</div>
 						</div>
 					</DrugInfoContainer>
 
@@ -200,4 +155,4 @@ const DrugItemModal: React.FC<DrugItemModalProps> = ({
 	)
 }
 
-export default DrugItemModal
+export default AddDrugForm

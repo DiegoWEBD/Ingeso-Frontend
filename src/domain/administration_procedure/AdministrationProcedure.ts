@@ -8,4 +8,8 @@ export default class AdministrationProcedure {
 	getProcedure(): string {
 		return this.procedure
 	}
+
+	clone(): AdministrationProcedure {
+		return new AdministrationProcedure(this.method, this.procedure)
+	}
 }
