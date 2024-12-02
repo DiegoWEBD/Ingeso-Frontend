@@ -4,4 +4,8 @@ export default class Ram {
 	getReaction(): string {
 		return this.reaction
 	}
+
+	clone(): Ram {
+		return new Ram(this.reaction)
+	}
 }
