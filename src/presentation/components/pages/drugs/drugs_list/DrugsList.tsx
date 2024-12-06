@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import AddDrugButton from './AddDrugButton'
 import DrugInitialData from '../../../../../infrastrucure/drug/DrugInitialData'
+import ProtectedComponent from '../../../protected/ProtectedComponent'
 
 type DrugsListProps = {
 	drugsInitialData: DrugInitialData[]
@@ -20,7 +21,11 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugsInitialData }) => {
 				gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 			}}
 		>
-			{!loadingInitialData && <AddDrugButton />}
+			{!loadingInitialData && (
+				<ProtectedComponent>
+					<AddDrugButton />
+				</ProtectedComponent>
+			)}
 
 			{loadingInitialData
 				? Array.from({ length: 6 }).map((_, index) => (

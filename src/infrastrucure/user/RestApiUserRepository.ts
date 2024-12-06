@@ -29,8 +29,6 @@ export default class RestApiUserRepository implements UserRepository {
 			await axios.get(`${API_URL}/refresh`, { headers })
 		}
 
-		//const { data } = await axios.get(`${API_URL}/user`, { headers })
-
 		return data.user ? UserAdapter.FromRestApi(data.user) : null
 	}
 
