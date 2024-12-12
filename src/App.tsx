@@ -9,6 +9,7 @@ import HomePage from './presentation/components/pages/home/HomePage'
 import LoginPage from './presentation/components/pages/login/LoginPage'
 import PageNotFound from './presentation/components/pages/not_found/PageNotFound'
 import ProfilePage from './presentation/components/pages/profile/ProfilePage'
+import FavoritesPage from './presentation/components/pages/favorites/FavoritesPage'
 
 const router = createBrowserRouter([
 	{
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
 			{
 				path: 'farmacos',
 				element: <ProtectedRoute children={<DrugsPage />} />,
+			},
+
+			{
+				path: 'favoritos',
+				element: <ProtectedRoute children={<FavoritesPage />} />,
 			},
 
 			{

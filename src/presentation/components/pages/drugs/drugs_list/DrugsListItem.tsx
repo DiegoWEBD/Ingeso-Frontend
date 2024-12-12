@@ -19,6 +19,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugInitialData }) => {
 		drugInitialData.favorite
 	)
 	const { showBoundary } = useErrorBoundary()
+	const { drugsInitialData, setDrugsNames} = useAppState()
 
 	const drugRepository: DrugRepository = useAppState(
 		(state) => state.drugRepository
@@ -31,6 +32,13 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugInitialData }) => {
 			await drugRepository.addFavorite(drugInitialData.name)
 		}
 		setIsFavorite(!isFavorite)
+		setDrugsNames(
+			drugsInitialData.map((drug) =>
+				drug.name === drugInitialData.name
+					? { ...drug, favorite: !isFavorite }
+					: drug
+			)
+		)
 	}
 
 	const onClick = () => {
