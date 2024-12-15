@@ -11,6 +11,7 @@ export default defineConfig({
 			strategies: 'injectManifest',
 			srcDir: 'src',
 			filename: 'service-worker.ts',
+
 			injectManifest: {
 				swSrc: 'src/service-worker.ts',
 				swDest: 'dist/service-worker.js',
@@ -18,6 +19,8 @@ export default defineConfig({
 			manifest: {
 				name: 'Guía Farmacología',
 				short_name: 'Farmacología',
+				start_url: '/',
+				display: 'standalone',
 				description:
 					'Guía de consulta rápida sobre cuidados de Enfermería en la administración de fármacos.',
 				theme_color: '#ffffff',
