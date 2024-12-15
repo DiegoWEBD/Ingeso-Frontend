@@ -32,6 +32,7 @@
 	--input-bg-color: white;
 	--input-text-color: #1f2937;
 	--input-border-color: #d1d5db;
+	--disabled-input-background-color: #f3f4f6;
 
 	--card-bg-color: white;
 }
@@ -57,6 +58,7 @@ body {
 	--input-bg-color: white;
 	--input-text-color: #1f2937;
 	--input-border-color: #d1d5db;
+	--disabled-input-background-color: #f3f4f6;
 
 	--card-bg-color: white;
 }
@@ -78,6 +80,7 @@ body {
 	--input-bg-color: white;
 	--input-text-color: #1f2937;
 	--input-border-color: #d1d5db;
+	--disabled-input-background-color: #f3f4f6;
 
 	--card-bg-color: white;
 }
@@ -99,6 +102,7 @@ body {
 	--input-bg-color: #1f2937;
 	--input-text-color: #f3f4f6;
 	--input-border-color: #1f2937;
+	--disabled-input-background-color: #f3f4f6;
 
 	--card-bg-color: #111827;
 }
@@ -117,6 +121,11 @@ body {
 	--secondary-color: #64748b;
 	--secondary-color-intense: #1e293b; /* Carga..; */
 
+	--input-bg-color: #1f2937;
+	--input-text-color: #f3f4f6;
+	--input-border-color: #1f2937;
+	--disabled-input-background-color: #f3f4f6;
+
 	--card-bg-color: #1e293b;
 }
 
@@ -133,6 +142,11 @@ body {
 
 	--secondary-color: #fecdd3;
 	--secondary-color-intense: #fda4af;
+
+	--input-bg-color: #1f2937;
+	--input-text-color: #f3f4f6;
+	--input-border-color: #1f2937;
+	--disabled-input-background-color: #f3f4f6;
 
 	--card-bg-color: white;
 }

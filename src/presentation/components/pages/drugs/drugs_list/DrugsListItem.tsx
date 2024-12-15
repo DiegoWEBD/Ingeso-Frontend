@@ -4,8 +4,9 @@ import { useErrorBoundary } from 'react-error-boundary'
 import Drug from '../../../../../domain/drug/Drug'
 import DrugRepository from '../../../../../domain/drug/DrugRepository'
 import useAppState from '../../../../global_states/appState'
-import DrugItemModal from './modal/DrugItemModal'
+import DrugItemForm from './drug_form/DrugItemForm'
 import DrugInitialData from '../../../../../infrastrucure/drug/DrugInitialData'
+import ModalContainer from '../../../containers/ModalContainer'
 
 type DrugsListItemProps = {
 	drugInitialData: DrugInitialData
@@ -79,12 +80,13 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugInitialData }) => {
 			/>
 
 			{modalVisible && (
-				<DrugItemModal
-					closeModal={closeModal}
-					drug={drug}
-					loading={loading}
-					setDrug={setDrug}
-				/>
+				<ModalContainer>
+					<DrugItemForm
+						closeModal={closeModal}
+						drug={drug}
+						loading={loading}
+					/>
+				</ModalContainer>
 			)}
 		</div>
 	)

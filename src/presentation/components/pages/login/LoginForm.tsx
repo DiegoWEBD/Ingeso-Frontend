@@ -1,18 +1,18 @@
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google'
-import axios, { AxiosError } from 'axios'
-import Cookies from 'js-cookie'
-import React from 'react'
+import { AxiosError } from 'axios'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useErrorBoundary } from 'react-error-boundary'
-import UserAdapter from '../../../../infrastrucure/user/adapter/UserAdapter'
-import { API_URL } from '../../../../utils'
 import useAppState from '../../../global_states/appState'
 import AppTitle from '../../AppTitle'
+import { useAuthService } from '../../custom_hooks/useAuthService'
 import LoginButton from './LoginButton'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()
+	const [role, setRole] = useState<string>('')
+	const apiLogin = useAuthService()
 
 	const navigate = useNavigate()
 	const { showBoundary } = useErrorBoundary()
@@ -20,26 +20,10 @@ const LoginForm: React.FC = () => {
 	const handleSuccess = (
 		response: Omit<TokenResponse, 'err' | 'error_description' | 'error_uri'>
 	) => {
-		axios
-			.post(`${API_URL}/auth`, {
-				google_access_token: response.access_token,
-				token_type: response.token_type,
-			})
-			.then((res) => res.data)
-			.then((data) => {
-				Cookies.set('access_token', data.access_token, {
-					expires: 1,
-					secure: true,
-					sameSite: 'Lax',
-				})
-
-				Cookies.set('refresh_token', data.refresh_token, {
-					expires: 28,
-					secure: true,
-					sameSite: 'Lax',
-				})
-
-				setUser(UserAdapter.FromRestApi(data.user))
+		apiLogin(response.access_token, response.token_type, role)
+			.then((user) => {
+				console.log(user)
+				setUser(user)
 				navigate('/farmacos')
 			})
 			.catch((error: AxiosError) => {
@@ -51,7 +35,7 @@ const LoginForm: React.FC = () => {
 		showBoundary(error)
 	}
 
-	const login = useGoogleLogin({
+	const googleLogin = useGoogleLogin({
 		onSuccess: handleSuccess,
 		onError: (error: any) => handleError(error),
 		scope: 'email profile',
@@ -62,10 +46,20 @@ const LoginForm: React.FC = () => {
 			<div className="rounded-md p-7 text-center bg-card text-primary sm:w-[25rem] h-fit flex flex-col items-center gap-5 shadow-md">
 				<img src="logo_ucn.png" className="w-[9rem]" />
 				<AppTitle className="text-primary" />
-				<LoginButton onClick={() => login()}>
+				<LoginButton
+					onClick={() => {
+						setRole('teacher')
+						googleLogin()
+					}}
+				>
 					Acceso Docentes
 				</LoginButton>
-				<LoginButton onClick={() => login()}>
+				<LoginButton
+					onClick={() => {
+						setRole('student')
+						googleLogin()
+					}}
+				>
 					Acceso Estudiantes
 				</LoginButton>
 			</div>

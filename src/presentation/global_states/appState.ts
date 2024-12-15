@@ -1,11 +1,12 @@
+import Cookies from 'js-cookie'
 import { create } from 'zustand'
 import DrugRepository from '../../domain/drug/DrugRepository'
-import RestApiDrugRepository from '../../infrastrucure/drug/RestApiDrugRepository'
 import User from '../../domain/user/User'
 import UserRepository from '../../domain/user/UserRepository'
-import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepository'
-import Cookies from 'js-cookie'
 import DrugInitialData from '../../infrastrucure/drug/DrugInitialData'
+import RestApiDrugRepository from '../../infrastrucure/drug/RestApiDrugRepository'
+import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepository'
+import Teacher from '../../domain/teacher/Teacher'
 
 type AppState = {
 	user: User | null
@@ -17,6 +18,7 @@ type AppState = {
 	setUser: (user: User) => void
 	setDrugsNames: (drugsInitialData: DrugInitialData[]) => void
 	setTheme: (themeId: string) => void
+	isTeacher: () => boolean
 	isAppInstaled: () => boolean
 }
 
@@ -63,6 +65,12 @@ const useAppState = create<AppState>((set) => {
 		setTheme: (themeId: string) => {
 			document.querySelector('body')?.setAttribute('data-theme', themeId)
 			localStorage.setItem('data-theme', themeId)
+		},
+
+		isTeacher: (): boolean => {
+			const state = useAppState.getState()
+			console.log(state.user)
+			return state.user !== null && state.user instanceof Teacher
 		},
 
 		isAppInstaled: (): boolean => {

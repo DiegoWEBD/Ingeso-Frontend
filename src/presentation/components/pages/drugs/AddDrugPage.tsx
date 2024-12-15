@@ -6,7 +6,7 @@ import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
 import useAppState from '../../../global_states/appState'
 import ModalContainer from '../../containers/ModalContainer'
-import DrugInfoContainer from './drugs_list/modal/DrugInfoContainer'
+import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
 import { motion } from 'framer-motion'
 
 type AddDrugPageProps = {

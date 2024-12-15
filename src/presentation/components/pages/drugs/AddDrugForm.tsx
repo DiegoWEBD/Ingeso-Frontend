@@ -2,27 +2,19 @@ import { FormikErrors, useFormik } from 'formik'
 import { motion } from 'framer-motion'
 import { Pill, X } from 'lucide-react'
 import { useErrorBoundary } from 'react-error-boundary'
-import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
 import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
 import useAppState from '../../../global_states/appState'
 import ModalContainer from '../../containers/ModalContainer'
-import DrugAdministrationProcedure from './drugs_list/modal/DrugAdministrationProcedure'
-import DrugInfoContainer from './drugs_list/modal/DrugInfoContainer'
-import DrugInfoLabel from './drugs_list/modal/DrugInfoLabel'
-import Input from './drugs_list/modal/Input'
-import TextArea from './drugs_list/modal/TextArea'
+import Input from '../../generic_components/input/Input'
+import TextAreaWithSkeleton from '../../generic_components/text_area/TextAreaWithSkeleton'
+import DrugAdministrationProcedure from './drugs_list/drug_form/DrugAdministrationProcedure'
+import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
+import DrugInfoLabel from './drugs_list/drug_form/DrugInfoLabel'
+import { FormValues } from './drugs_list/drug_form/hooks/useDrugForm'
 
 type DrugItemModalProps = {
 	closeModal: () => void
-}
-
-export interface FormValues {
-	name: string
-	presentation: string
-	description: string
-	administrationProcedures: Array<AdministrationProcedure>
-	rams: Array<Ram>
 }
 
 const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
@@ -110,7 +102,7 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 							onChange={formik.handleChange}
 						/>
 
-						<TextArea
+						<TextAreaWithSkeleton
 							name="description"
 							label="Descripción"
 							value={formik.values.description}
