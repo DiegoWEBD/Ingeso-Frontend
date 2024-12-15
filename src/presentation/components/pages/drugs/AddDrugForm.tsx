@@ -7,7 +7,7 @@ import Ram from '../../../../domain/ram/Ram'
 import useAppState from '../../../global_states/appState'
 import ModalContainer from '../../containers/ModalContainer'
 import Input from '../../generic_components/input/Input'
-import TextArea from '../../generic_components/text_area/TextArea'
+import TextAreaWithSkeleton from '../../generic_components/text_area/TextAreaWithSkeleton'
 import DrugAdministrationProcedure from './drugs_list/drug_form/DrugAdministrationProcedure'
 import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
 import DrugInfoLabel from './drugs_list/drug_form/DrugInfoLabel'
@@ -102,7 +102,7 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 							onChange={formik.handleChange}
 						/>
 
-						<TextArea
+						<TextAreaWithSkeleton
 							name="description"
 							label="Descripción"
 							value={formik.values.description}
