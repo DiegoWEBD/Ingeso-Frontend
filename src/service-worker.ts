@@ -1,6 +1,8 @@
 /// <reference lib="webworker" />
 import { setCacheNameDetails } from 'workbox-core'
 import { precacheAndRoute } from 'workbox-precaching'
+import { NetworkFirst } from 'workbox-strategies'
+import { registerRoute } from 'workbox-routing'
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -25,6 +27,14 @@ self.addEventListener('install', (event) => {
 	event.waitUntil(self.skipWaiting())
 })
 
+registerRoute(
+	({ url }) =>
+		url.pathname.startsWith('https://ingeso-backend.onrender.com/drugs'),
+	new NetworkFirst({
+		cacheName: 'api-drugs-cache',
+	})
+)
+
 // Example: Cache API data (e.g., drug data)
 self.addEventListener('fetch', (event) => {
 	const fetchEvent = event as FetchEvent
@@ -37,11 +47,4 @@ self.addEventListener('fetch', (event) => {
 			return fetch(event.request)
 		})()
 	)
-})
-
-// Listen for messages from the app (e.g., manual cache updates)
-self.addEventListener('message', (event) => {
-	if (event.data && event.data.type === 'SKIP_WAITING') {
-		self.skipWaiting()
-	}
 })
