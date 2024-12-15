@@ -34,7 +34,14 @@ registerRoute(
 	new NetworkFirst({
 		cacheName: 'api-drugs-cache',
 		plugins: [
-			// Add plugins here if needed, like expiration or request integrity
+			{
+				cacheWillUpdate: async ({ request, response }) => {
+					if (response && response.ok) {
+						return response // If response is okay, update cache
+					}
+					return null // If not, return null
+				},
+			},
 		],
 	})
 )
