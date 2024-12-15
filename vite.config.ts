@@ -10,7 +10,7 @@ export default defineConfig({
 			registerType: 'autoUpdate',
 			strategies: 'injectManifest',
 			srcDir: 'src',
-			filename: 'service-worker.js',
+			filename: 'service-worker.ts',
 			manifest: {
 				name: 'Guía Farmacología',
 				short_name: 'Farmacología',
