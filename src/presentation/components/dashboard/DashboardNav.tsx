@@ -1,6 +1,6 @@
 import React from 'react'
 import DashboardTab from './DashboardTab'
-import { Home, Pill, LogIn, User } from 'lucide-react'
+import { Home, Pill, LogIn, User, Star } from 'lucide-react'
 import Cookies from 'js-cookie'
 
 type DashboardNavProps = {
@@ -26,6 +26,14 @@ const DashboardNav: React.FC<DashboardNavProps> = ({ isOpen, closeNav }) => {
 					icon={<Pill />}
 					title='Fármacos'
 					to='/farmacos'
+					closeNav={closeNav}
+				/>
+			)}
+			{accessToken && (
+				<DashboardTab
+					icon={<Star />}
+					title='Favoritos'
+					to='/favoritos'
 					closeNav={closeNav}
 				/>
 			)}
