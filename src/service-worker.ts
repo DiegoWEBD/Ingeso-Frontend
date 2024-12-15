@@ -1,8 +1,6 @@
 /// <reference lib="webworker" />
 import { setCacheNameDetails } from 'workbox-core'
 import { precacheAndRoute } from 'workbox-precaching'
-import { registerRoute } from 'workbox-routing'
-import { CacheFirst, NetworkFirst } from 'workbox-strategies'
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -28,33 +26,18 @@ self.addEventListener('install', (event) => {
 })
 
 // Example: Cache API data (e.g., drug data)
-registerRoute(
-	({ url }) =>
-		url.pathname.startsWith('https://ingeso-backend.onrender.com/drugs'),
-	new NetworkFirst({
-		cacheName: 'api-drugs-cache',
-		plugins: [
-			{
-				cacheWillUpdate: async ({ request, response }) => {
-					console.log(request)
-					if (response && response.ok) {
-						return response // If response is okay, update cache
-					}
-					return null // If not, return null
-				},
-			},
-		],
-	})
-)
+self.addEventListener('fetch', (event) => {
+	const fetchEvent = event as FetchEvent
+	fetchEvent.respondWith(
+		(async function () {
+			const cache = await caches.open('my-app-cache')
+			const cachedResponse = await cache.match(fetchEvent.request)
 
-// Example: Cache static assets
-registerRoute(
-	({ request }) =>
-		request.destination === 'script' || request.destination === 'style',
-	new CacheFirst({
-		cacheName: 'static-resources-cache',
-	})
-)
+			if (cachedResponse !== undefined) return cachedResponse
+			return fetch(event.request)
+		})()
+	)
+})
 
 // Listen for messages from the app (e.g., manual cache updates)
 self.addEventListener('message', (event) => {
