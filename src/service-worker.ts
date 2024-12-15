@@ -36,6 +36,7 @@ registerRoute(
 		plugins: [
 			{
 				cacheWillUpdate: async ({ request, response }) => {
+					console.log(request)
 					if (response && response.ok) {
 						return response // If response is okay, update cache
 					}
