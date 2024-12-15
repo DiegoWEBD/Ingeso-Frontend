@@ -21,11 +21,21 @@ export default class RestApiDrugRepository implements DrugRepository {
 
 	async getDrugsInitialData(): Promise<Array<DrugInitialData>> {
 		const accessToken = Cookies.get('access_token')
+		/*
 		const { data } = await axios.get(`${API_URL}/drugs`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		})
+		return data*/
+		const response = await fetch(`${API_URL}/drugs`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		})
+		const data = await response.json()
+		console.log(data)
+
 		return data
 	}
 
