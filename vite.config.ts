@@ -8,6 +8,9 @@ export default defineConfig({
 		react(),
 		VitePWA({
 			registerType: 'autoUpdate',
+			strategies: 'injectManifest',
+			srcDir: 'src',
+			filename: 'service-worker.js',
 			manifest: {
 				name: 'Guía Farmacología',
 				short_name: 'Farmacología',
