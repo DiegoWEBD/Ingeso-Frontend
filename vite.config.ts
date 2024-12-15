@@ -11,6 +11,10 @@ export default defineConfig({
 			strategies: 'injectManifest',
 			srcDir: 'src',
 			filename: 'service-worker.ts',
+			injectManifest: {
+				swSrc: 'src/service-worker.ts',
+				swDest: 'dist/service-worker.js',
+			},
 			manifest: {
 				name: 'Guía Farmacología',
 				short_name: 'Farmacología',
