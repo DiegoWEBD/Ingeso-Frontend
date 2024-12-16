@@ -1,20 +1,17 @@
+import { motion } from 'framer-motion'
 import { Pill, PlusCircle, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { useErrorBoundary } from 'react-error-boundary'
 import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
-import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
-import useAppState from '../../../global_states/appState'
 import ModalContainer from '../../containers/ModalContainer'
 import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
-import { motion } from 'framer-motion'
 
 type AddDrugPageProps = {
 	closeModal: () => void
 }
 
 const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
-	const { drugRepository, drugsInitialData, setDrugsNames } = useAppState()
+	//const { drugRepository, drugsInitialData, setDrugsNames } = useAppState()
 
 	const [name, setName] = useState('')
 	const [presentation, setPresentation] = useState('')
@@ -28,13 +25,14 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 	const [tempRam, setTempRam] = useState('')
 	const [tempProcedure, setTempProcedure] = useState('')
 
-	const { showBoundary } = useErrorBoundary()
+	//const { showBoundary } = useErrorBoundary()
 
-	const [confirmationModalVisible, setConfirmationModalVisible] =
-		useState(false)
+	const [_, setConfirmationModalVisible] = useState(false)
 
 	useEffect(() => {
-		setSubmitEnabled(name !== '' && presentation !== '' && description !== '')
+		setSubmitEnabled(
+			name !== '' && presentation !== '' && description !== ''
+		)
 	}, [name, presentation, description])
 
 	const handleFormSubmit = (e: React.FormEvent) => {
@@ -44,42 +42,6 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 			return
 		}
 		setConfirmationModalVisible(true)
-	}
-	const confirmSubmit = () => {
-		setConfirmationModalVisible(false)
-		handleSubmit()
-	}
-
-	const handleSubmit = async () => {
-		const drug = new Drug(
-			name,
-			presentation,
-			description,
-			rams,
-			administrationProcedures
-		)
-
-		try {
-			console.log('trying to add')
-			await drugRepository.add(drug)
-			setDrugsNames([
-				...drugsInitialData,
-				{ name: drug.getName(), favorite: false },
-			])
-			console.log('Fármaco registrado:', drug)
-
-			// Limpiar los campos
-			setName('')
-			setPresentation('')
-			setDescription('')
-			setRams([])
-			setAdministrationProcedures([])
-			setTempRam('')
-			setTempProcedure('')
-		} catch (error) {
-			showBoundary(error)
-			console.error('Error al registrar el fármaco:', error)
-		}
 	}
 
 	return (
@@ -100,7 +62,9 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 					<DrugInfoContainer>
 						{/* Campo Nombre */}
 						<div className="flex flex-col gap-1">
-							<label className="font-bold text-lg text-primary">Nombre</label>
+							<label className="font-bold text-lg text-primary">
+								Nombre
+							</label>
 							<input
 								className="text-gray-700 border rounded-md border-gray-300 w-full"
 								type="text"
@@ -119,7 +83,9 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 								className="text-gray-700 border rounded-md border-gray-300 w-full"
 								type="text"
 								value={presentation}
-								onChange={(e) => setPresentation(e.target.value)}
+								onChange={(e) =>
+									setPresentation(e.target.value)
+								}
 								required
 							/>
 						</div>
@@ -139,7 +105,9 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 
 						{/* RAMs */}
 						<div className="flex flex-col gap-1">
-							<label className="font-bold text-lg text-primary">RAMs</label>
+							<label className="font-bold text-lg text-primary">
+								RAMs
+							</label>
 							<div className="flex gap-2">
 								<input
 									className="text-gray-700 border rounded-md border-gray-300 w-full"
@@ -152,7 +120,10 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 										type="button"
 										onClick={() => {
 											if (tempRam) {
-												setRams((prev) => [...prev, new Ram(tempRam)])
+												setRams((prev) => [
+													...prev,
+													new Ram(tempRam),
+												])
 												setTempRam('')
 											}
 										}}
@@ -181,20 +152,24 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 									className="text-gray-700 border rounded-md border-gray-300 w-full"
 									type="text"
 									value={tempProcedure}
-									onChange={(e) => setTempProcedure(e.target.value)}
+									onChange={(e) =>
+										setTempProcedure(e.target.value)
+									}
 								/>
 								{tempProcedure !== '' && (
 									<button
 										type="button"
 										onClick={() => {
 											if (tempProcedure) {
-												setAdministrationProcedures((prev) => [
-													...prev,
-													new AdministrationProcedure(
-														tempProcedure,
-														'Descripción del procedimiento'
-													),
-												])
+												setAdministrationProcedures(
+													(prev) => [
+														...prev,
+														new AdministrationProcedure(
+															tempProcedure,
+															'Descripción del procedimiento'
+														),
+													]
+												)
 												setTempProcedure('')
 											}
 										}}
@@ -207,11 +182,14 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 								)}
 							</div>
 							<ul>
-								{administrationProcedures.map((procedure, index) => (
-									<li key={index}>
-										{procedure.getMethod()} - {procedure.getProcedure()}
-									</li>
-								))}
+								{administrationProcedures.map(
+									(procedure, index) => (
+										<li key={index}>
+											{procedure.getMethod()} -{' '}
+											{procedure.getProcedure()}
+										</li>
+									)
+								)}
 							</ul>
 						</div>
 					</DrugInfoContainer>

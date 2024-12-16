@@ -20,7 +20,11 @@ const DrugAdministrationProcedure: React.FC<
 > = ({ loading, disabled, formik }) => {
 	const { isTeacher } = useAppState()
 
-	const allMethods = ['bolo directo', 'bolo intermitente', 'infusión continua']
+	const allMethods = [
+		'bolo directo',
+		'bolo intermitente',
+		'infusión continua',
+	]
 
 	const usedMethods = (): string[] => {
 		return formik.values.administrationProcedures
@@ -57,7 +61,10 @@ const DrugAdministrationProcedure: React.FC<
 									disabled={disabled}
 									className="whitespace-nowrap font-medium border border-[var(--input-border-color)] rounded-md px-2 py-1 input"
 								>
-									{[ap.getMethod(), ...availableMethods()].map((method) => (
+									{[
+										ap.getMethod(),
+										...availableMethods(),
+									].map((method) => (
 										<option key={method} value={method}>
 											{method}
 										</option>
@@ -73,6 +80,7 @@ const DrugAdministrationProcedure: React.FC<
 								value={ap.getProcedure()}
 								onChange={formik.handleChange}
 								disabled={disabled}
+								onBlur={formik.handleBlur}
 								className="h-fit"
 							/>
 							<ProtectedComponent>
@@ -80,7 +88,8 @@ const DrugAdministrationProcedure: React.FC<
 									type="button"
 									onClick={() => {
 										const updatedProcedures = [
-											...formik.values.administrationProcedures,
+											...formik.values
+												.administrationProcedures,
 										]
 										updatedProcedures.splice(index, 1)
 										formik.setFieldValue(
@@ -88,7 +97,10 @@ const DrugAdministrationProcedure: React.FC<
 											updatedProcedures
 										)
 									}}
-									disabled={formik.values.administrationProcedures.length <= 1}
+									disabled={
+										formik.values.administrationProcedures
+											.length <= 1
+									}
 								>
 									<Trash className="text-red-500 hover:bg-red-500 hover:text-white hover:rounded-full p-[3px] transition-all" />
 								</button>
@@ -101,10 +113,17 @@ const DrugAdministrationProcedure: React.FC<
 								type="button"
 								className="bg-primary-extra-weak rounded-full p-1 text-[var(--primary-color-weak)] hover:text-[var(--primary-color)] transition-all"
 								onClick={() => {
-									formik.setFieldValue('administrationProcedures', [
-										...formik.values.administrationProcedures,
-										new AdministrationProcedure(availableMethods()[0], ''),
-									])
+									formik.setFieldValue(
+										'administrationProcedures',
+										[
+											...formik.values
+												.administrationProcedures,
+											new AdministrationProcedure(
+												availableMethods()[0],
+												''
+											),
+										]
+									)
 								}}
 							>
 								<Plus size={'1.3rem'} />
