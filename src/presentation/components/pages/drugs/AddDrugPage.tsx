@@ -30,20 +30,27 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 
 	const { showBoundary } = useErrorBoundary()
 
+	const [confirmationModalVisible, setConfirmationModalVisible] =
+		useState(false)
+
 	useEffect(() => {
-		setSubmitEnabled(
-			name !== '' && presentation !== '' && description !== ''
-		)
+		setSubmitEnabled(name !== '' && presentation !== '' && description !== '')
 	}, [name, presentation, description])
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-
 		if (!name || !presentation || !description) {
 			alert('Por favor, complete todos los campos obligatorios.')
 			return
 		}
+		setConfirmationModalVisible(true)
+	}
+	const confirmSubmit = () => {
+		setConfirmationModalVisible(false)
+		handleSubmit()
+	}
 
+	const handleSubmit = async () => {
 		const drug = new Drug(
 			name,
 			presentation,
@@ -89,13 +96,11 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 					</h1>
 				</div>
 
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handleFormSubmit}>
 					<DrugInfoContainer>
 						{/* Campo Nombre */}
 						<div className="flex flex-col gap-1">
-							<label className="font-bold text-lg text-primary">
-								Nombre
-							</label>
+							<label className="font-bold text-lg text-primary">Nombre</label>
 							<input
 								className="text-gray-700 border rounded-md border-gray-300 w-full"
 								type="text"
@@ -114,9 +119,7 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 								className="text-gray-700 border rounded-md border-gray-300 w-full"
 								type="text"
 								value={presentation}
-								onChange={(e) =>
-									setPresentation(e.target.value)
-								}
+								onChange={(e) => setPresentation(e.target.value)}
 								required
 							/>
 						</div>
@@ -136,9 +139,7 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 
 						{/* RAMs */}
 						<div className="flex flex-col gap-1">
-							<label className="font-bold text-lg text-primary">
-								RAMs
-							</label>
+							<label className="font-bold text-lg text-primary">RAMs</label>
 							<div className="flex gap-2">
 								<input
 									className="text-gray-700 border rounded-md border-gray-300 w-full"
@@ -151,10 +152,7 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 										type="button"
 										onClick={() => {
 											if (tempRam) {
-												setRams((prev) => [
-													...prev,
-													new Ram(tempRam),
-												])
+												setRams((prev) => [...prev, new Ram(tempRam)])
 												setTempRam('')
 											}
 										}}
@@ -183,24 +181,20 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 									className="text-gray-700 border rounded-md border-gray-300 w-full"
 									type="text"
 									value={tempProcedure}
-									onChange={(e) =>
-										setTempProcedure(e.target.value)
-									}
+									onChange={(e) => setTempProcedure(e.target.value)}
 								/>
 								{tempProcedure !== '' && (
 									<button
 										type="button"
 										onClick={() => {
 											if (tempProcedure) {
-												setAdministrationProcedures(
-													(prev) => [
-														...prev,
-														new AdministrationProcedure(
-															tempProcedure,
-															'Descripción del procedimiento'
-														),
-													]
-												)
+												setAdministrationProcedures((prev) => [
+													...prev,
+													new AdministrationProcedure(
+														tempProcedure,
+														'Descripción del procedimiento'
+													),
+												])
 												setTempProcedure('')
 											}
 										}}
@@ -213,14 +207,11 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 								)}
 							</div>
 							<ul>
-								{administrationProcedures.map(
-									(procedure, index) => (
-										<li key={index}>
-											{procedure.getMethod()} -{' '}
-											{procedure.getProcedure()}
-										</li>
-									)
-								)}
+								{administrationProcedures.map((procedure, index) => (
+									<li key={index}>
+										{procedure.getMethod()} - {procedure.getProcedure()}
+									</li>
+								))}
 							</ul>
 						</div>
 					</DrugInfoContainer>
