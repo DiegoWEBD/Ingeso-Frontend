@@ -48,20 +48,26 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 		}
 
 		values.administrationProcedures.forEach((administrationProcedure) => {
-			if (administrationProcedure.getProcedure().replace(' ', '') !== '') return
+			if (administrationProcedure.getProcedure().replace(' ', '') !== '')
+				return
 
 			errors.administrationProcedures =
 				'Debe definir todos los procedimientos de administración'
 		})
 
-		values.rams.forEach((ram, index) => {
+		// Handle rams validation
+		const ramsErrors: string[] = []
+		values.rams.forEach((ram) => {
 			if (!ram.getReaction().trim()) {
-				if (!errors.rams) errors.rams = []
-				errors.rams[index] = {
-					reaction: 'Debe definir la reacción adversa',
-				}
+				ramsErrors.push('Debe definir la reacción adversa')
+			} else {
+				ramsErrors.push('') // No error for this RAM
 			}
 		})
+
+		if (ramsErrors.some((error) => error !== '')) {
+			errors.rams = ramsErrors
+		}
 
 		return errors
 	}
@@ -127,7 +133,11 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 							value={formik.values.name}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							error={formik.touched.name ? formik.errors.name : undefined}
+							error={
+								formik.touched.name
+									? formik.errors.name
+									: undefined
+							}
 						/>
 
 						<Input
@@ -165,7 +175,9 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 						)}
 
 						<div>
-							<DrugInfoLabel>Reacciones adversas a medicamentos</DrugInfoLabel>
+							<DrugInfoLabel>
+								Reacciones adversas a medicamentos
+							</DrugInfoLabel>
 							<div className="space-y-2">
 								<textarea
 									name={`rams[0].reaction`}
@@ -177,7 +189,7 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 										formik.touched.rams[0] &&
 										formik.errors.rams &&
 										formik.errors.rams[0] &&
-										formik.errors.rams[0].reaction
+										formik.errors.rams[0]
 											? 'border-red-500'
 											: 'border-gray-300'
 									}`}
@@ -186,9 +198,9 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 									formik.touched.rams[0] &&
 									formik.errors.rams &&
 									formik.errors.rams[0] &&
-									formik.errors.rams[0].reaction && (
+									formik.errors.rams[0] && (
 										<p className="text-xs text-red-500 italic">
-											{formik.errors.rams[0].reaction}
+											{formik.errors.rams[0].toString()}
 										</p>
 									)}
 							</div>
@@ -225,7 +237,9 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 									Sí
 								</button>
 								<button
-									onClick={() => setConfirmationModalVisible(false)}
+									onClick={() =>
+										setConfirmationModalVisible(false)
+									}
 									className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-all"
 								>
 									No
