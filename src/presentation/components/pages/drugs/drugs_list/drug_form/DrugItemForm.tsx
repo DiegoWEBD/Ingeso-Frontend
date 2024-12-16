@@ -97,6 +97,7 @@ const DrugItemForm: React.FC<DrugItemFormProps> = ({
 										index
 									].getReaction()}
 									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
 								/>
 							))}
 						</div>

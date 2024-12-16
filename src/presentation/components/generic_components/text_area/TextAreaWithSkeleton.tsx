@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FocusEvent } from 'react'
+import React, { ChangeEvent, FocusEventHandler } from 'react'
 import DrugInfoLabel from '../../pages/drugs/drugs_list/drug_form/DrugInfoLabel'
-import TextAreaSkeleton from './TextAreaSkeleton'
 import TextArea from './TextArea'
+import TextAreaSkeleton from './TextAreaSkeleton'
 
 type TextAreaProps = {
 	loading?: boolean
@@ -12,7 +12,7 @@ type TextAreaProps = {
 	error?: string
 	className?: string
 	onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
-	onBlur: (event: FocusEvent) => void
+	onBlur: FocusEventHandler<HTMLTextAreaElement>
 }
 
 const TextAreaWithSkeleton: React.FC<TextAreaProps> = ({
@@ -38,16 +38,16 @@ const TextAreaWithSkeleton: React.FC<TextAreaProps> = ({
 						value={value}
 						onChange={onChange}
 						disabled={disabled}
+						onBlur={onBlur}
 						className={`input border px-2 py-1 rounded-md w-full h-[7rem] resize-none ${className} ${
-							error ? 'border-red-500' : 'border-[var(--input-border-color)]'
+							error
+								? 'border-red-500'
+								: 'border-[var(--input-border-color)]'
 						}`}
-						style={{
-							background: disabled
-								? 'var(--disabled-input-background-color)'
-								: '',
-						}}
 					/>
-					{error && <p className="text-xs text-red-500 italic">{error}</p>}
+					{error && (
+						<p className="text-xs text-red-500 italic">{error}</p>
+					)}
 				</>
 			)}
 		</div>
