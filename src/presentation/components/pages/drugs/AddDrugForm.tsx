@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FormikErrors, useFormik } from 'formik'
 import { motion } from 'framer-motion'
 import { Pill, X } from 'lucide-react'
-import { useState } from 'react'
+
 import { useErrorBoundary } from 'react-error-boundary'
 import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
 import Drug from '../../../../domain/drug/Drug'
@@ -86,6 +86,7 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 
 	const confirmSubmit = () => {
 		if (!formValues) return
+		//console.log(formValues)
 
 		const drug = new Drug(
 			formValues.name,
@@ -94,8 +95,8 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 			formValues.rams,
 			formValues.administrationProcedures
 		)
-    
-    drugRepository
+
+		drugRepository
 			.add(drug)
 			.then(() => {
 				console.log('Fármaco agregado correctamente')
@@ -106,7 +107,7 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 				closeModal()
 			})
 			.catch((error) => showBoundary(error))
-      .finally(() => setConfirmationModalVisible(false))
+			.finally(() => setConfirmationModalVisible(false))
 	}
 
 	return (
@@ -134,43 +135,43 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 						<form onSubmit={formik.handleSubmit}>
 							<DrugInfoContainer>
 								<Input
-							name="name"
-							label="Nombre"
-							value={formik.values.name}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							error={
-								formik.touched.name
-									? formik.errors.name
-									: undefined
-							}
-						/>
+									name="name"
+									label="Nombre"
+									value={formik.values.name}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									error={
+										formik.touched.name
+											? formik.errors.name
+											: undefined
+									}
+								/>
 
 								<Input
-							name="presentation"
-							label="Presentación"
-							value={formik.values.presentation}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							error={
-								formik.touched.presentation
-									? formik.errors.presentation
-									: undefined
-							}
-						/>
+									name="presentation"
+									label="Presentación"
+									value={formik.values.presentation}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									error={
+										formik.touched.presentation
+											? formik.errors.presentation
+											: undefined
+									}
+								/>
 
-						<TextAreaWithSkeleton
-							name="description"
-							label="Descripción"
-							value={formik.values.description}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							error={
-								formik.touched.description
-									? formik.errors.description
-									: undefined
-							}
-						/>
+								<TextAreaWithSkeleton
+									name="description"
+									label="Descripción"
+									value={formik.values.description}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									error={
+										formik.touched.description
+											? formik.errors.description
+											: undefined
+									}
+								/>
 
 								<DrugAdministrationProcedure formik={formik} />
 								{formik.errors.administrationProcedures && (
@@ -180,36 +181,36 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 								)}
 
 								<div>
-							<DrugInfoLabel>
-								Reacciones adversas a medicamentos
-							</DrugInfoLabel>
-							<div className="space-y-2">
-								<textarea
-									name={`rams[0].reaction`}
-									value={formik.values.rams[0].getReaction()}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									className={`text-secondary-weak border rounded-md px-2 py-1 w-full ${
-										formik.touched.rams &&
-										formik.touched.rams[0] &&
-										formik.errors.rams &&
-										formik.errors.rams[0] &&
-										formik.errors.rams[0]
-											? 'border-red-500'
-											: 'border-gray-300'
-									}`}
-								/>
-								{formik.touched.rams &&
-									formik.touched.rams[0] &&
-									formik.errors.rams &&
-									formik.errors.rams[0] &&
-									formik.errors.rams[0] && (
-										<p className="text-xs text-red-500 italic">
-											{formik.errors.rams[0].toString()}
-										</p>
-									)}
-							</div>
-						</div>
+									<DrugInfoLabel>
+										Reacciones adversas a medicamentos
+									</DrugInfoLabel>
+									<div className="space-y-2">
+										<textarea
+											name={`rams[0].reaction`}
+											value={formik.values.rams[0].getReaction()}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											className={`text-secondary-weak border rounded-md px-2 py-1 w-full ${
+												formik.touched.rams &&
+												formik.touched.rams[0] &&
+												formik.errors.rams &&
+												formik.errors.rams[0] &&
+												formik.errors.rams[0]
+													? 'border-red-500'
+													: 'border-gray-300'
+											}`}
+										/>
+										{formik.touched.rams &&
+											formik.touched.rams[0] &&
+											formik.errors.rams &&
+											formik.errors.rams[0] &&
+											formik.errors.rams[0] && (
+												<p className="text-xs text-red-500 italic">
+													{formik.errors.rams[0].toString()}
+												</p>
+											)}
+									</div>
+								</div>
 								<button
 									type="button"
 									onClick={closeModal}
@@ -225,35 +226,34 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 								</button>
 							</DrugInfoContainer>
 						</form>
-              {confirmationModalVisible && (
-					<ModalContainer>
-						<div className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4">
-							<p className="text-lg font-bold mb-4">
-								¿Está seguro que desea agregar este fármaco?
-							</p>
-							<div className="flex justify-end space-x-4">
-								<button
-									onClick={confirmSubmit}
-									className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense transition-all"
-								>
-									Sí
-								</button>
-								<button
-									onClick={() =>
-										setConfirmationModalVisible(false)
-									}
-									className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-all"
-								>
-									No
-								</button>
-							</div>
-						</div>
-					</ModalContainer>
-				)}
 					)}
 				</div>
-
 			</motion.div>
+			{confirmationModalVisible && (
+				<ModalContainer>
+					<div className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4">
+						<p className="text-lg font-bold mb-4">
+							¿Está seguro que desea agregar este fármaco?
+						</p>
+						<div className="flex justify-end space-x-4">
+							<button
+								onClick={confirmSubmit}
+								className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense transition-all"
+							>
+								Sí
+							</button>
+							<button
+								onClick={() =>
+									setConfirmationModalVisible(false)
+								}
+								className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-all"
+							>
+								No
+							</button>
+						</div>
+					</div>
+				</ModalContainer>
+			)}
 		</ModalContainer>
 	)
 }

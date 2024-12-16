@@ -69,7 +69,6 @@ const useAppState = create<AppState>((set) => {
 
 		isTeacher: (): boolean => {
 			const state = useAppState.getState()
-			console.log(state.user)
 			return state.user !== null && state.user instanceof Teacher
 		},
 
