@@ -1,6 +1,7 @@
 import { FormikErrors, useFormik } from 'formik'
 import { motion } from 'framer-motion'
 import { Pill, X } from 'lucide-react'
+import { useState } from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
 import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
@@ -12,6 +13,8 @@ import DrugAdministrationProcedure from './drugs_list/drug_form/DrugAdministrati
 import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
 import DrugInfoLabel from './drugs_list/drug_form/DrugInfoLabel'
 import { FormValues } from './drugs_list/drug_form/hooks/useDrugForm'
+import ExcelUploader from './ExcelUploader'
+import SourceChanger from './SourceChanger'
 
 type DrugItemModalProps = {
 	closeModal: () => void
@@ -20,6 +23,7 @@ type DrugItemModalProps = {
 const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 	const { drugRepository, setDrugsNames, drugsInitialData } = useAppState()
 	const { showBoundary } = useErrorBoundary()
+	const [source, setSource] = useState<string>('form')
 
 	const validate = (values: FormValues): FormikErrors<FormValues> => {
 		let errors: FormikErrors<FormValues> = {}
@@ -51,6 +55,8 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 	})
 
 	const handleSubmit = (values: FormValues) => {
+		console.log(values)
+
 		const drug = new Drug(
 			values.name,
 			values.presentation,
@@ -77,74 +83,83 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 			<motion.div
 				initial={{ scale: 0 }}
 				animate={{ scale: 1 }}
-				className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4 overflow-hidden"
+				className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4 overflow-hidden max-h-[35rem]"
 			>
-				<form onSubmit={formik.handleSubmit}>
+				<div>
 					<div className="mb-4 text-2xl font-bold flex items-center gap-2">
 						<Pill className="h-6 w-6 text-primary" />
 						<h2 className="font-bold tracking-wide text-primary-intense">
-							Detalles del fármaco
+							Agregar fármaco
 						</h2>
 					</div>
 
-					<DrugInfoContainer>
-						<Input
-							name="name"
-							label="Nombre"
-							value={formik.values.name}
-							onChange={formik.handleChange}
-						/>
+					<SourceChanger setSource={setSource} />
 
-						<Input
-							name="presentation"
-							label="Presentación"
-							value={formik.values.presentation}
-							onChange={formik.handleChange}
-						/>
-
-						<TextAreaWithSkeleton
-							name="description"
-							label="Descripción"
-							value={formik.values.description}
-							onChange={formik.handleChange}
-						/>
-
-						<DrugAdministrationProcedure formik={formik} />
-						{formik.errors.administrationProcedures && (
-							<p className="text-xs text-red-500 italic">
-								{formik.errors.administrationProcedures.toString()}
-							</p>
-						)}
-
-						<div>
-							<DrugInfoLabel>
-								Reacciones adversas a medicamentos
-							</DrugInfoLabel>
-							<div className="space-y-2">
-								<textarea
-									name={`rams[0].reaction`}
-									value={formik.values.rams[0].getReaction()}
+					{source === 'excel' ? (
+						<DrugInfoContainer>
+							<ExcelUploader closeModal={closeModal} />
+						</DrugInfoContainer>
+					) : (
+						<form onSubmit={formik.handleSubmit}>
+							<DrugInfoContainer>
+								<Input
+									name="name"
+									label="Nombre"
+									value={formik.values.name}
 									onChange={formik.handleChange}
-									className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full"
 								/>
-							</div>
-						</div>
-					</DrugInfoContainer>
 
-					<button
-						type="button"
-						onClick={closeModal}
-						className="absolute top-2 right-2 p-2 text-primary hover:text-primary-intense transition-all"
-					>
-						<X className="h-6 w-6" />
-					</button>
-					<button
-						type="submit"
-						className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense w-full"
-					>
-						Guardar
-					</button>
-				</form>
+								<Input
+									name="presentation"
+									label="Presentación"
+									value={formik.values.presentation}
+									onChange={formik.handleChange}
+								/>
+
+								<TextAreaWithSkeleton
+									name="description"
+									label="Descripción"
+									value={formik.values.description}
+									onChange={formik.handleChange}
+								/>
+
+								<DrugAdministrationProcedure formik={formik} />
+								{formik.errors.administrationProcedures && (
+									<p className="text-xs text-red-500 italic">
+										{formik.errors.administrationProcedures.toString()}
+									</p>
+								)}
+
+								<div>
+									<DrugInfoLabel>
+										Reacciones adversas a medicamentos
+									</DrugInfoLabel>
+									<div className="space-y-2">
+										<textarea
+											name={`rams[0].reaction`}
+											value={formik.values.rams[0].getReaction()}
+											onChange={formik.handleChange}
+											className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full"
+										/>
+									</div>
+								</div>
+								<button
+									type="button"
+									onClick={closeModal}
+									className="absolute top-2 right-2 p-2 text-primary hover:text-primary-intense transition-all"
+								>
+									<X className="h-6 w-6" />
+								</button>
+								<button
+									type="submit"
+									className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense w-full"
+								>
+									Guardar
+								</button>
+							</DrugInfoContainer>
+						</form>
+					)}
+				</div>
 			</motion.div>
 		</ModalContainer>
 	)
