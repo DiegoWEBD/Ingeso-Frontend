@@ -15,7 +15,7 @@ import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
 import DrugInfoLabel from './drugs_list/drug_form/DrugInfoLabel'
 import { FormValues } from './drugs_list/drug_form/hooks/useDrugForm'
 import ExcelUploader from './ExcelUploader'
-import SourceChanger from './SourceChanger'
+import SourceChanger from './drugs_list/drug_form/source_changer/SourceChanger'
 
 type DrugItemModalProps = {
 	closeModal: () => void
@@ -85,7 +85,6 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 
 	const confirmSubmit = () => {
 		if (!formValues) return
-		//console.log(formValues)
 
 		const drug = new Drug(
 			formValues.name,
@@ -124,15 +123,21 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 						</h2>
 					</div>
 
-					<SourceChanger setSource={setSource} />
-
 					{source === 'excel' ? (
 						<DrugInfoContainer>
+							<SourceChanger
+								source={source}
+								setSource={setSource}
+							/>
 							<ExcelUploader closeModal={closeModal} />
 						</DrugInfoContainer>
 					) : (
 						<form onSubmit={formik.handleSubmit}>
 							<DrugInfoContainer>
+								<SourceChanger
+									source={source}
+									setSource={setSource}
+								/>
 								<Input
 									name="name"
 									label="Nombre"

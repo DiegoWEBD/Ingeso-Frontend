@@ -5,6 +5,7 @@ import { parseExcelFile } from '../../../utils/parse_excel'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { API_URL } from '../../../../utils'
+import useAppState from '../../../global_states/appState'
 
 type ExcelUploaderProps = {
 	closeModal: () => void
@@ -14,11 +15,10 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({ closeModal }) => {
 	const [excelFile, setExcelFile] = useState<any | null>()
 	const [excelData, setExcelData] = useState<any[] | null>(null)
 	const [fileName, setFileName] = useState<string | null>(null)
+	const { setDrugsNames } = useAppState()
 
 	const onDrop = useCallback(async (acceptedFiles: File[]) => {
-		console.log('onDrop')
 		const file = acceptedFiles[0]
-		console.log(file)
 		if (!file) return
 
 		setExcelFile(file)
@@ -63,9 +63,10 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({ closeModal }) => {
 
 		axios
 			.post(`${API_URL}/drugs/upload`, { file: excelFile }, { headers })
-			.then(() => {
+			.then((response) => response.data)
+			.then((data) => {
+				setDrugsNames(data.drugs_names)
 				closeModal()
-				window.location.reload()
 			})
 			.catch(console.error)
 	}

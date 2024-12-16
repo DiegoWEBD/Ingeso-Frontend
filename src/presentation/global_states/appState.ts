@@ -20,6 +20,7 @@ type AppState = {
 	setTheme: (themeId: string) => void
 	isTeacher: () => boolean
 	isAppInstaled: () => boolean
+	setDrugsInititalData: (data: DrugInitialData[]) => void
 }
 
 const useAppState = create<AppState>((set) => {
@@ -52,6 +53,10 @@ const useAppState = create<AppState>((set) => {
 				user,
 				loadingInitialData: false,
 			})
+		},
+
+		setDrugsInititalData: (data: DrugInitialData[]) => {
+			set({ drugsInitialData: data })
 		},
 
 		setUser: (user: User) => {
