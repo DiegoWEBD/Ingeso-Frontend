@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import { FormikErrors, useFormik } from 'formik'
 import { motion } from 'framer-motion'
 import { Pill, X } from 'lucide-react'
+import { useState } from 'react'
 
 import { useErrorBoundary } from 'react-error-boundary'
-import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
 import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
 import useAppState from '../../../global_states/appState'
