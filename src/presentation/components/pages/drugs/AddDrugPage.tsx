@@ -1,20 +1,17 @@
+import { motion } from 'framer-motion'
 import { Pill, PlusCircle, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { useErrorBoundary } from 'react-error-boundary'
 import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
-import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
-import useAppState from '../../../global_states/appState'
 import ModalContainer from '../../containers/ModalContainer'
 import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
-import { motion } from 'framer-motion'
 
 type AddDrugPageProps = {
 	closeModal: () => void
 }
 
 const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
-	const { drugRepository, drugsInitialData, setDrugsNames } = useAppState()
+	//const { drugRepository, drugsInitialData, setDrugsNames } = useAppState()
 
 	const [name, setName] = useState('')
 	const [presentation, setPresentation] = useState('')
@@ -28,7 +25,9 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 	const [tempRam, setTempRam] = useState('')
 	const [tempProcedure, setTempProcedure] = useState('')
 
-	const { showBoundary } = useErrorBoundary()
+	//const { showBoundary } = useErrorBoundary()
+
+	const [_, setConfirmationModalVisible] = useState(false)
 
 	useEffect(() => {
 		setSubmitEnabled(
@@ -36,43 +35,13 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 		)
 	}, [name, presentation, description])
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-
 		if (!name || !presentation || !description) {
 			alert('Por favor, complete todos los campos obligatorios.')
 			return
 		}
-
-		const drug = new Drug(
-			name,
-			presentation,
-			description,
-			rams,
-			administrationProcedures
-		)
-
-		try {
-			console.log('trying to add')
-			await drugRepository.add(drug)
-			setDrugsNames([
-				...drugsInitialData,
-				{ name: drug.getName(), favorite: false },
-			])
-			console.log('Fármaco registrado:', drug)
-
-			// Limpiar los campos
-			setName('')
-			setPresentation('')
-			setDescription('')
-			setRams([])
-			setAdministrationProcedures([])
-			setTempRam('')
-			setTempProcedure('')
-		} catch (error) {
-			showBoundary(error)
-			console.error('Error al registrar el fármaco:', error)
-		}
+		setConfirmationModalVisible(true)
 	}
 
 	return (
@@ -89,7 +58,7 @@ const AddDrugPage: React.FC<AddDrugPageProps> = ({ closeModal }) => {
 					</h1>
 				</div>
 
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handleFormSubmit}>
 					<DrugInfoContainer>
 						{/* Campo Nombre */}
 						<div className="flex flex-col gap-1">

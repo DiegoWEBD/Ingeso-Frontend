@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { FormikErrors, useFormik } from 'formik'
 import { motion } from 'framer-motion'
 import { Pill, X } from 'lucide-react'
 import { useState } from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
+import AdministrationProcedure from '../../../../domain/administration_procedure/AdministrationProcedure'
 import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
 import useAppState from '../../../global_states/appState'
@@ -25,8 +27,22 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 	const { showBoundary } = useErrorBoundary()
 	const [source, setSource] = useState<string>('form')
 
+	const [confirmationModalVisible, setConfirmationModalVisible] =
+		useState(false)
+	const [formValues, setFormValues] = useState<FormValues | null>(null)
+
 	const validate = (values: FormValues): FormikErrors<FormValues> => {
 		let errors: FormikErrors<FormValues> = {}
+
+		if (!values.name.trim()) {
+			errors.name = 'El nombre es requerido'
+		}
+		if (!values.presentation.trim()) {
+			errors.presentation = 'La presentación es requerida'
+		}
+		if (!values.description.trim()) {
+			errors.description = 'La descripción es requerida'
+		}
 
 		values.administrationProcedures.forEach((administrationProcedure) => {
 			if (administrationProcedure.getProcedure().replace(' ', '') !== '')
@@ -35,6 +51,20 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 			errors.administrationProcedures =
 				'Debe definir todos los procedimientos de administración'
 		})
+
+		// Handle rams validation
+		const ramsErrors: string[] = []
+		values.rams.forEach((ram) => {
+			if (!ram.getReaction().trim()) {
+				ramsErrors.push('Debe definir la reacción adversa')
+			} else {
+				ramsErrors.push('') // No error for this RAM
+			}
+		})
+
+		if (ramsErrors.some((error) => error !== '')) {
+			errors.rams = ramsErrors
+		}
 
 		return errors
 	}
@@ -48,24 +78,24 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 			rams: [new Ram('')],
 		},
 		onSubmit: (values) => {
-			handleSubmit(values)
+			setFormValues(values)
+			setConfirmationModalVisible(true)
 		},
-		enableReinitialize: true,
 		validate: validate,
 	})
 
-	const handleSubmit = (values: FormValues) => {
-		console.log(values)
+	const confirmSubmit = () => {
+		if (!formValues) return
 
 		const drug = new Drug(
-			values.name,
-			values.presentation,
-			values.description,
-			values.rams,
-			values.administrationProcedures
+			formValues.name,
+			formValues.presentation,
+			formValues.description,
+			formValues.rams,
+			formValues.administrationProcedures
 		)
-
-		drugRepository
+    
+    drugRepository
 			.add(drug)
 			.then(() => {
 				console.log('Fármaco agregado correctamente')
@@ -76,6 +106,7 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 				closeModal()
 			})
 			.catch((error) => showBoundary(error))
+      .finally(() => setConfirmationModalVisible(false))
 	}
 
 	return (
@@ -103,25 +134,43 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 						<form onSubmit={formik.handleSubmit}>
 							<DrugInfoContainer>
 								<Input
-									name="name"
-									label="Nombre"
-									value={formik.values.name}
-									onChange={formik.handleChange}
-								/>
+							name="name"
+							label="Nombre"
+							value={formik.values.name}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							error={
+								formik.touched.name
+									? formik.errors.name
+									: undefined
+							}
+						/>
 
 								<Input
-									name="presentation"
-									label="Presentación"
-									value={formik.values.presentation}
-									onChange={formik.handleChange}
-								/>
+							name="presentation"
+							label="Presentación"
+							value={formik.values.presentation}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							error={
+								formik.touched.presentation
+									? formik.errors.presentation
+									: undefined
+							}
+						/>
 
-								<TextAreaWithSkeleton
-									name="description"
-									label="Descripción"
-									value={formik.values.description}
-									onChange={formik.handleChange}
-								/>
+						<TextAreaWithSkeleton
+							name="description"
+							label="Descripción"
+							value={formik.values.description}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							error={
+								formik.touched.description
+									? formik.errors.description
+									: undefined
+							}
+						/>
 
 								<DrugAdministrationProcedure formik={formik} />
 								{formik.errors.administrationProcedures && (
@@ -131,18 +180,36 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 								)}
 
 								<div>
-									<DrugInfoLabel>
-										Reacciones adversas a medicamentos
-									</DrugInfoLabel>
-									<div className="space-y-2">
-										<textarea
-											name={`rams[0].reaction`}
-											value={formik.values.rams[0].getReaction()}
-											onChange={formik.handleChange}
-											className="text-secondary-weak border border-gray-300 rounded-md px-2 py-1 w-full"
-										/>
-									</div>
-								</div>
+							<DrugInfoLabel>
+								Reacciones adversas a medicamentos
+							</DrugInfoLabel>
+							<div className="space-y-2">
+								<textarea
+									name={`rams[0].reaction`}
+									value={formik.values.rams[0].getReaction()}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									className={`text-secondary-weak border rounded-md px-2 py-1 w-full ${
+										formik.touched.rams &&
+										formik.touched.rams[0] &&
+										formik.errors.rams &&
+										formik.errors.rams[0] &&
+										formik.errors.rams[0]
+											? 'border-red-500'
+											: 'border-gray-300'
+									}`}
+								/>
+								{formik.touched.rams &&
+									formik.touched.rams[0] &&
+									formik.errors.rams &&
+									formik.errors.rams[0] &&
+									formik.errors.rams[0] && (
+										<p className="text-xs text-red-500 italic">
+											{formik.errors.rams[0].toString()}
+										</p>
+									)}
+							</div>
+						</div>
 								<button
 									type="button"
 									onClick={closeModal}
@@ -158,8 +225,34 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 								</button>
 							</DrugInfoContainer>
 						</form>
+              {confirmationModalVisible && (
+					<ModalContainer>
+						<div className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4">
+							<p className="text-lg font-bold mb-4">
+								¿Está seguro que desea agregar este fármaco?
+							</p>
+							<div className="flex justify-end space-x-4">
+								<button
+									onClick={confirmSubmit}
+									className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense transition-all"
+								>
+									Sí
+								</button>
+								<button
+									onClick={() =>
+										setConfirmationModalVisible(false)
+									}
+									className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-all"
+								>
+									No
+								</button>
+							</div>
+						</div>
+					</ModalContainer>
+				)}
 					)}
 				</div>
+
 			</motion.div>
 		</ModalContainer>
 	)

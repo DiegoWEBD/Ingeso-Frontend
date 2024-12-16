@@ -1,7 +1,7 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, FocusEventHandler } from 'react'
 import DrugInfoLabel from '../../pages/drugs/drugs_list/drug_form/DrugInfoLabel'
-import TextAreaSkeleton from './TextAreaSkeleton'
 import TextArea from './TextArea'
+import TextAreaSkeleton from './TextAreaSkeleton'
 
 type TextAreaProps = {
 	loading?: boolean
@@ -9,8 +9,10 @@ type TextAreaProps = {
 	label: string
 	name: string
 	disabled?: boolean
+	error?: string
 	className?: string
 	onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
+	onBlur: FocusEventHandler<HTMLTextAreaElement>
 }
 
 const TextAreaWithSkeleton: React.FC<TextAreaProps> = ({
@@ -19,8 +21,10 @@ const TextAreaWithSkeleton: React.FC<TextAreaProps> = ({
 	label,
 	onChange,
 	disabled,
+	error,
 	className,
 	name,
+	onBlur,
 }) => {
 	return (
 		<div className="flex flex-col gap-2">
@@ -28,13 +32,23 @@ const TextAreaWithSkeleton: React.FC<TextAreaProps> = ({
 			{loading ? (
 				<TextAreaSkeleton />
 			) : (
-				<TextArea
-					name={name}
-					value={value}
-					onChange={onChange}
-					disabled={disabled}
-					className={className}
-				/>
+				<>
+					<TextArea
+						name={name}
+						value={value}
+						onChange={onChange}
+						disabled={disabled}
+						onBlur={onBlur}
+						className={`input border px-2 py-1 rounded-md w-full h-[7rem] resize-none ${className} ${
+							error
+								? 'border-red-500'
+								: 'border-[var(--input-border-color)]'
+						}`}
+					/>
+					{error && (
+						<p className="text-xs text-red-500 italic">{error}</p>
+					)}
+				</>
 			)}
 		</div>
 	)

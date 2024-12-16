@@ -3,16 +3,17 @@ import { Pill, X } from 'lucide-react'
 import React from 'react'
 import Drug from '../../../../../../domain/drug/Drug'
 import useAppState from '../../../../../global_states/appState'
-import Input from '../../../../generic_components/input/Input'
-import TextArea from '../../../../generic_components/text_area/TextArea'
-import TextAreaSkeleton from '../../../../generic_components/text_area/TextAreaSkeleton'
-import TextAreaWithSkeleton from '../../../../generic_components/text_area/TextAreaWithSkeleton'
+
 import ProtectedComponent from '../../../../protected/ProtectedComponent'
 import DeleteDrugButton from './DeleteDrugButton'
 import DrugAdministrationProcedure from './DrugAdministrationProcedure'
 import DrugInfoContainer from './DrugInfoContainer'
 import DrugInfoLabel from './DrugInfoLabel'
 import useDrugForm from './hooks/useDrugForm'
+import Input from '../../../../generic_components/input/Input'
+import TextArea from '../../../../generic_components/text_area/TextArea'
+import TextAreaSkeleton from '../../../../generic_components/text_area/TextAreaSkeleton'
+import TextAreaWithSkeleton from '../../../../generic_components/text_area/TextAreaWithSkeleton'
 
 type DrugItemFormProps = {
 	closeModal: () => void
@@ -50,6 +51,7 @@ const DrugItemForm: React.FC<DrugItemFormProps> = ({
 					disabled={!isTeacher()}
 					value={formik.values.name}
 					onChange={formik.handleChange}
+					onBlur={formik.handleBlur}
 				/>
 
 				<Input
@@ -59,6 +61,7 @@ const DrugItemForm: React.FC<DrugItemFormProps> = ({
 					disabled={!isTeacher()}
 					value={formik.values.presentation}
 					onChange={formik.handleChange}
+					onBlur={formik.handleBlur}
 				/>
 
 				<TextAreaWithSkeleton
@@ -68,6 +71,7 @@ const DrugItemForm: React.FC<DrugItemFormProps> = ({
 					value={formik.values.description}
 					onChange={formik.handleChange}
 					loading={loading}
+					onBlur={formik.handleBlur}
 				/>
 
 				<DrugAdministrationProcedure
@@ -93,6 +97,7 @@ const DrugItemForm: React.FC<DrugItemFormProps> = ({
 										index
 									].getReaction()}
 									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
 								/>
 							))}
 						</div>

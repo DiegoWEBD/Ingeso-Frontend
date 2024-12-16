@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, FocusEventHandler } from 'react'
 
 type TextAreaProps = {
 	value: string
@@ -6,6 +6,7 @@ type TextAreaProps = {
 	disabled?: boolean
 	className?: string
 	onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
+	onBlur: FocusEventHandler<HTMLTextAreaElement>
 }
 
 const TextArea: React.FC<TextAreaProps> = ({
@@ -14,6 +15,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 	disabled,
 	name,
 	className,
+	onBlur,
 }) => {
 	return (
 		<textarea
@@ -21,6 +23,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 			value={value}
 			onChange={onChange}
 			disabled={disabled}
+			onBlur={onBlur}
 			className={`input border border-[var(--input-border-color)] px-2 py-1 rounded-md w-full h-[7rem] resize-none ${className}`}
 			style={{
 				background: disabled
