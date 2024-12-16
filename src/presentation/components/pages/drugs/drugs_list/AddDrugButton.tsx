@@ -1,7 +1,6 @@
 import { Plus } from 'lucide-react'
 import React, { useState } from 'react'
 import AddDrugForm from '../AddDrugForm'
-import AddDrugPage from '../AddDrugPage'
 
 const AddDrugButton: React.FC = () => {
 	const [modalVisible, setModalVisible] = useState<boolean>(false)
