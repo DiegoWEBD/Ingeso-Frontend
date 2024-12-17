@@ -5,7 +5,7 @@ import Drug from '../../../../../../domain/drug/Drug'
 import useAppState from '../../../../../global_states/appState'
 
 import ProtectedComponent from '../../../../protected/ProtectedComponent'
-import DeleteDrugButton from './DeleteDrugButton'
+import DeleteDrugButton from './buttons/DeleteDrugButton'
 import DrugAdministrationProcedure from './DrugAdministrationProcedure'
 import DrugInfoContainer from './DrugInfoContainer'
 import DrugInfoLabel from './DrugInfoLabel'
@@ -14,6 +14,7 @@ import Input from '../../../../generic_components/input/Input'
 import TextArea from '../../../../generic_components/text_area/TextArea'
 import TextAreaSkeleton from '../../../../generic_components/text_area/TextAreaSkeleton'
 import TextAreaWithSkeleton from '../../../../generic_components/text_area/TextAreaWithSkeleton'
+import SaveChangesButton from './buttons/SaveChangesButton'
 
 type DrugItemFormProps = {
 	closeModal: () => void
@@ -114,15 +115,9 @@ const DrugItemForm: React.FC<DrugItemFormProps> = ({
 			</button>
 
 			<ProtectedComponent>
-				<div className="space-y-3">
+				<div className="space-y-3 mt-3">
 					<DeleteDrugButton drug={drug} closeModal={closeModal} />
-
-					<button
-						type="submit"
-						className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-[var(--primary-color-intense)] hover:font-bold w-full transition-all"
-					>
-						Guardar
-					</button>
+					<SaveChangesButton />
 				</div>
 			</ProtectedComponent>
 		</motion.form>

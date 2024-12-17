@@ -110,7 +110,6 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 		drugRepository
 			.add(drug)
 			.then(() => {
-				console.log('Fármaco agregado correctamente')
 				setDrugsNames([
 					...drugsInitialData,
 					{ name: drug.getName(), favorite: false },
