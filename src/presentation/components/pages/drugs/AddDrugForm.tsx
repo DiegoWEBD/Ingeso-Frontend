@@ -1,5 +1,4 @@
 import { FormikErrors, useFormik } from 'formik'
-import { motion } from 'framer-motion'
 import { Pill, X } from 'lucide-react'
 import { useState } from 'react'
 
@@ -8,14 +7,17 @@ import Drug from '../../../../domain/drug/Drug'
 import Ram from '../../../../domain/ram/Ram'
 import useAppState from '../../../global_states/appState'
 import ModalContainer from '../../containers/ModalContainer'
+import Button from '../../generic_components/buttons/Button'
 import Input from '../../generic_components/input/Input'
+import ConfirmationNotification from '../../generic_components/notifications/ConfirmationNotification'
+import useConfirmationNotification from '../../generic_components/notifications/custom_hooks/useConfirmationNotification'
 import TextAreaWithSkeleton from '../../generic_components/text_area/TextAreaWithSkeleton'
 import DrugAdministrationProcedure from './drugs_list/drug_form/DrugAdministrationProcedure'
 import DrugInfoContainer from './drugs_list/drug_form/DrugInfoContainer'
 import DrugInfoLabel from './drugs_list/drug_form/DrugInfoLabel'
 import { FormValues } from './drugs_list/drug_form/hooks/useDrugForm'
-import ExcelUploader from './ExcelUploader'
 import SourceChanger from './drugs_list/drug_form/source_changer/SourceChanger'
+import ExcelUploader from './ExcelUploader'
 
 type DrugItemModalProps = {
 	closeModal: () => void
@@ -26,38 +28,50 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 	const { showBoundary } = useErrorBoundary()
 	const [source, setSource] = useState<string>('form')
 
-	const [confirmationModalVisible, setConfirmationModalVisible] =
-		useState(false)
-	const [formValues, setFormValues] = useState<FormValues | null>(null)
+	const {
+		isConfirmationOpen,
+		openConfirmationNotification,
+		closeConfirmationNotification,
+	} = useConfirmationNotification()
 
 	const validate = (values: FormValues): FormikErrors<FormValues> => {
 		let errors: FormikErrors<FormValues> = {}
 
 		if (!values.name.trim()) {
-			errors.name = 'El nombre es requerido'
+			errors.name = 'El nombre es requerido.'
 		}
 		if (!values.presentation.trim()) {
-			errors.presentation = 'La presentación es requerida'
+			errors.presentation = 'La presentación es requerida.'
 		}
 		if (!values.description.trim()) {
-			errors.description = 'La descripción es requerida'
+			errors.description = 'La descripción es requerida.'
 		}
 
-		values.administrationProcedures.forEach((administrationProcedure) => {
-			if (administrationProcedure.getProcedure().replace(' ', '') !== '')
-				return
-
+		if (values.administrationProcedures.length === 0) {
 			errors.administrationProcedures =
-				'Debe definir todos los procedimientos de administración'
-		})
+				'Debe definir al menos un procedimiento de administración para un método.'
+		} else {
+			values.administrationProcedures.forEach(
+				(administrationProcedure) => {
+					if (
+						administrationProcedure
+							.getProcedure()
+							.replace(' ', '') !== ''
+					)
+						return
 
-		// Handle rams validation
+					errors.administrationProcedures =
+						'Debe definir los procedimientos para los métodos de administración elegidos.'
+				}
+			)
+		}
+
 		const ramsErrors: string[] = []
 		values.rams.forEach((ram) => {
 			if (!ram.getReaction().trim()) {
-				ramsErrors.push('Debe definir la reacción adversa')
+				ramsErrors.push('Debe definir la reacción adversa.')
 			} else {
-				ramsErrors.push('') // No error for this RAM
+				ramsErrors.push('')
 			}
 		})
 
@@ -76,22 +90,18 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 			administrationProcedures: [],
 			rams: [new Ram('')],
 		},
-		onSubmit: (values) => {
-			setFormValues(values)
-			setConfirmationModalVisible(true)
-		},
+		onSubmit: () => openConfirmationNotification(),
 		validate: validate,
 	})
 
 	const confirmSubmit = () => {
-		if (!formValues) return
-
+		console.log(formik.values)
 		const drug = new Drug(
-			formValues.name,
-			formValues.presentation,
-			formValues.description,
-			formValues.rams,
-			formValues.administrationProcedures
+			formik.values.name,
+			formik.values.presentation,
+			formik.values.description,
+			formik.values.rams,
+			formik.values.administrationProcedures
 		)
 
 		drugRepository
@@ -105,16 +115,11 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 				closeModal()
 			})
 			.catch((error) => showBoundary(error))
-			.finally(() => setConfirmationModalVisible(false))
 	}
 
 	return (
 		<ModalContainer>
-			<motion.div
-				initial={{ scale: 0 }}
-				animate={{ scale: 1 }}
-				className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4 overflow-hidden max-h-[35rem]"
-			>
+			<div className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4 overflow-hidden max-h-[35rem]">
 				<div>
 					<div className="mb-4 text-2xl font-bold flex items-center gap-2">
 						<Pill className="h-6 w-6 text-primary" />
@@ -178,11 +183,12 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 								/>
 
 								<DrugAdministrationProcedure formik={formik} />
-								{formik.errors.administrationProcedures && (
-									<p className="text-xs text-red-500 italic">
-										{formik.errors.administrationProcedures.toString()}
-									</p>
-								)}
+								{formik.touched.administrationProcedures &&
+									formik.errors.administrationProcedures && (
+										<p className="text-xs text-red-500 italic">
+											{formik.errors.administrationProcedures.toString()}
+										</p>
+									)}
 
 								<div>
 									<DrugInfoLabel>
@@ -222,41 +228,21 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 								>
 									<X className="h-6 w-6" />
 								</button>
-								<button
-									type="submit"
-									className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense w-full"
-								>
+								<Button type="submit" className="w-full">
 									Guardar
-								</button>
+								</Button>
 							</DrugInfoContainer>
 						</form>
 					)}
 				</div>
-			</motion.div>
-			{confirmationModalVisible && (
-				<ModalContainer>
-					<div className="relative bg-card rounded-lg p-6 shadow-lg sm:max-w-[32rem] w-full mx-4">
-						<p className="text-lg font-bold mb-4">
-							¿Está seguro que desea agregar este fármaco?
-						</p>
-						<div className="flex justify-end space-x-4">
-							<button
-								onClick={confirmSubmit}
-								className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-intense transition-all"
-							>
-								Sí
-							</button>
-							<button
-								onClick={() =>
-									setConfirmationModalVisible(false)
-								}
-								className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-all"
-							>
-								No
-							</button>
-						</div>
-					</div>
-				</ModalContainer>
+			</div>
+			{isConfirmationOpen && (
+				<ConfirmationNotification
+					onConfirm={confirmSubmit}
+					closeNotification={closeConfirmationNotification}
+				>
+					¿Está seguro que desea agregar este fármaco?
+				</ConfirmationNotification>
 			)}
 		</ModalContainer>
 	)
