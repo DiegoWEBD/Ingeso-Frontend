@@ -4,12 +4,14 @@ import Button from '../buttons/Button'
 
 type ConfirmationNotificationProps = {
 	children: ReactNode
-	onConfirm: () => void
+	buttonType?: 'button' | 'submit' | 'reset'
+	onConfirm?: () => void
 	closeNotification: () => void
 }
 
 const ConfirmationNotification: React.FC<ConfirmationNotificationProps> = ({
 	children,
+	buttonType,
 	onConfirm,
 	closeNotification,
 }) => {
@@ -21,7 +23,9 @@ const ConfirmationNotification: React.FC<ConfirmationNotificationProps> = ({
 				</p>
 				<div className="flex justify-around ">
 					<Button
+						type={buttonType}
 						onClick={() => {
+							if (!onConfirm) return
 							onConfirm()
 							closeNotification()
 						}}
