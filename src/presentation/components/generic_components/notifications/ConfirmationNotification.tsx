@@ -16,7 +16,7 @@ const ConfirmationNotification: React.FC<ConfirmationNotificationProps> = ({
 	return (
 		<ModalContainer>
 			<div className="bg-card rounded-lg py-6 px-3 shadow-lg sm:max-w-[27rem] w-full">
-				<p className="text-lg font-semibold mb-5 text-center">
+				<p className="text-lg font-semibold mb-5 text-center text-secondary">
 					{children}
 				</p>
 				<div className="flex justify-around ">
