@@ -10,6 +10,7 @@ import ModalContainer from '../../containers/ModalContainer'
 import Button from '../../generic_components/buttons/Button'
 import Input from '../../generic_components/input/Input'
 import ConfirmationNotification from '../../generic_components/notifications/ConfirmationNotification'
+import { useNotification } from '../../generic_components/notifications/contexts/InformativeNotificationContext'
 import useConfirmationNotification from '../../generic_components/notifications/custom_hooks/useConfirmationNotification'
 import TextAreaWithSkeleton from '../../generic_components/text_area/TextAreaWithSkeleton'
 import DrugAdministrationProcedure from './drugs_list/drug_form/DrugAdministrationProcedure'
@@ -18,8 +19,6 @@ import DrugInfoLabel from './drugs_list/drug_form/DrugInfoLabel'
 import { FormValues } from './drugs_list/drug_form/hooks/useDrugForm'
 import SourceChanger from './drugs_list/drug_form/source_changer/SourceChanger'
 import ExcelUploader from './ExcelUploader'
-import useInformativeNotification from '../../generic_components/notifications/custom_hooks/useInformativeNotification'
-import InformativeNotification from '../../generic_components/notifications/InformativeNotification'
 
 type DrugItemModalProps = {
 	closeModal: () => void
@@ -36,8 +35,7 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 		closeConfirmationNotification,
 	} = useConfirmationNotification()
 
-	const { isNotificationOpen, showNotification } =
-		useInformativeNotification(closeModal)
+	const { showNotification } = useNotification()
 
 	const validate = (values: FormValues): FormikErrors<FormValues> => {
 		let errors: FormikErrors<FormValues> = {}
@@ -117,7 +115,8 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 					...drugsInitialData,
 					{ name: drug.getName(), favorite: false },
 				])
-				showNotification()
+				showNotification('Fármaco agregado correctamente')
+				closeModal()
 			})
 			.catch((error) => showBoundary(error))
 	}
@@ -248,12 +247,6 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 				>
 					¿Está seguro que desea agregar este fármaco?
 				</ConfirmationNotification>
-			)}
-
-			{isNotificationOpen && (
-				<InformativeNotification>
-					Fármaco agregado correctamente
-				</InformativeNotification>
 			)}
 		</ModalContainer>
 	)

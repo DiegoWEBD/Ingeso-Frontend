@@ -1,17 +1,16 @@
 import { CheckCircle } from 'lucide-react'
-import React, { ReactNode } from 'react'
+import React from 'react'
+import { useNotification } from './contexts/InformativeNotificationContext'
 
-type InformativeNotificationProps = {
-	children: ReactNode
-}
+const InformativeNotification: React.FC = () => {
+	const { message, isVisible } = useNotification()
 
-const InformativeNotification: React.FC<InformativeNotificationProps> = ({
-	children,
-}) => {
+	if (!isVisible) return null
+
 	return (
 		<div className="absolute bottom-2 right-2 bg-green-500 rounded-lg p-3 shadow-lg w-fit text-white flex gap-5 items-center">
 			<CheckCircle />
-			<p className="text">{children}</p>
+			<p>{message}</p>
 		</div>
 	)
 }
