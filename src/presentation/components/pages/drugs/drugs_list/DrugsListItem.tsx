@@ -20,7 +20,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugInitialData }) => {
 		drugInitialData.favorite
 	)
 	const { showBoundary } = useErrorBoundary()
-	const { drugsInitialData, setDrugsNames} = useAppState()
+	const { drugsInitialData, setDrugsNames } = useAppState()
 
 	const drugRepository: DrugRepository = useAppState(
 		(state) => state.drugRepository
@@ -66,7 +66,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugInitialData }) => {
 		<div className="relative">
 			<button
 				onClick={onClick}
-				className="min-h-[4rem] w-full bg-card text-secondary hover:font-bold transition-all rounded font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[1.8rem] hover:shadow-md hover:shadow-black/30"
+				className="min-h-[4rem] w-full bg-card text-secondary rounded font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[1.8rem] hover:shadow-md hover:shadow-black/30 transition-all"
 			>
 				<p className="break-words">{drugInitialData.name}</p>
 			</button>
