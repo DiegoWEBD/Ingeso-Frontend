@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
 							<li>Inicia sesión con tu correo institucional.</li>
 							<li>Explora la lista de fármacos disponibles.</li>
 							<li>
-								Selecciona un fármaco para ver información
+								Selecciona un fármaco para ver su información
 								detallada.
 							</li>
 							<li>
