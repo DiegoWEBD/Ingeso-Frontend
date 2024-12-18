@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
 import Drug from '../../domain/drug/Drug'
 import DrugRepository from '../../domain/drug/DrugRepository'
 import { API_URL } from '../../utils'
@@ -9,7 +8,7 @@ import DrugInitialData from './DrugInitialData'
 
 export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
 
 		await axios.post(`${API_URL}/drugs`, new DrugJSONAdapter(drug), {
 			headers: {
@@ -20,7 +19,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async getDrugsInitialData(): Promise<Array<DrugInitialData>> {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
 
 		const response = await fetch(`${API_URL}/drugs`, {
 			headers: {
@@ -33,7 +32,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async findByName(name: string): Promise<Drug | null> {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
 		const { data } = await axios.get(
 			`${API_URL}/drugs/${encodeURIComponent(name)}`,
 			{
@@ -46,7 +45,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async update(name: string, newValues: Drug): Promise<void> {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
 		await axios.put(
 			`${API_URL}/drugs/${encodeURIComponent(name)}`,
 			new DrugJSONAdapter(newValues),
@@ -59,7 +58,8 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async delete(drug: Drug): Promise<void> {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
+
 		await axios.delete(
 			`${API_URL}/drugs/${encodeURIComponent(drug.getName())}`,
 			{
@@ -71,7 +71,8 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async addFavorite(drugName: string): Promise<void> {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
+
 		await axios.post(
 			`${API_URL}/favorites/${encodeURIComponent(drugName)}`,
 			null,
@@ -82,7 +83,8 @@ export default class RestApiDrugRepository implements DrugRepository {
 	}
 
 	async removeFavorite(drugName: string): Promise<void> {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
+
 		await axios.delete(
 			`${API_URL}/favorites/${encodeURIComponent(drugName)}`,
 			{

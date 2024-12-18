@@ -19,18 +19,6 @@ export const useAuthService = () => {
 		localStorage.setItem('access_token', data.access_token)
 		localStorage.setItem('refresh_token', data.refresh_token)
 
-		/*Cookies.set('access_token', data.access_token, {
-			expires: 1,
-			secure: true,
-			sameSite: 'Lax',
-		})
-
-		Cookies.set('refresh_token', data.refresh_token, {
-			expires: 28,
-			secure: true,
-			sameSite: 'Lax',
-		})*/
-
 		return role === 'teacher'
 			? new JSONTeacherAdapter(data.user)
 			: new JSONStudentAdapter(data.user)

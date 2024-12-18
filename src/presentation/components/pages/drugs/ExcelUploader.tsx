@@ -1,11 +1,10 @@
-import React, { useState, useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { Upload, FileSpreadsheet, X } from 'lucide-react'
-import { parseExcelFile } from '../../../utils/parse_excel'
-import Cookies from 'js-cookie'
 import axios from 'axios'
+import { FileSpreadsheet, Upload, X } from 'lucide-react'
+import React, { useCallback, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import { API_URL } from '../../../../utils'
 import useAppState from '../../../global_states/appState'
+import { parseExcelFile } from '../../../utils/parse_excel'
 
 type ExcelUploaderProps = {
 	closeModal: () => void
@@ -54,7 +53,7 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({ closeModal }) => {
 	}
 
 	const uploadDrugsExcel = () => {
-		const accessToken = Cookies.get('access_token')
+		const accessToken = localStorage.getItem('access_token')
 
 		const headers = {
 			Authorization: `Bearer ${accessToken}`,

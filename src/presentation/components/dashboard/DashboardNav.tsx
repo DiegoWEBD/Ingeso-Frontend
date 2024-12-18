@@ -1,7 +1,6 @@
+import { Home, LogIn, Pill, Star, User } from 'lucide-react'
 import React from 'react'
 import DashboardTab from './DashboardTab'
-import { Home, Pill, LogIn, User, Star } from 'lucide-react'
-import Cookies from 'js-cookie'
 
 type DashboardNavProps = {
 	isOpen: boolean
@@ -9,7 +8,7 @@ type DashboardNavProps = {
 }
 
 const DashboardNav: React.FC<DashboardNavProps> = ({ isOpen, closeNav }) => {
-	const accessToken = Cookies.get('access_token')
+	const accessToken = localStorage.getItem('access_token')
 
 	return (
 		<nav
@@ -19,29 +18,34 @@ const DashboardNav: React.FC<DashboardNavProps> = ({ isOpen, closeNav }) => {
 					: 'max-h-0 opacity-0 lg:max-h-[1000px] lg:opacity-100'
 			} overflow-hidden`}
 		>
-			<DashboardTab icon={<Home />} title='Inicio' to='/' closeNav={closeNav} />
+			<DashboardTab
+				icon={<Home />}
+				title="Inicio"
+				to="/"
+				closeNav={closeNav}
+			/>
 
 			{accessToken && (
 				<DashboardTab
 					icon={<Pill />}
-					title='Fármacos'
-					to='/farmacos'
+					title="Fármacos"
+					to="/farmacos"
 					closeNav={closeNav}
 				/>
 			)}
 			{accessToken && (
 				<DashboardTab
 					icon={<Star />}
-					title='Favoritos'
-					to='/favoritos'
+					title="Favoritos"
+					to="/favoritos"
 					closeNav={closeNav}
 				/>
 			)}
 			{accessToken && (
 				<DashboardTab
 					icon={<User />}
-					title='Perfil'
-					to='/perfil'
+					title="Perfil"
+					to="/perfil"
 					closeNav={closeNav}
 				/>
 			)}
@@ -49,8 +53,8 @@ const DashboardNav: React.FC<DashboardNavProps> = ({ isOpen, closeNav }) => {
 			{!accessToken && (
 				<DashboardTab
 					icon={<LogIn />}
-					title='Iniciar sesión'
-					to='/login'
+					title="Iniciar sesión"
+					to="/login"
 					closeNav={closeNav}
 				/>
 			)}

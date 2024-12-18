@@ -5,13 +5,12 @@ import AppContainer from '../containers/AppContainer'
 import BodyContainer from '../containers/BodyContainer'
 import Dashboard from '../dashboard/Dashboard'
 
-import Cookies from 'js-cookie'
 import { useErrorBoundary } from 'react-error-boundary'
 import InformativeNotification from '../generic_components/notifications/InformativeNotification'
 
 const Root: React.FC = () => {
 	const { loadInitialData, setTheme } = useAppState()
-	const accessToken = Cookies.get('access_token')
+	const accessToken = localStorage.getItem('access_token')
 	const { showBoundary } = useErrorBoundary()
 
 	useEffect(() => {
