@@ -1,12 +1,11 @@
-import Cookies from 'js-cookie'
 import { create } from 'zustand'
 import DrugRepository from '../../domain/drug/DrugRepository'
+import Teacher from '../../domain/teacher/Teacher'
 import User from '../../domain/user/User'
 import UserRepository from '../../domain/user/UserRepository'
 import DrugInitialData from '../../infrastrucure/drug/DrugInitialData'
 import RestApiDrugRepository from '../../infrastrucure/drug/RestApiDrugRepository'
 import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepository'
-import Teacher from '../../domain/teacher/Teacher'
 
 type AppState = {
 	user: User | null
@@ -35,8 +34,8 @@ const useAppState = create<AppState>((set) => {
 		userRepository,
 
 		loadInitialData: async () => {
-			const accessToken = Cookies.get('access_token')
-			const refreshToken = Cookies.get('refresh_token')
+			const accessToken = localStorage.getItem('access_token')
+			const refreshToken = localStorage.getItem('refresh_token')
 			if (!accessToken || !refreshToken) return
 
 			set({ loadingInitialData: true })

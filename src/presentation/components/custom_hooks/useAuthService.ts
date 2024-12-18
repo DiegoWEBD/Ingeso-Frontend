@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
 import User from '../../../domain/user/User'
 import JSONStudentAdapter from '../../../infrastrucure/user/adapter/JSONStudentAdapter'
 import JSONTeacherAdapter from '../../../infrastrucure/user/adapter/JSONTeacherAdapter'
@@ -17,7 +16,10 @@ export const useAuthService = () => {
 			role,
 		})
 
-		Cookies.set('access_token', data.access_token, {
+		localStorage.setItem('access_token', data.access_token)
+		localStorage.setItem('refresh_token', data.refresh_token)
+
+		/*Cookies.set('access_token', data.access_token, {
 			expires: 1,
 			secure: true,
 			sameSite: 'Lax',
@@ -27,7 +29,7 @@ export const useAuthService = () => {
 			expires: 28,
 			secure: true,
 			sameSite: 'Lax',
-		})
+		})*/
 
 		return role === 'teacher'
 			? new JSONTeacherAdapter(data.user)
