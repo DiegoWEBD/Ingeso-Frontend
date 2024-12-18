@@ -1,11 +1,14 @@
 import { LogOut } from 'lucide-react'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LogOutButton: React.FC = () => {
+	const navigate = useNavigate()
+
 	const logOut = () => {
 		localStorage.removeItem('access_token')
 		localStorage.removeItem('refresh_token')
-		window.location.reload()
+		navigate('/login')
 	}
 
 	return (
