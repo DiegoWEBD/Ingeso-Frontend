@@ -11,7 +11,6 @@ const ThemeSwitcher: React.FC = () => {
 
 			<div className="flex flex-col items-start gap-2">
 				<ThemeOption themeName="Verde" themeId="" />
-				<ThemeOption themeName="Indigo" themeId="indigo" />
 				<ThemeOption themeName="Violeta" themeId="violet" />
 				<ThemeOption themeName="Dark" themeId="dark" />
 				<ThemeOption themeName="Grey" themeId="grey" />

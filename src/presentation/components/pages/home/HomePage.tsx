@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import InstallButton from '../../buttons/InstallButton'
 import InformativeCard from './InformativeCard'
 import InititalMessage from './InititalMessage'
+import DevelopersTeam from './developers/DevelopersTeam'
 
 const HomePage: React.FC = () => {
 	return (
@@ -12,7 +13,7 @@ const HomePage: React.FC = () => {
 			</p>
 			<div className="flex flex-col gap-[2rem] md:gap-[5rem] pt-5 sm:pt-10">
 				<InititalMessage />
-				<div className="flex flex-col gap-8 xl:flex-row xl:justify-around items-center xl:items-start ">
+				<div className="flex flex-col gap-8 xl:flex-row xl:justify-around items-center xl:items-start">
 					<InformativeCard title="Características principales">
 						<ul className="list-disc pl-5">
 							<li>
@@ -51,6 +52,7 @@ const HomePage: React.FC = () => {
 						Explorar fármacos
 					</Link>
 				</div>
+				<DevelopersTeam />
 			</div>
 		</div>
 	)
