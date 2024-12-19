@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import { useLocation } from 'react-router-dom'
 import useAppState from '../../global_states/appState'
 
 type BodyContainerProps = {
@@ -7,16 +6,10 @@ type BodyContainerProps = {
 }
 
 const BodyContainer: React.FC<BodyContainerProps> = ({ children }) => {
-	const pathname = useLocation().pathname
 	const { isAppInstaled } = useAppState()
 
 	return (
-		<div
-			className="pt-[5rem] md:pt-[6rem] lg:pt-0 lg:pl-[25rem] bg-secondary overflow-y-auto animate-bg-transition"
-			style={{
-				height: pathname === '/login' ? '100%' : '',
-			}}
-		>
+		<div className="pt-[5rem] md:pt-[6rem] lg:pt-0 lg:pl-[25rem] bg-secondary overflow-y-auto animate-bg-transition min-h-screen w-full">
 			<div
 				className={`flex flex-col px-4 pb-4 ${
 					isAppInstaled() ? 'pt-14' : 'pt-5'

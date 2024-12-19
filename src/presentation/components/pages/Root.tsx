@@ -31,11 +31,9 @@ const Root: React.FC = () => {
 		<AppContainer>
 			<InformativeNotification />
 			<Dashboard />
-			<div className="w-full h-full">
-				<BodyContainer>
-					<Outlet />
-				</BodyContainer>
-			</div>
+			<BodyContainer>
+				<Outlet />
+			</BodyContainer>
 		</AppContainer>
 	)
 }
