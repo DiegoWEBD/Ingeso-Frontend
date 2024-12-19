@@ -24,7 +24,20 @@ self.addEventListener('activate', (event) => {
 
 // Optional: Skip waiting phase
 self.addEventListener('install', (event) => {
-	event.waitUntil(self.skipWaiting())
+	event.waitUntil(
+		caches.open('pwa-cache').then((cache) => {
+			return cache.addAll([
+				// Add the new icons to cache
+				'/-48x48.png',
+				'/-72x72.png',
+				'/-96x96.png',
+				'/-128x128.png',
+				'/-192x192.png',
+				'/-256x256.png',
+				'/-512x512.png',
+			])
+		})
+	)
 })
 
 registerRoute(
