@@ -66,7 +66,7 @@ const DrugsListItem: React.FC<DrugsListItemProps> = ({ drugInitialData }) => {
 		<div className="relative">
 			<button
 				onClick={onClick}
-				className="min-h-[4rem] w-full bg-card text-secondary rounded font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[1.8rem] hover:shadow-md hover:shadow-black/30 transition-all"
+				className="min-h-[4rem] text-sm w-full bg-card text-secondary rounded font-semibold rounded-[7px] shadow-sm shadow-black/30 py-[0.9rem] px-[1.8rem] hover:shadow-md hover:shadow-black/30 transition-all"
 			>
 				<p className="break-words">{drugInitialData.name}</p>
 			</button>
