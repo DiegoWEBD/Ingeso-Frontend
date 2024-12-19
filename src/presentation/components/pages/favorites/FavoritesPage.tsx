@@ -28,7 +28,7 @@ const FavoritesPage: React.FC = () => {
 		<div className="flex flex-col gap-5">
 			<h1 className="text-3xl font-bold text-secondary">Favoritos</h1>
 			<SearchBar onSearch={filterFavoriteDrugs} />
-			<DrugsList drugsInitialData={filteredFavoriteDrugs} />
+			<DrugsList drugsInitialData={filteredFavoriteDrugs} favorites />
 		</div>
 	)
 }

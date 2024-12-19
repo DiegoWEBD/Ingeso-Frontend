@@ -1,5 +1,6 @@
 import { PaintBucket } from 'lucide-react'
 import ThemeOption from './theme_switcher/ThemeOption'
+import StudentComponent from '../../protected/StudentComponent'
 
 const ThemeSwitcher: React.FC = () => {
 	return (
@@ -11,10 +12,13 @@ const ThemeSwitcher: React.FC = () => {
 
 			<div className="flex flex-col items-start gap-2">
 				<ThemeOption themeName="Verde" themeId="" />
-				<ThemeOption themeName="Violeta" themeId="violet" />
-				<ThemeOption themeName="Dark" themeId="dark" />
-				<ThemeOption themeName="Grey" themeId="grey" />
-				<ThemeOption themeName="Pink" themeId="pink" />
+				<ThemeOption themeName="Azul" themeId="blue" />
+				<StudentComponent>
+					<ThemeOption themeName="Violeta" themeId="violet" />
+					<ThemeOption themeName="Dark" themeId="dark" />
+					<ThemeOption themeName="Grey" themeId="grey" />
+					<ThemeOption themeName="Pink" themeId="pink" />
+				</StudentComponent>
 			</div>
 		</div>
 	)

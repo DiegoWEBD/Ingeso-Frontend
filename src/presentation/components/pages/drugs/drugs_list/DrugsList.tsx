@@ -9,9 +9,13 @@ import ProtectedComponent from '../../../protected/ProtectedComponent'
 
 type DrugsListProps = {
 	drugsInitialData: DrugInitialData[]
+	favorites?: boolean
 }
 
-const DrugsList: React.FC<DrugsListProps> = ({ drugsInitialData }) => {
+const DrugsList: React.FC<DrugsListProps> = ({
+	drugsInitialData,
+	favorites,
+}) => {
 	const { loadingInitialData } = useAppState()
 
 	return (
@@ -21,7 +25,7 @@ const DrugsList: React.FC<DrugsListProps> = ({ drugsInitialData }) => {
 				gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 			}}
 		>
-			{!loadingInitialData && (
+			{!loadingInitialData && !favorites && (
 				<ProtectedComponent>
 					<AddDrugButton />
 				</ProtectedComponent>
