@@ -30,7 +30,7 @@ const DrugsPage: React.FC = () => {
 	}
 
 	return (
-		<div className="flex flex-col gap-5">
+		<div className="flex flex-col gap-5 pb-10 lg:pb-0">
 			<h1 className="text-3xl font-bold text-secondary">Fármacos</h1>
 			<SearchBar onSearch={filterDrugNames} />
 			<DrugsList drugsInitialData={filteredDrugsInitialData} />

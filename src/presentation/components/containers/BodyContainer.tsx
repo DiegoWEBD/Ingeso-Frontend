@@ -9,7 +9,7 @@ const BodyContainer: React.FC<BodyContainerProps> = ({ children }) => {
 	const { isAppInstaled } = useAppState()
 
 	return (
-		<div className="pt-[5rem] md:pt-[6rem] lg:pt-0 lg:pl-[25rem] bg-secondary overflow-y-auto animate-bg-transition min-h-screen w-full">
+		<div className="pt-[5rem] md:pt-[6rem] lg:pt-0 lg:pl-[25rem] bg-secondary overflow-y-scroll animate-bg-transition min-h-screen w-full">
 			<div
 				className={`flex flex-col px-4 pb-4 ${
 					isAppInstaled() ? 'pt-14' : 'pt-5'

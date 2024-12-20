@@ -11,7 +11,7 @@ const ProfilePage: React.FC = () => {
 	const user: User | null = useAppState((state) => state.user)
 
 	return (
-		<div className="flex flex-col gap-16 items-center justify-center lg:h-full">
+		<div className="flex flex-col gap-16 items-center justify-center lg:h-full pb-10 lg:pb-0">
 			<div className="flex flex-col gap-x-16 gap-y-7 items-center">
 				<div className="bg-white shadow-md flex flex-col gap-3 sm:w-[25rem] rounded-md p-5 break-words bg-card">
 					<p className="text-xl font-bold text-primary-intense pb-3">
