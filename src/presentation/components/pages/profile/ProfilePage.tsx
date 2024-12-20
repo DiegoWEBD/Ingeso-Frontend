@@ -11,35 +11,39 @@ const ProfilePage: React.FC = () => {
 	const user: User | null = useAppState((state) => state.user)
 
 	return (
-		<div className='flex flex-col gap-8 items-center'>
-			<div className='flex flex-col xl:flex-row gap-x-10 gap-y-7'>
-				<div className='bg-white shadow-md flex flex-col gap-3 sm:w-[25rem] rounded-md p-5 break-words bg-card'>
-					<p className='text-xl font-bold text-primary-intense pb-3'>
+		<div className="flex flex-col gap-16 items-center justify-center lg:h-full">
+			<div className="flex flex-col gap-x-16 gap-y-7 items-center">
+				<div className="bg-white shadow-md flex flex-col gap-3 sm:w-[25rem] rounded-md p-5 break-words bg-card">
+					<p className="text-xl font-bold text-primary-intense pb-3">
 						Información Personal
 					</p>
-					<div className='flex flex-col gap-1'>
-						<p className='text-primary font-semibold'>Nombre Completo</p>
+					<div className="flex flex-col gap-1">
+						<p className="text-primary font-semibold">
+							Nombre Completo
+						</p>
 						<UserDataItem item={user?.getName()} />
 					</div>
-					<div className='flex flex-col gap-1'>
-						<p className='text-primary font-semibold'>Correo Institucional</p>
+					<div className="flex flex-col gap-1">
+						<p className="text-primary font-semibold">
+							Correo Institucional
+						</p>
 						<UserDataItem item={user?.getInstitutionalEmail()} />
 					</div>
-					<div className='flex flex-col gap-1'>
-						<p className='text-primary font-semibold'>Rol</p>
+					<div className="flex flex-col gap-1">
+						<p className="text-primary font-semibold">Rol</p>
 						<UserDataItem
 							item={
-								user
-									? user instanceof Teacher
-										? 'Profesor'
-										: 'Estudiante'
-									: undefined
+								user instanceof Teacher
+									? 'Profesor'
+									: 'Estudiante'
 							}
 						/>
 					</div>
 				</div>
 
-				<ThemeSwitcher />
+				<div className="flex flex-col lg:w-auto lg:flex-grow">
+					<ThemeSwitcher />
+				</div>
 			</div>
 
 			<LogOutButton />

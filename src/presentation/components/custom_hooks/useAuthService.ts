@@ -2,7 +2,7 @@ import axios from 'axios'
 import User from '../../../domain/user/User'
 import JSONStudentAdapter from '../../../infrastrucure/user/adapter/JSONStudentAdapter'
 import JSONTeacherAdapter from '../../../infrastrucure/user/adapter/JSONTeacherAdapter'
-import { API_URL } from '../../../utils'
+import { API_URL } from '../../utils/utils'
 
 export const useAuthService = () => {
 	const login = async (

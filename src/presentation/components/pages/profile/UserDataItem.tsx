@@ -7,7 +7,9 @@ type UserDataItemProps = {
 
 const UserDataItem: React.FC<UserDataItemProps> = ({ item }) => {
 	return item ? (
-		<p className='border rounded-md py-1 px-2 text-sm text-gray-500'>{item}</p>
+		<p className="border rounded-md py-1 px-2 text-sm text-gray-500">
+			{item}
+		</p>
 	) : (
 		<Skeleton />
 	)

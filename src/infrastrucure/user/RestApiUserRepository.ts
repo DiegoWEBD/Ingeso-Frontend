@@ -1,7 +1,7 @@
 import axios from 'axios'
 import User from '../../domain/user/User'
 import UserRepository from '../../domain/user/UserRepository'
-import { API_URL } from '../../utils'
+import { API_URL } from '../../presentation/utils/utils'
 import JSONStudentAdapter from './adapter/JSONStudentAdapter'
 import JSONTeacherAdapter from './adapter/JSONTeacherAdapter'
 

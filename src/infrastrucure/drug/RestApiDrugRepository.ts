@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Drug from '../../domain/drug/Drug'
 import DrugRepository from '../../domain/drug/DrugRepository'
-import { API_URL } from '../../utils'
+import { API_URL } from '../../presentation/utils/utils'
 import DrugAdapter from './adapter/DrugAdapter'
 import DrugJSONAdapter from './adapter/DrugJSONAdapter'
 import DrugInitialData from './DrugInitialData'

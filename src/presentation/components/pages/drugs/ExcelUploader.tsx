@@ -2,7 +2,7 @@ import axios from 'axios'
 import { FileSpreadsheet, Upload, X } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { API_URL } from '../../../../utils'
+import { API_URL } from '../../../utils/utils'
 import useAppState from '../../../global_states/appState'
 import { parseExcelFile } from '../../../utils/parse_excel'
 

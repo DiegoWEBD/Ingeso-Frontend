@@ -35,6 +35,8 @@
 	--disabled-input-background-color: #f3f4f6;
 	--disabled-button-background-color: #a7f3d0;
 
+	--border-color: #e5e7eb;
+
 	--tertiary-text-color: #6b7280;
 
 	--card-bg-color: white;
@@ -63,6 +65,7 @@ body {
 	--input-border-color: #d1d5db;
 	--disabled-input-background-color: #f3f4f6;
 
+	--border-color: #e5e7eb;
 	--tertiary-text-color: #6b7280;
 
 	--card-bg-color: white;
@@ -87,6 +90,7 @@ body {
 	--input-border-color: #d1d5db;
 	--disabled-input-background-color: #f3f4f6;
 
+	--border-color: #e5e7eb;
 	--tertiary-text-color: #6b7280;
 
 	--card-bg-color: white;
@@ -111,6 +115,7 @@ body {
 	--input-border-color: #1f2937;
 	--disabled-input-background-color: #f3f4f6;
 
+	--border-color: #4b5563;
 	--tertiary-text-color: #6b7280;
 
 	--card-bg-color: #111827;
@@ -135,6 +140,7 @@ body {
 	--input-border-color: #1f2937;
 	--disabled-input-background-color: #f3f4f6;
 
+	--border-color: #e5e7eb;
 	--tertiary-text-color: #f3f4f6;
 
 	--card-bg-color: #1e293b;
@@ -159,6 +165,7 @@ body {
 	--input-border-color: #1f2937;
 	--disabled-input-background-color: #f3f4f6;
 
+	--border-color: #e5e7eb;
 	--tertiary-text-color: #475569;
 
 	--card-bg-color: white;
