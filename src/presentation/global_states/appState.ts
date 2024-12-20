@@ -6,6 +6,7 @@ import UserRepository from '../../domain/user/UserRepository'
 import DrugInitialData from '../../infrastrucure/drug/DrugInitialData'
 import RestApiDrugRepository from '../../infrastrucure/drug/RestApiDrugRepository'
 import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepository'
+import { NavigateFunction } from 'react-router-dom'
 
 type AppState = {
 	user: User | null
@@ -13,7 +14,7 @@ type AppState = {
 	drugRepository: DrugRepository
 	userRepository: UserRepository
 	loadingInitialData: boolean
-	loadInitialData: () => Promise<void>
+	loadInitialData: (navigate: NavigateFunction) => Promise<void>
 	setUser: (user: User) => void
 	setDrugsNames: (drugsInitialData: DrugInitialData[]) => void
 	setTheme: (themeId: string) => void
@@ -33,17 +34,29 @@ const useAppState = create<AppState>((set) => {
 		drugRepository,
 		userRepository,
 
-		loadInitialData: async () => {
+		loadInitialData: async (navigate: NavigateFunction) => {
 			const accessToken = localStorage.getItem('access_token')
 			const refreshToken = localStorage.getItem('refresh_token')
 			if (!accessToken || !refreshToken) return
 
 			set({ loadingInitialData: true })
+			let user: User | null = null
 
-			const user = await userRepository.getByToken(
-				accessToken,
-				refreshToken
-			)
+			try {
+				user = await userRepository.getByToken(
+					accessToken,
+					refreshToken
+				)
+			} catch (error) {
+				localStorage.removeItem('access_token')
+				localStorage.removeItem('refresh_token')
+				navigate('/login')
+
+				return
+			}
+
+			if (!user) return
+
 			const drugsInitialData: Array<DrugInitialData> =
 				await drugRepository.getDrugsInitialData()
 

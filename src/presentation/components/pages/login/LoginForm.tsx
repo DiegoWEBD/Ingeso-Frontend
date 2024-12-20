@@ -22,7 +22,6 @@ const LoginForm: React.FC = () => {
 	) => {
 		apiLogin(response.access_token, response.token_type, role)
 			.then((user) => {
-				console.log(user)
 				setUser(user)
 				navigate('/farmacos')
 			})
