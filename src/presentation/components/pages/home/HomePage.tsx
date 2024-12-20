@@ -7,7 +7,7 @@ import DevelopersTeam from './developers/DevelopersTeam'
 
 const HomePage: React.FC = () => {
 	return (
-		<div className="px-5 flex flex-col overflow-y-auto min-h-full">
+		<div className="px-5 flex flex-col min-h-full">
 			<p className="font-extrabold text-xl sm:text-3xl lg:text-4xl xl:pt-5 text-primary-intense">
 				Bienvenido a tu Guía de Farmacología
 			</p>

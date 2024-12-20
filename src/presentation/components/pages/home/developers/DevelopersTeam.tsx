@@ -3,7 +3,7 @@ import React from 'react'
 
 const DevelopersTeam: React.FC = () => {
 	return (
-		<div className="flex flex-wrap gap-2 sm:gap-4 items-center text-xs sm:text-sm border-t-2 text-tertiary pt-4 justify-center text-center px-4">
+		<div className="pb-4 flex flex-wrap gap-2 sm:gap-4 items-center text-xs sm:text-sm border-t-2 text-tertiary pt-4 justify-center text-center px-4">
 			<Users size={'1rem'} />
 			<p>Desarrollado por:</p>
 			<p>
