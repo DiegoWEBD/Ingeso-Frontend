@@ -98,7 +98,6 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 	})
 
 	const confirmSubmit = () => {
-		console.log(formik.values)
 		const drug = new Drug(
 			formik.values.name,
 			formik.values.presentation,
