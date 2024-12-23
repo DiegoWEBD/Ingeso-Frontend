@@ -1,6 +1,6 @@
 import { PaintBucket } from 'lucide-react'
-import ThemeOption from './theme_switcher/ThemeOption'
-import StudentComponent from '../../protected/StudentComponent'
+import ThemeOption from './ThemeOption'
+import StudentComponent from '../../../protected/StudentComponent'
 
 const ThemeSwitcher: React.FC = () => {
 	return (

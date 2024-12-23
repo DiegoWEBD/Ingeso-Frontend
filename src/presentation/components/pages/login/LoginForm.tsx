@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { useErrorBoundary } from 'react-error-boundary'
 import useAppState from '../../../global_states/appState'
 import AppTitle from '../../AppTitle'
-import { useAuthService } from '../../custom_hooks/useAuthService'
 import LoginButton from './LoginButton'
+import { useAuthService } from '../../../custom_hooks/useAuthService'
 
 const LoginForm: React.FC = () => {
 	const { setUser } = useAppState()

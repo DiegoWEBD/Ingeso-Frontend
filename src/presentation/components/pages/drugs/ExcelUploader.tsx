@@ -5,6 +5,9 @@ import { useDropzone } from 'react-dropzone'
 import { API_URL } from '../../../utils/utils'
 import useAppState from '../../../global_states/appState'
 import { parseExcelFile } from '../../../utils/parse_excel'
+import { useNotification } from '../../generic_components/notifications/contexts/InformativeNotificationContext'
+import useConfirmationNotification from '../../generic_components/notifications/custom_hooks/useConfirmationNotification'
+import ConfirmationNotification from '../../generic_components/notifications/ConfirmationNotification'
 
 type ExcelUploaderProps = {
 	closeModal: () => void
@@ -15,6 +18,13 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({ closeModal }) => {
 	const [excelData, setExcelData] = useState<any[] | null>(null)
 	const [fileName, setFileName] = useState<string | null>(null)
 	const { setDrugsNames } = useAppState()
+	const { showNotification } = useNotification()
+
+	const {
+		isConfirmationOpen,
+		openConfirmationNotification,
+		closeConfirmationNotification,
+	} = useConfirmationNotification()
 
 	const onDrop = useCallback(async (acceptedFiles: File[]) => {
 		const file = acceptedFiles[0]
@@ -49,7 +59,7 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({ closeModal }) => {
 	const handleSubmit = (event: any) => {
 		event.preventDefault()
 
-		uploadDrugsExcel()
+		openConfirmationNotification()
 	}
 
 	const uploadDrugsExcel = () => {
@@ -64,6 +74,7 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({ closeModal }) => {
 			.post(`${API_URL}/drugs/upload`, { file: excelFile }, { headers })
 			.then((response) => response.data)
 			.then((data) => {
+				showNotification('Fármacos agregados correctamente')
 				setDrugsNames(data.drugs_names)
 				closeModal()
 			})
@@ -176,6 +187,16 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({ closeModal }) => {
 			>
 				Guardar
 			</button>
+
+			{isConfirmationOpen && (
+				<ConfirmationNotification
+					closeNotification={closeConfirmationNotification}
+					onConfirm={uploadDrugsExcel}
+				>
+					¿Está seguro que desea agregar fármacos desde este archivo
+					Excel?
+				</ConfirmationNotification>
+			)}
 		</form>
 	)
 }

@@ -230,22 +230,27 @@ const AddDrugForm: React.FC<DrugItemModalProps> = ({ closeModal }) => {
 								>
 									<X className="h-6 w-6" />
 								</button>
-								<Button type="submit" className="w-full">
+								<Button
+									type="submit"
+									className="w-full"
+									disabledBackgroundColor="var(--disabled-button-background-color)"
+									disabled={!formik.dirty}
+								>
 									Guardar
 								</Button>
 							</DrugInfoContainer>
 						</form>
 					)}
 				</div>
+				{isConfirmationOpen && (
+					<ConfirmationNotification
+						closeNotification={closeConfirmationNotification}
+						onConfirm={confirmSubmit}
+					>
+						¿Está seguro que desea agregar este fármaco?
+					</ConfirmationNotification>
+				)}
 			</div>
-			{isConfirmationOpen && (
-				<ConfirmationNotification
-					onConfirm={confirmSubmit}
-					closeNotification={closeConfirmationNotification}
-				>
-					¿Está seguro que desea agregar este fármaco?
-				</ConfirmationNotification>
-			)}
 		</ModalContainer>
 	)
 }

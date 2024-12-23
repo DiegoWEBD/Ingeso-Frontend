@@ -5,7 +5,7 @@ import User from '../../../../domain/user/User'
 import useAppState from '../../../global_states/appState'
 import LogOutButton from './LogOutButton'
 import UserDataItem from './UserDataItem'
-import ThemeSwitcher from './ThemeSwitcher'
+import ThemeSwitcher from './theme_switcher/ThemeSwitcher'
 
 const ProfilePage: React.FC = () => {
 	const user: User | null = useAppState((state) => state.user)

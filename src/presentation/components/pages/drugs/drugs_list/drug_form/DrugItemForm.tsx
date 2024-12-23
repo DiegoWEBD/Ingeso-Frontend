@@ -117,7 +117,7 @@ const DrugItemForm: React.FC<DrugItemFormProps> = ({
 			<ProtectedComponent>
 				<div className="space-y-3 mt-3">
 					<DeleteDrugButton drug={drug} closeModal={closeModal} />
-					<SaveChangesButton />
+					<SaveChangesButton disabled={!formik.dirty || loading} />
 				</div>
 			</ProtectedComponent>
 		</motion.form>

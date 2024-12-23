@@ -7,6 +7,8 @@ import DrugInitialData from '../../infrastrucure/drug/DrugInitialData'
 import RestApiDrugRepository from '../../infrastrucure/drug/RestApiDrugRepository'
 import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepository'
 import { NavigateFunction } from 'react-router-dom'
+import AuthService from '../../application/auth/AuthService'
+import RestApiAuthService from '../../infrastrucure/auth/RestApiAuthService'
 
 type AppState = {
 	user: User | null
@@ -14,6 +16,7 @@ type AppState = {
 	drugRepository: DrugRepository
 	userRepository: UserRepository
 	loadingInitialData: boolean
+	authService: AuthService
 	loadInitialData: (navigate: NavigateFunction) => Promise<void>
 	setUser: (user: User) => void
 	setDrugsNames: (drugsInitialData: DrugInitialData[]) => void
@@ -26,6 +29,7 @@ type AppState = {
 const useAppState = create<AppState>((set) => {
 	const drugRepository: DrugRepository = new RestApiDrugRepository()
 	const userRepository: UserRepository = new RestApiUserRepository()
+	const authService: AuthService = new RestApiAuthService()
 
 	return {
 		user: null,
@@ -33,6 +37,7 @@ const useAppState = create<AppState>((set) => {
 		loadingInitialData: false,
 		drugRepository,
 		userRepository,
+		authService,
 
 		loadInitialData: async (navigate: NavigateFunction) => {
 			const accessToken = localStorage.getItem('access_token')
@@ -48,14 +53,28 @@ const useAppState = create<AppState>((set) => {
 					refreshToken
 				)
 			} catch (error) {
-				localStorage.removeItem('access_token')
-				localStorage.removeItem('refresh_token')
-				navigate('/login')
-
-				return
+				try {
+					const newAccessToken = await authService.refresh(
+						refreshToken
+					)
+					localStorage.setItem('access_token', newAccessToken)
+					user = await userRepository.getByToken(
+						newAccessToken,
+						refreshToken
+					)
+				} catch (refreshError) {
+					localStorage.removeItem('access_token')
+					localStorage.removeItem('refresh_token')
+					set({ loadingInitialData: false })
+					navigate('/login')
+					return
+				}
 			}
 
-			if (!user) return
+			if (!user) {
+				set({ loadingInitialData: false })
+				return
+			}
 
 			const drugsInitialData: Array<DrugInitialData> =
 				await drugRepository.getDrugsInitialData()

@@ -4,6 +4,7 @@ import AdministrationProcedure from '../../../../../../../domain/administration_
 import Drug from '../../../../../../../domain/drug/Drug'
 import Ram from '../../../../../../../domain/ram/Ram'
 import useAppState from '../../../../../../global_states/appState'
+import { useNotification } from '../../../../../generic_components/notifications/contexts/InformativeNotificationContext'
 
 export interface FormValues {
 	name: string
@@ -16,6 +17,7 @@ export interface FormValues {
 const useDrugForm = (drug: Drug | null, closeModal: () => void) => {
 	const { drugRepository, setDrugsNames, drugsInitialData } = useAppState()
 	const { showBoundary } = useErrorBoundary()
+	const { showNotification } = useNotification()
 
 	const validate = (values: FormValues): FormikErrors<FormValues> => {
 		let errors: FormikErrors<FormValues> = {}
@@ -45,7 +47,7 @@ const useDrugForm = (drug: Drug | null, closeModal: () => void) => {
 		drugRepository
 			.update(drug.getName(), newValues)
 			.then(() => {
-				console.log('Fármaco modificado correctamente')
+				showNotification('Fármaco modificado correctamente')
 				setDrugsNames(
 					drugsInitialData.map((data) =>
 						data.name === drug.getName()

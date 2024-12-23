@@ -3,7 +3,11 @@ import Button from '../../../../../generic_components/buttons/Button'
 import ConfirmationNotification from '../../../../../generic_components/notifications/ConfirmationNotification'
 import useConfirmationNotification from '../../../../../generic_components/notifications/custom_hooks/useConfirmationNotification'
 
-const SaveChangesButton: React.FC = () => {
+type SaveChangesButtonProps = {
+	disabled?: boolean
+}
+
+const SaveChangesButton: React.FC<SaveChangesButtonProps> = ({ disabled }) => {
 	const {
 		isConfirmationOpen,
 		openConfirmationNotification,
@@ -15,8 +19,9 @@ const SaveChangesButton: React.FC = () => {
 			<Button
 				type="button"
 				className="w-full"
-				backgroundColor="bg-primary-weak hover:bg-[var(--primary-color)]"
+				disabledBackgroundColor="var(--disabled-button-background-color)"
 				onClick={openConfirmationNotification}
+				disabled={disabled}
 			>
 				<p>Guardar</p>
 			</Button>
