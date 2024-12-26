@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import useAppState from '../../global_states/appState'
 import AppContainer from '../containers/AppContainer'
 import BodyContainer from '../containers/BodyContainer'
@@ -12,12 +12,11 @@ const Root: React.FC = () => {
 	const { loadInitialData, setTheme } = useAppState()
 	const accessToken = localStorage.getItem('access_token')
 	const { showBoundary } = useErrorBoundary()
-	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (!accessToken) return
 
-		loadInitialData(navigate)
+		loadInitialData()
 			.then(() => console.log('Datos iniciales cargados.'))
 			.catch((error) => showBoundary(error))
 	}, [accessToken])

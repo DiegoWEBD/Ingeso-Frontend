@@ -1,4 +1,3 @@
-import { NavigateFunction } from 'react-router-dom'
 import { create } from 'zustand'
 import AuthService from '../../application/auth/AuthService'
 import DrugRepository from '../../domain/drug/DrugRepository'
@@ -17,7 +16,7 @@ type AppState = {
 	userRepository: UserRepository
 	loadingInitialData: boolean
 	authService: AuthService
-	loadInitialData: (navigate: NavigateFunction) => Promise<void>
+	loadInitialData: () => Promise<void>
 	setUser: (user: User) => void
 	setDrugsNames: (drugsInitialData: DrugInitialData[]) => void
 	setTheme: (themeId: string) => void
@@ -39,7 +38,7 @@ const useAppState = create<AppState>((set) => {
 		userRepository,
 		authService,
 
-		loadInitialData: async (navigate: NavigateFunction) => {
+		loadInitialData: async () => {
 			const accessToken = localStorage.getItem('access_token')
 			const refreshToken = localStorage.getItem('refresh_token')
 			if (!accessToken || !refreshToken) return
