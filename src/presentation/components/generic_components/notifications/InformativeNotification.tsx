@@ -13,10 +13,10 @@ const InformativeNotification: React.FC = () => {
 					initial={{ opacity: 0, scale: 0.2 }}
 					animate={{ opacity: 1, scale: 1 }}
 					exit={{ opacity: 0, scale: 0.2 }}
-					className="fixed bottom-4 right-4 bg-green-500 rounded-lg p-3 shadow-lg w-fit text-white flex gap-5 items-center z-10"
+					className="fixed bottom-4 right-4 bg-green-500 rounded-lg p-2 shadow-lg w-fit max-w-xs text-white flex gap-3 items-center z-10"
 				>
-					<CheckCircle />
-					<p>{message}</p>
+					<CheckCircle size={20} />
+					<p className="text-sm">{message}</p>
 				</motion.div>
 			)}
 		</AnimatePresence>
