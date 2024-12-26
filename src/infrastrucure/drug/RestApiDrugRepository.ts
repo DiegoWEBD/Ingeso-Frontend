@@ -1,6 +1,6 @@
-import axios from 'axios'
 import Drug from '../../domain/drug/Drug'
 import DrugRepository from '../../domain/drug/DrugRepository'
+import apiClient from '../../presentation/utils/axios_interceptor'
 import { API_URL } from '../../presentation/utils/utils'
 import DrugAdapter from './adapter/DrugAdapter'
 import DrugJSONAdapter from './adapter/DrugJSONAdapter'
@@ -10,7 +10,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 	async add(drug: Drug): Promise<void> {
 		const accessToken = localStorage.getItem('access_token')
 
-		await axios.post(`${API_URL}/drugs`, new DrugJSONAdapter(drug), {
+		await apiClient.post(`${API_URL}/drugs`, new DrugJSONAdapter(drug), {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 
 	async findByName(name: string): Promise<Drug | null> {
 		const accessToken = localStorage.getItem('access_token')
-		const { data } = await axios.get(
+		const { data } = await apiClient.get(
 			`${API_URL}/drugs/${encodeURIComponent(name)}`,
 			{
 				headers: {
@@ -46,7 +46,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 
 	async update(name: string, newValues: Drug): Promise<void> {
 		const accessToken = localStorage.getItem('access_token')
-		await axios.put(
+		await apiClient.put(
 			`${API_URL}/drugs/${encodeURIComponent(name)}`,
 			new DrugJSONAdapter(newValues),
 			{
@@ -60,7 +60,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 	async delete(drug: Drug): Promise<void> {
 		const accessToken = localStorage.getItem('access_token')
 
-		await axios.delete(
+		await apiClient.delete(
 			`${API_URL}/drugs/${encodeURIComponent(drug.getName())}`,
 			{
 				headers: {
@@ -73,7 +73,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 	async addFavorite(drugName: string): Promise<void> {
 		const accessToken = localStorage.getItem('access_token')
 
-		await axios.post(
+		await apiClient.post(
 			`${API_URL}/favorites/${encodeURIComponent(drugName)}`,
 			null,
 			{
@@ -85,7 +85,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 	async removeFavorite(drugName: string): Promise<void> {
 		const accessToken = localStorage.getItem('access_token')
 
-		await axios.delete(
+		await apiClient.delete(
 			`${API_URL}/favorites/${encodeURIComponent(drugName)}`,
 			{
 				headers: { Authorization: `Bearer ${accessToken}` },

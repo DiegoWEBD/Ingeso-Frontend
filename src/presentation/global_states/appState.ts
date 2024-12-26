@@ -1,14 +1,14 @@
+import { NavigateFunction } from 'react-router-dom'
 import { create } from 'zustand'
+import AuthService from '../../application/auth/AuthService'
 import DrugRepository from '../../domain/drug/DrugRepository'
 import Teacher from '../../domain/teacher/Teacher'
 import User from '../../domain/user/User'
 import UserRepository from '../../domain/user/UserRepository'
+import RestApiAuthService from '../../infrastrucure/auth/RestApiAuthService'
 import DrugInitialData from '../../infrastrucure/drug/DrugInitialData'
 import RestApiDrugRepository from '../../infrastrucure/drug/RestApiDrugRepository'
 import RestApiUserRepository from '../../infrastrucure/user/RestApiUserRepository'
-import { NavigateFunction } from 'react-router-dom'
-import AuthService from '../../application/auth/AuthService'
-import RestApiAuthService from '../../infrastrucure/auth/RestApiAuthService'
 
 type AppState = {
 	user: User | null
@@ -47,29 +47,7 @@ const useAppState = create<AppState>((set) => {
 			set({ loadingInitialData: true })
 			let user: User | null = null
 
-			try {
-				user = await userRepository.getByToken(
-					accessToken,
-					refreshToken
-				)
-			} catch (error) {
-				try {
-					const newAccessToken = await authService.refresh(
-						refreshToken
-					)
-					localStorage.setItem('access_token', newAccessToken)
-					user = await userRepository.getByToken(
-						newAccessToken,
-						refreshToken
-					)
-				} catch (refreshError) {
-					localStorage.removeItem('access_token')
-					localStorage.removeItem('refresh_token')
-					set({ loadingInitialData: false })
-					navigate('/login')
-					return
-				}
-			}
+			user = await userRepository.getByToken(accessToken)
 
 			if (!user) {
 				set({ loadingInitialData: false })
