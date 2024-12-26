@@ -75,7 +75,7 @@ export default class RestApiDrugRepository implements DrugRepository {
 
 		await apiClient.post(
 			`${API_URL}/favorites/${encodeURIComponent(drugName)}`,
-			null,
+			{},
 			{
 				headers: { Authorization: `Bearer ${accessToken}` },
 			}
